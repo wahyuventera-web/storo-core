@@ -12,7 +12,7 @@ const FAQ = () => {
     },
     {
       question: "Apakah perlu login dashboard rumit?",
-      answer: "Tidak perlu! Order dari webstore bisa langsung dicek via email atau WhatsApp. Dashboard admin juga user-friendly untuk update stok dan harga."
+      answer: "Tidak perlu! Order dari webstore dikelola melalui WooCommerce dashboard yang user-friendly untuk update stok, harga, dan monitoring order."
     },
     {
       question: "Berapa lama proses pembuatan webstore?",
@@ -63,7 +63,7 @@ const FAQ = () => {
           <p className="text-gray-600 mb-4">Masih ada pertanyaan lain?</p>
           <button 
             className="btn-secondary"
-            onClick={() => window.open('https://wa.me/6281234567890?text=Halo%20Storo.id,%20saya%20ada%20pertanyaan%20tentang%20webstore', '_blank')}
+            onClick={() => window.open('https://wa.me/6285647486700?text=Halo%20Storo.id,%20saya%20ada%20pertanyaan%20tentang%20webstore', '_blank')}
           >
             Tanya Langsung via WhatsApp
           </button>

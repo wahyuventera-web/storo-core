@@ -18,10 +18,10 @@ const ContactForm = () => {
     e.preventDefault();
     
     // Create WhatsApp message
-    const waMessage = `Halo Storo.id,%0A%0ANama: ${formData.name}%0ANo. WhatsApp: ${formData.phone}%0APesan: ${formData.message}%0A%0ASaya tertarik dengan layanan webstore dari Shopee.`;
+    const waMessage = `Halo Storo.id,%0A%0ANama: ${formData.name}%0ANo. WhatsApp: ${formData.phone}%0APesan: ${formData.message}%0A%0ASaya tertarik dengan layanan webstore dari Storo.id.`;
     
     // Open WhatsApp
-    window.open(`https://wa.me/6281234567890?text=${waMessage}`, '_blank');
+    window.open(`https://wa.me/6285647486700?text=${waMessage}`, '_blank');
     
     // Show success toast
     toast({
@@ -49,7 +49,7 @@ const ContactForm = () => {
               Hubungi Kami
             </h2>
             <p className="text-lg text-gray-600">
-              Kirim pesan singkat atau langsung upload file Excel Shopee Anda
+              Kirim pesan singkat untuk konsultasi layanan webstore Storo.id
             </p>
           </div>
 
@@ -95,18 +95,6 @@ const ContactForm = () => {
                 />
               </div>
 
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-600 mb-2">
-                  Punya file Excel dari Seller Center? Upload di sini (opsional)
-                </p>
-                <Button type="button" variant="outline" size="sm">
-                  Pilih File Excel
-                </Button>
-                <p className="text-xs text-gray-500 mt-2">
-                  File akan dikirim melalui WhatsApp
-                </p>
-              </div>
 
               <Button type="submit" className="w-full btn-hero">
                 Kirim via WhatsApp
@@ -117,10 +105,10 @@ const ContactForm = () => {
               <p className="text-sm text-gray-600">
                 Atau langsung chat WhatsApp: 
                 <button 
-                  onClick={() => window.open('https://wa.me/6281234567890', '_blank')}
+                  onClick={() => window.open('https://wa.me/6285647486700', '_blank')}
                   className="text-primary font-semibold ml-1 hover:underline"
                 >
-                  +62 812-3456-7890
+                  +62 856-4748-6700
                 </button>
               </p>
             </div>

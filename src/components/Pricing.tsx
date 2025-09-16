@@ -8,10 +8,12 @@ const Pricing = () => {
       price: "Rp1,5 juta",
       description: "Untuk bisnis yang baru mulai",
       features: [
-        "Setup webstore + 500 SKU",
-        "Integrasi payment & ongkir",
+        "Setup webstore + 100 SKU",
+        "Integrasi payment & ongkir", 
+        "WooCommerce untuk order processing",
         "Free support 1 bulan",
-        "Training penggunaan dasar"
+        "Training penggunaan dasar",
+        "Maintenance & hosting: Rp200rb/bulan"
       ],
       popular: false
     },
@@ -20,21 +22,54 @@ const Pricing = () => {
       price: "Rp2,5 juta", 
       description: "Paling populer untuk seller aktif",
       features: [
-        "Semua Starter + 1.000 SKU",
+        "Setup webstore + 200 SKU",
         "AI rewrite judul & deskripsi produk",
+        "WooCommerce untuk order processing",
         "Free domain 1 tahun",
         "Template custom design",
-        "Priority support"
+        "Priority support",
+        "Maintenance & hosting: Rp200rb/bulan"
       ],
       popular: true
     },
     {
-      name: "Enterprise",
-      price: "Custom Price",
+      name: "Advance",
+      price: "Rp3,5 juta",
       description: "Untuk seller dengan volume tinggi",
+      features: [
+        "Setup webstore + 200+ SKU",
+        "AI rewrite judul & deskripsi produk",
+        "WooCommerce untuk order processing",
+        "Free domain 1 tahun",
+        "Template custom design",
+        "Priority support",
+        "Maintenance & hosting: Rp200rb/bulan"
+      ],
+      popular: false
+    },
+    {
+      name: "Flexible",
+      price: "Rp5 juta",
+      description: "Domain & hosting customer sendiri",
+      features: [
+        "Setup di hosting customer",
+        "Domain customer sendiri",
+        "WooCommerce untuk order processing",
+        "Template custom design",
+        "Priority support",
+        "Tanpa biaya maintenance",
+        "Lifetime use"
+      ],
+      popular: false
+    },
+    {
+      name: "Custom",
+      price: "Custom Price",
+      description: "Solusi khusus sesuai kebutuhan",
       features: [
         "SKU unlimited",
         "Tema custom + integrasi iklan",
+        "WooCommerce dengan custom features",
         "SLA support cepat (2 jam)",
         "Marketing automation",
         "Dedicated account manager"
@@ -55,7 +90,7 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 max-w-7xl mx-auto">
           {packages.map((pkg, index) => (
             <div key={index} className={`relative bg-white rounded-xl shadow-lg p-8 ${pkg.popular ? 'ring-2 ring-primary' : ''}`}>
               {pkg.popular && (
@@ -83,7 +118,7 @@ const Pricing = () => {
 
               <Button 
                 className={`w-full ${pkg.popular ? 'btn-hero' : 'btn-outline'}`}
-                onClick={() => window.open(`https://wa.me/6281234567890?text=Halo%20Storo.id,%20saya%20tertarik%20dengan%20paket%20${pkg.name}`, '_blank')}
+                onClick={() => window.open(`https://wa.me/6285647486700?text=Halo%20Storo.id,%20saya%20tertarik%20dengan%20paket%20${pkg.name}`, '_blank')}
               >
                 Pilih Paket {pkg.name}
               </Button>
@@ -95,7 +130,7 @@ const Pricing = () => {
           <Button 
             size="lg"
             className="btn-hero"
-            onClick={() => window.open('https://wa.me/6281234567890?text=Halo%20Storo.id,%20saya%20mau%20pesan%20webstore', '_blank')}
+            onClick={() => window.open('https://wa.me/6285647486700?text=Halo%20Storo.id,%20saya%20mau%20pesan%20webstore', '_blank')}
           >
             Pesan Sekarang via WhatsApp
           </Button>
