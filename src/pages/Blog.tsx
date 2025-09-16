@@ -74,7 +74,7 @@ const blogPosts = [
     author: "Tim Storo.id",
     date: "1 Maret 2024",
     category: "Bisnis",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop"
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=400&fit=crop"
   },
   {
     id: 8,
@@ -84,7 +84,7 @@ const blogPosts = [
     author: "Tim Storo.id",
     date: "28 Februari 2024",
     category: "Technical",
-    image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&h=400&fit=crop"
+    image: "https://images.unsplash.com/photo-1560472355-536de3962603?w=800&h=400&fit=crop"
   },
   {
     id: 9,
