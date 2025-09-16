@@ -185,7 +185,7 @@ const blogPosts = [
     author: "Tim Storo.id",
     date: "8 Maret 2024",
     category: "Marketing",
-    image: "https://images.unsplash.com/photo-1432888622747-4eb9a8e2d3a8?w=800&h=400&fit=crop"
+    image: "https://images.unsplash.com/photo-1571721795195-a2ca4d4e0d2f?w=800&h=400&fit=crop"
   },
   {
     id: 5,
@@ -594,7 +594,7 @@ const blogPosts = [
     author: "Tim Storo.id",
     date: "25 Februari 2024",
     category: "Bisnis",
-    image: "https://images.unsplash.com/photo-1533750516457-a7f992034fcd?w=800&h=400&fit=crop"
+    image: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=800&h=400&fit=crop"
   },
   {
     id: 10,
