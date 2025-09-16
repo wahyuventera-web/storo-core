@@ -90,12 +90,12 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 max-w-7xl mx-auto pt-6">
           {packages.map((pkg, index) => (
             <div key={index} className={`relative bg-white rounded-xl shadow-lg p-8 ${pkg.popular ? 'ring-2 ring-primary' : ''}`}>
               {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                  <span className="bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">
                     Paling Populer
                   </span>
                 </div>
