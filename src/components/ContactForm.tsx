@@ -41,7 +41,7 @@ const ContactForm = () => {
   };
 
   return (
-    <section className="section-padding bg-gray-50">
+    <section id="contact" className="section-padding bg-gray-50">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
