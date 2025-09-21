@@ -3,7 +3,7 @@ import { FileSpreadsheet, CreditCard, Truck } from "lucide-react";
 const Solution = () => {
   const solutions = [
     {
-      icon: <FileSpreadsheet className="w-12 h-12 text-secondary" />,
+      icon: <FileSpreadsheet className="w-12 h-12 text-primary" />,
       title: "Import Produk Otomatis dari Excel Shopee",
       description: "Langsung upload file dari Seller Center, tidak perlu input manual satu-satu"
     },
@@ -13,14 +13,14 @@ const Solution = () => {
       description: "Terima pembayaran langsung ke rekening dengan gateway payment terpercaya"
     },
     {
-      icon: <Truck className="w-12 h-12 text-secondary" />,
+      icon: <Truck className="w-12 h-12 text-primary" />,
       title: "Ongkir Real-time (JNE, J&T, SiCepat, AnterAja, dll)",
       description: "Hitung ongkir otomatis dari berbagai ekspedisi terpopuler"
     }
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-r from-teal-50 to-orange-50">
+    <section className="section-padding bg-gradient-to-r from-primary/5 to-secondary/5">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -35,7 +35,7 @@ const Solution = () => {
           {solutions.map((solution, index) => (
             <div key={index} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 text-center">
               <div className="flex justify-center mb-6">
-                <div className="p-3 bg-teal-100 rounded-full">
+                <div className="p-3 bg-primary/10 rounded-full">
                   {solution.icon}
                 </div>
               </div>
