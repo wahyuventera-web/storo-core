@@ -1,1 +1,4 @@
 project_id = "wfthvovlhphnrodrqxqt"
+
+[functions.leads-collector]
+verify_jwt = false

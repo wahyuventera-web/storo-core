@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      leads: {
+        Row: {
+          created_at: string
+          domain: string
+          email: string
+          id: string
+          ip_address: string | null
+          project: string
+          referrer: string | null
+          source: string
+          updated_at: string
+          user_agent: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          created_at?: string
+          domain: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          project: string
+          referrer?: string | null
+          source: string
+          updated_at?: string
+          user_agent?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          created_at?: string
+          domain?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          project?: string
+          referrer?: string | null
+          source?: string
+          updated_at?: string
+          user_agent?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       screenshots: {
         Row: {
           filename: string

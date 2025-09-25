@@ -14,23 +14,56 @@ const ContactForm = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create WhatsApp message
-    const waMessage = `Halo Storo.id,%0A%0ANama: ${formData.name}%0ANo. WhatsApp: ${formData.phone}%0APesan: ${formData.message}%0A%0ASaya tertarik dengan layanan webstore dari Storo.id.`;
-    
-    // Open WhatsApp
-    window.open(`https://wa.me/6285647486700?text=${waMessage}`, '_blank');
-    
-    // Show success toast
-    toast({
-      title: "Pesan Terkirim!",
-      description: "Kami akan menghubungi Anda segera via WhatsApp.",
-    });
+    try {
+      // Save lead to database via edge function
+      const response = await fetch('https://wfthvovlhphnrodrqxqt.supabase.co/functions/v1/leads-collector', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.phone, // Using phone as identifier since no email in contact form
+          whatsapp: formData.phone,
+          domain: window.location.hostname,
+          project: 'storo-id',
+          source: 'contact-form'
+        }),
+      });
 
-    // Reset form
-    setFormData({ name: "", phone: "", message: "" });
+      if (!response.ok) {
+        throw new Error('Failed to save lead');
+      }
+      
+      // Create WhatsApp message
+      const waMessage = `Halo Storo.id,%0A%0ANama: ${formData.name}%0ANo. WhatsApp: ${formData.phone}%0APesan: ${formData.message}%0A%0ASaya tertarik dengan layanan webstore dari Storo.id.`;
+      
+      // Open WhatsApp
+      window.open(`https://wa.me/6285647486700?text=${waMessage}`, '_blank');
+      
+      // Show success toast
+      toast({
+        title: "Pesan Terkirim!",
+        description: "Data Anda tersimpan dan kami akan menghubungi Anda segera via WhatsApp.",
+      });
+
+      // Reset form
+      setFormData({ name: "", phone: "", message: "" });
+    } catch (error) {
+      console.error('Error saving lead:', error);
+      // Still show WhatsApp on error
+      const waMessage = `Halo Storo.id,%0A%0ANama: ${formData.name}%0ANo. WhatsApp: ${formData.phone}%0APesan: ${formData.message}%0A%0ASaya tertarik dengan layanan webstore dari Storo.id.`;
+      window.open(`https://wa.me/6285647486700?text=${waMessage}`, '_blank');
+      
+      toast({
+        title: "Pesan Terkirim!",
+        description: "Kami akan menghubungi Anda segera via WhatsApp.",
+      });
+
+      setFormData({ name: "", phone: "", message: "" });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

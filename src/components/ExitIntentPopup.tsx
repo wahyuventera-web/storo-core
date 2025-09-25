@@ -42,11 +42,30 @@ const ExitIntentPopup = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     try {
       const validatedData = exitIntentSchema.parse(formData);
+      
+      // Save lead to database via edge function
+      const response = await fetch('https://wfthvovlhphnrodrqxqt.supabase.co/functions/v1/leads-collector', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: validatedData.email,
+          whatsapp: validatedData.whatsapp || null,
+          domain: window.location.hostname,
+          project: 'storo-id',
+          source: 'exit-intent'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save lead');
+      }
       
       // Mark as seen
       localStorage.setItem("storo-exit-intent-seen", "true");
@@ -59,7 +78,7 @@ const ExitIntentPopup = () => {
       
       toast({
         title: "Pilihan yang tepat! 🎉",
-        description: "Tim kami akan segera menghubungi Anda untuk membantu membuat webstore mandiri.",
+        description: "Data Anda tersimpan dan tim kami akan segera menghubungi Anda untuk membantu membuat webstore mandiri.",
       });
       
       setIsOpen(false);
@@ -73,6 +92,23 @@ const ExitIntentPopup = () => {
           if (err.path[0] === 'whatsapp') newErrors.whatsapp = err.message;
         });
         setErrors(newErrors);
+      } else {
+        console.error('Error saving lead:', error);
+        // Still show WhatsApp on error
+        const validatedData = exitIntentSchema.parse(formData);
+        localStorage.setItem("storo-exit-intent-seen", "true");
+        
+        const message = `Halo Storo.id! Saya tertarik untuk membuat webstore mandiri.%0A%0AEmail: ${encodeURIComponent(validatedData.email)}${validatedData.whatsapp ? `%0AWhatsApp: ${encodeURIComponent(validatedData.whatsapp)}` : ''}`;
+        window.open(`https://wa.me/6285647486700?text=${message}`, '_blank');
+        
+        toast({
+          title: "Pilihan yang tepat! 🎉",
+          description: "Tim kami akan segera menghubungi Anda untuk membantu membuat webstore mandiri.",
+        });
+        
+        setIsOpen(false);
+        setFormData({ email: "", whatsapp: "" });
+        setErrors({});
       }
     }
   };
