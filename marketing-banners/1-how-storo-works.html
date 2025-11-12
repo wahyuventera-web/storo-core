@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cara Kerja Storo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #4169df 0%, #f3973b 100%);
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .banner {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 50px;
+            max-width: 1080px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            color: #4169df;
+            margin-bottom: 15px;
+        }
+        .logo-dot {
+            color: #f3973b;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 22px;
+            color: #666;
+            font-weight: 500;
+        }
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4169df, #6b88ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(65, 105, 223, 0.3);
+        }
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-desc {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .arrow {
+            position: absolute;
+            top: 40px;
+            right: -30px;
+            font-size: 48px;
+            color: #f3973b;
+            font-weight: 300;
+        }
+        .step:last-child .arrow {
+            display: none;
+        }
+        .cta {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .cta-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366, #20BA5A);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+        .time {
+            display: inline-block;
+            background: linear-gradient(135deg, #f3973b, #ffb366);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="header">
+            <div class="logo">Storo<span class="logo-dot">.id</span></div>
+            <h1>Cara Kerja Storo</h1>
+            <p class="subtitle">Super Simple, Hanya 3 Langkah!</p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">Export Produk dari Seller Center</div>
+                <div class="step-desc">Download file Excel dari dashboard Shopee Seller Center Anda</div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">Kirim File Excel ke Storo.id</div>
+                <div class="step-desc">Upload melalui WhatsApp atau form kontak kami</div>
+                <div class="arrow">→</div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">Webstore Siap Transaksi</div>
+                <div class="step-desc">Produk, ongkir, dan payment sudah siap dalam 1-3 hari kerja</div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <p class="cta-text">Praktis, Langsung Jalan!</p>
+            <a href="#" class="cta-button">📱 Chat WhatsApp: +62 856-4748-6700</a>
+            <div class="time">⚡ Respon dalam 5 Menit</div>
+        </div>
+    </div>
+</body>
+</html>

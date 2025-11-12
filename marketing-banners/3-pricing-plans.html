@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paket Harga Storo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #4169df 0%, #6b88ff 100%);
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .banner {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            max-width: 1200px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            color: #4169df;
+            margin-bottom: 15px;
+        }
+        .logo-dot {
+            color: #f3973b;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 22px;
+            color: #666;
+            font-weight: 500;
+        }
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .plan {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 16px;
+            border: 2px solid #e0e0e0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .plan.popular {
+            border: 3px solid #4169df;
+            box-shadow: 0 10px 40px rgba(65, 105, 223, 0.2);
+            transform: scale(1.05);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #4169df, #6b88ff);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .plan-name {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .plan-price {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4169df, #f3973b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .plan-sku {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .plan-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        .plan-features li {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.5;
+        }
+        .plan-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #25D366;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .maintenance {
+            text-align: center;
+            font-size: 13px;
+            color: #f3973b;
+            font-weight: 700;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .extra-plans {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .cta-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366, #20BA5A);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="header">
+            <div class="logo">Storo<span class="logo-dot">.id</span></div>
+            <h1>Paket Harga Storo</h1>
+            <p class="subtitle">Pilih Paket Sesuai Kebutuhan Bisnis Anda</p>
+        </div>
+
+        <div class="plans">
+            <div class="plan">
+                <div class="plan-name">Starter</div>
+                <div class="plan-price">Rp 1,5 Jt</div>
+                <div class="plan-sku">Maksimal 100 SKU</div>
+                <ul class="plan-features">
+                    <li>Setup webstore lengkap</li>
+                    <li>Payment gateway integration</li>
+                    <li>Ongkir otomatis realtime</li>
+                    <li>WooCommerce dashboard</li>
+                    <li>Training dasar</li>
+                    <li>Support 1 bulan</li>
+                </ul>
+                <div class="maintenance">Rp 200rb/bulan</div>
+            </div>
+
+            <div class="plan popular">
+                <div class="popular-badge">⭐ PALING POPULER</div>
+                <div class="plan-name">Pro</div>
+                <div class="plan-price">Rp 2,5 Jt</div>
+                <div class="plan-sku">Maksimal 200 SKU</div>
+                <ul class="plan-features">
+                    <li>Semua fitur Starter</li>
+                    <li>AI rewrite judul & deskripsi</li>
+                    <li>Domain gratis 1 tahun</li>
+                    <li>Custom template design</li>
+                    <li>Priority support</li>
+                    <li>SEO optimization</li>
+                </ul>
+                <div class="maintenance">Rp 200rb/bulan</div>
+            </div>
+
+            <div class="plan">
+                <div class="plan-name">Advance</div>
+                <div class="plan-price">Rp 3,5 Jt</div>
+                <div class="plan-sku">Maksimal 1.000 SKU</div>
+                <ul class="plan-features">
+                    <li>Semua fitur Pro</li>
+                    <li>Kapasitas 1.000 produk</li>
+                    <li>Advanced customization</li>
+                    <li>Priority support 24/7</li>
+                    <li>Marketing integration</li>
+                    <li>Analytics dashboard</li>
+                </ul>
+                <div class="maintenance">Rp 200rb/bulan</div>
+            </div>
+        </div>
+
+        <div class="extra-plans">
+            <div class="plan">
+                <div class="plan-name">Flexible</div>
+                <div class="plan-price">Rp 5 Jt</div>
+                <div class="plan-sku">SKU Unlimited*</div>
+                <ul class="plan-features">
+                    <li>Domain & hosting sendiri</li>
+                    <li>Tanpa biaya maintenance</li>
+                    <li>Lifetime usage</li>
+                    <li>Full customization</li>
+                    <li>Cocok untuk developer</li>
+                </ul>
+            </div>
+
+            <div class="plan">
+                <div class="plan-name">Custom</div>
+                <div class="plan-price">Hubungi Kami</div>
+                <div class="plan-sku">SKU Unlimited</div>
+                <ul class="plan-features">
+                    <li>Custom theme design</li>
+                    <li>Marketing automation</li>
+                    <li>2 jam SLA support</li>
+                    <li>Dedicated account manager</li>
+                    <li>Advanced integrations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta">
+            <p class="cta-text">Tidak yakin paket mana? Konsultasi gratis!</p>
+            <a href="#" class="cta-button">📱 Chat WhatsApp: +62 856-4748-6700</a>
+        </div>
+    </div>
+</body>
+</html>

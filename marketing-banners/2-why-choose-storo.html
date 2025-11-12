@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenapa Pilih Storo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f3973b 0%, #4169df 100%);
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .banner {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 50px;
+            max-width: 1080px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            color: #4169df;
+            margin-bottom: 15px;
+        }
+        .logo-dot {
+            color: #f3973b;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 22px;
+            color: #666;
+            font-weight: 500;
+        }
+        .reasons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .reason {
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff8f3 100%);
+            padding: 35px;
+            border-radius: 16px;
+            border: 2px solid #f0f0f0;
+        }
+        .reason-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .reason-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #4169df;
+            margin-bottom: 12px;
+        }
+        .reason-desc {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4169df, #f3973b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366, #20BA5A);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="header">
+            <div class="logo">Storo<span class="logo-dot">.id</span></div>
+            <h1>Kenapa Pilih Storo?</h1>
+            <p class="subtitle">Solusi Terbaik untuk Seller Shopee</p>
+        </div>
+
+        <div class="reasons">
+            <div class="reason">
+                <div class="reason-icon">💰</div>
+                <div class="reason-title">Bebas dari Fee Marketplace</div>
+                <div class="reason-desc">Margin profit makin tipis karena fee marketplace? Miliki toko sendiri dan maksimalkan keuntungan Anda!</div>
+            </div>
+
+            <div class="reason">
+                <div class="reason-icon">👥</div>
+                <div class="reason-title">Data Customer Milik Anda</div>
+                <div class="reason-desc">Bangun database pelanggan sendiri. Tidak lagi bergantung pada platform marketplace.</div>
+            </div>
+
+            <div class="reason">
+                <div class="reason-icon">⚡</div>
+                <div class="reason-title">Praktis & Cepat</div>
+                <div class="reason-desc">Cukup kirim file Excel, Storo siapkan semua. Tidak perlu upload produk satu-satu!</div>
+            </div>
+
+            <div class="reason">
+                <div class="reason-icon">🎯</div>
+                <div class="reason-title">Solusi All-in-One</div>
+                <div class="reason-desc">Payment gateway, ongkir otomatis, dan dashboard lengkap. Semua sudah terintegrasi!</div>
+            </div>
+
+            <div class="reason">
+                <div class="reason-icon">🤖</div>
+                <div class="reason-title">AI-Powered Features</div>
+                <div class="reason-desc">Fitur AI untuk rewrite judul & deskripsi produk (paket Pro & di atasnya).</div>
+            </div>
+
+            <div class="reason">
+                <div class="reason-icon">💬</div>
+                <div class="reason-title">Support Responsif</div>
+                <div class="reason-desc">Respon cepat dalam 5 menit. Konsultasi gratis tanpa komitmen!</div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Seller Percaya Storo</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">4.9/5</div>
+                <div class="stat-label">Rating dari Klien</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">1-3</div>
+                <div class="stat-label">Hari Siap Transaksi</div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <a href="#" class="cta-button">📱 Konsultasi Gratis via WhatsApp</a>
+        </div>
+    </div>
+</body>
+</html>
