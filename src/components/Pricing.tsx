@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import DownloadCatalog from "./DownloadCatalog";
 
 const Pricing = () => {
   const packages = [
@@ -134,6 +135,7 @@ const Pricing = () => {
           >
             Pesan Sekarang via WhatsApp
           </Button>
+          <DownloadCatalog />
         </div>
       </div>
     </section>
