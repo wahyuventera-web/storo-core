@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paket Harga Storo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #4169df 0%, #f3973b 100%);
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .banner {
+            background: white;
+            width: 1080px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4169df, #f3973b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 24px;
+            color: #666;
+            font-weight: 500;
+        }
+        .packages {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .package {
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff8f3 100%);
+            padding: 35px 25px;
+            border-radius: 20px;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .package.popular {
+            border-color: #4169df;
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(65, 105, 223, 0.2);
+        }
+        .badge {
+            background: linear-gradient(135deg, #4169df, #f3973b);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .package-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4169df, #f3973b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+        .period {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        .features li {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4169df;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 3px solid #f0f0f0;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366, #20BA5A);
+            color: white;
+            padding: 20px 60px;
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+        .note {
+            font-size: 16px;
+            color: #666;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="header">
+            <img src="../public/logo.png" alt="Storo.id" class="logo">
+            <h1>Paket Harga Storo</h1>
+            <p class="subtitle">Pilih Paket yang Sesuai dengan Kebutuhan Anda</p>
+        </div>
+
+        <div class="packages">
+            <div class="package">
+                <div class="package-name">Basic</div>
+                <div class="price">Rp 199K</div>
+                <div class="period">/bulan</div>
+                <ul class="features">
+                    <li>Import produk dari Excel</li>
+                    <li>Maksimal 100 produk</li>
+                    <li>Payment Gateway (Midtrans/Xendit)</li>
+                    <li>Ongkir otomatis (JNE, J&T, SiCepat)</li>
+                    <li>Domain .storo.id</li>
+                    <li>Support via WhatsApp</li>
+                </ul>
+            </div>
+
+            <div class="package popular">
+                <div class="badge">PALING POPULER</div>
+                <div class="package-name">Pro</div>
+                <div class="price">Rp 399K</div>
+                <div class="period">/bulan</div>
+                <ul class="features">
+                    <li>Import produk dari Excel</li>
+                    <li>Maksimal 500 produk</li>
+                    <li>Payment Gateway (Midtrans/Xendit)</li>
+                    <li>Ongkir otomatis semua ekspedisi</li>
+                    <li>Custom domain (.com/.id)</li>
+                    <li>AI rewrite judul & deskripsi</li>
+                    <li>Priority support</li>
+                </ul>
+            </div>
+
+            <div class="package">
+                <div class="package-name">Enterprise</div>
+                <div class="price">Custom</div>
+                <div class="period">Hubungi kami</div>
+                <ul class="features">
+                    <li>Unlimited produk</li>
+                    <li>Semua fitur Pro</li>
+                    <li>Multi-warehouse</li>
+                    <li>API integration</li>
+                    <li>Custom development</li>
+                    <li>Dedicated account manager</li>
+                    <li>24/7 support</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta">
+            <a href="https://wa.me/6285647486700" class="cta-button">📱 Konsultasi Gratis via WhatsApp</a>
+            <p class="note">💬 Tidak yakin paket mana yang cocok? Chat kami untuk diskusi!</p>
+        </div>
+    </div>
+</body>
+</html>

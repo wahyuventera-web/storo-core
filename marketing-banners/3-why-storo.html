@@ -12,42 +12,40 @@
         }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f3973b 0%, #4169df 100%);
-            padding: 40px;
-            min-height: 100vh;
+            background: linear-gradient(135deg, #4169df 0%, #f3973b 100%);
+            padding: 0;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
         }
         .banner {
             background: white;
-            border-radius: 24px;
-            padding: 60px 50px;
-            max-width: 1080px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            width: 1080px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
         .header {
             text-align: center;
             margin-bottom: 50px;
         }
         .logo {
-            font-size: 48px;
-            font-weight: 800;
-            color: #4169df;
-            margin-bottom: 15px;
-        }
-        .logo-dot {
-            color: #f3973b;
+            width: 200px;
+            height: auto;
+            margin-bottom: 30px;
         }
         h1 {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 800;
-            color: #1a1a1a;
+            background: linear-gradient(135deg, #4169df, #f3973b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 15px;
         }
         .subtitle {
-            font-size: 22px;
+            font-size: 24px;
             color: #666;
             font-weight: 500;
         }
@@ -55,20 +53,20 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 30px;
-            margin-top: 40px;
+            margin: 40px 0;
         }
         .reason {
             background: linear-gradient(135deg, #f8f9ff 0%, #fff8f3 100%);
-            padding: 35px;
-            border-radius: 16px;
+            padding: 30px;
+            border-radius: 20px;
             border: 2px solid #f0f0f0;
         }
         .reason-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+            font-size: 50px;
+            margin-bottom: 20px;
         }
         .reason-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
             color: #4169df;
             margin-bottom: 12px;
@@ -81,15 +79,16 @@
         .stats {
             display: flex;
             justify-content: space-around;
-            margin-top: 50px;
-            padding-top: 40px;
-            border-top: 2px solid #f0f0f0;
+            margin: 50px 0 40px;
+            padding: 40px 0;
+            border-top: 3px solid #f0f0f0;
+            border-bottom: 3px solid #f0f0f0;
         }
         .stat {
             text-align: center;
         }
         .stat-number {
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 800;
             background: linear-gradient(135deg, #4169df, #f3973b);
             -webkit-background-clip: text;
@@ -98,21 +97,21 @@
             margin-bottom: 10px;
         }
         .stat-label {
-            font-size: 16px;
+            font-size: 18px;
             color: #666;
             font-weight: 600;
         }
         .cta {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 30px;
         }
         .cta-button {
             display: inline-block;
             background: linear-gradient(135deg, #25D366, #20BA5A);
             color: white;
-            padding: 18px 50px;
+            padding: 20px 60px;
             border-radius: 12px;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             text-decoration: none;
             box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
@@ -122,7 +121,7 @@
 <body>
     <div class="banner">
         <div class="header">
-            <div class="logo">Storo<span class="logo-dot">.id</span></div>
+            <img src="../public/logo.png" alt="Storo.id" class="logo">
             <h1>Kenapa Pilih Storo?</h1>
             <p class="subtitle">Solusi Terbaik untuk Seller Shopee</p>
         </div>
@@ -151,18 +150,6 @@
                 <div class="reason-title">Solusi All-in-One</div>
                 <div class="reason-desc">Payment gateway, ongkir otomatis, dan dashboard lengkap. Semua sudah terintegrasi!</div>
             </div>
-
-            <div class="reason">
-                <div class="reason-icon">🤖</div>
-                <div class="reason-title">AI-Powered Features</div>
-                <div class="reason-desc">Fitur AI untuk rewrite judul & deskripsi produk (paket Pro & di atasnya).</div>
-            </div>
-
-            <div class="reason">
-                <div class="reason-icon">💬</div>
-                <div class="reason-title">Support Responsif</div>
-                <div class="reason-desc">Respon cepat dalam 5 menit. Konsultasi gratis tanpa komitmen!</div>
-            </div>
         </div>
 
         <div class="stats">
@@ -181,7 +168,7 @@
         </div>
 
         <div class="cta">
-            <a href="#" class="cta-button">📱 Konsultasi Gratis via WhatsApp</a>
+            <a href="https://wa.me/6285647486700" class="cta-button">📱 Mulai Sekarang via WhatsApp</a>
         </div>
     </div>
 </body>
