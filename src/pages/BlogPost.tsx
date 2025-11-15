@@ -1,7 +1,10 @@
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
+import { supabase } from "@/integrations/supabase/client";
+import ReactMarkdown from "react-markdown";
 import brandingStrategyImg from "@/assets/blog-branding-strategy.jpg";
 import returnRefundImg from "@/assets/blog-return-refund.jpg";
 import digitalMarketingImg from "@/assets/blog-digital-marketing.jpg";
@@ -3037,7 +3040,66 @@ const blogPosts = [
 
 const BlogPost = () => {
   const { id } = useParams();
-  const post = blogPosts.find(p => p.id === parseInt(id || '1'));
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        // Try to fetch from database by slug first, then by id
+        let query = supabase.from('blog_posts').select('*');
+        
+        // Check if id is a UUID or a number
+        if (id && id.includes('-')) {
+          // It's a slug
+          query = query.eq('slug', id);
+        } else {
+          // It's an id (could be UUID or number)
+          query = query.eq('id', id);
+        }
+        
+        const { data, error } = await query.single();
+
+        if (error) throw error;
+
+        if (data) {
+          setPost({
+            ...data,
+            date: new Date(data.published_at).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+            }),
+            image: data.image_url,
+          });
+        } else {
+          // Fallback to hardcoded posts
+          const hardcodedPost = blogPosts.find(p => p.id === parseInt(id || '1'));
+          setPost(hardcodedPost);
+        }
+      } catch (error) {
+        console.error('Error fetching post:', error);
+        // Fallback to hardcoded posts
+        const hardcodedPost = blogPosts.find(p => p.id === parseInt(id || '1'));
+        setPost(hardcodedPost);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="pt-24 pb-16 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -3108,9 +3170,14 @@ const BlogPost = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div 
-              className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-ul:text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+              className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-ul:text-muted-foreground prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-3"
+            >
+              {post.content && post.content.startsWith('<') ? (
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              ) : (
+                <ReactMarkdown>{post.content}</ReactMarkdown>
+              )}
+            </div>
             
             {/* CTA Section */}
             <div className="mt-12 p-8 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl text-center">
