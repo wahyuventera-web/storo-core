@@ -897,8 +897,10 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Separate useEffect for data fetching (no cleanup needed)
   useEffect(() => {
-    // Fetch posts from database
+    let isMounted = true;
+    
     const fetchPosts = async () => {
       console.log('🔄 Fetching blog posts from database...');
       setLoading(true);
@@ -912,6 +914,11 @@ const Blog = () => {
 
         console.log('📊 Supabase response:', { data, error });
 
+        if (!isMounted) {
+          console.log('⚠️ Component unmounted, skipping state update');
+          return;
+        }
+
         if (error) {
           console.error('❌ Supabase error:', error);
           throw error;
@@ -920,7 +927,6 @@ const Blog = () => {
         if (data && data.length > 0) {
           console.log(`✅ Found ${data.length} blog posts in database`);
           
-          // Transform database posts to match the expected format
           const transformedPosts = data.map((post) => ({
             id: post.id,
             title: post.title,
@@ -945,18 +951,30 @@ const Blog = () => {
         }
       } catch (error) {
         console.error('❌ Error fetching blog posts:', error);
-        setError('Gagal memuat artikel. Menggunakan artikel contoh.');
-        // Use hardcoded posts as fallback
-        setPosts(blogPosts);
+        if (isMounted) {
+          setError('Gagal memuat artikel. Menggunakan artikel contoh.');
+          setPosts(blogPosts);
+        }
       } finally {
-        setLoading(false);
-        console.log('✔️ Fetch complete');
+        if (isMounted) {
+          setLoading(false);
+          console.log('✔️ Fetch complete, loading set to false');
+        }
       }
     };
 
     fetchPosts();
 
-    // Animate elements on scroll
+    return () => {
+      isMounted = false;
+      console.log('🧹 Blog component unmounting - data fetch cleanup');
+    };
+  }, []);
+
+  // Separate useEffect for IntersectionObserver animation
+  useEffect(() => {
+    console.log('🎨 Setting up IntersectionObserver');
+    
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -970,12 +988,24 @@ const Blog = () => {
       rootMargin: '0px 0px -50px 0px'
     });
 
-    document.querySelectorAll('.fade-in').forEach((el) => {
-      observer.observe(el);
-    });
+    // Wait for DOM elements to be ready
+    const timer = setTimeout(() => {
+      document.querySelectorAll('.fade-in').forEach((el) => {
+        observer.observe(el);
+      });
+    }, 100);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      console.log('🧹 Disconnecting IntersectionObserver');
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [posts]); // Re-observe when posts change
+
+  // Debug useEffect to track state changes
+  useEffect(() => {
+    console.log('📊 STATE UPDATE - Loading:', loading, '| Posts count:', posts.length);
+  }, [loading, posts]);
 
   const handleWhatsApp = () => {
     const message = "Halo Storo.id, saya ingin konsultasi tentang jasa setup webstore dari Shopee";
@@ -984,7 +1014,15 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Blog page - displaying articles from database */}
+      {/* Debug Info - Development Only */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed bottom-4 right-4 bg-black text-white p-4 rounded-lg text-xs z-50 font-mono shadow-lg">
+          <div className="font-bold mb-2">🔍 Debug Info</div>
+          <div>Loading: <span className={loading ? 'text-yellow-400' : 'text-green-400'}>{loading ? 'true' : 'false'}</span></div>
+          <div>Posts: <span className="text-blue-400">{posts.length}</span></div>
+          <div>Error: <span className="text-red-400">{error || 'none'}</span></div>
+        </div>
+      )}
       <Header />
       
       {/* Hero Section */}
