@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
+import { supabase } from "@/integrations/supabase/client";
 import brandingStrategyImg from "@/assets/blog-branding-strategy.jpg";
 import returnRefundImg from "@/assets/blog-return-refund.jpg";
 import digitalMarketingImg from "@/assets/blog-digital-marketing.jpg";
@@ -892,7 +893,49 @@ const blogPosts = [
 ];
 
 const Blog = () => {
+  const [posts, setPosts] = useState<any[]>(blogPosts);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    // Fetch posts from database
+    const fetchPosts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .order('published_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Transform database posts to match the expected format
+          const transformedPosts = data.map((post) => ({
+            id: post.id,
+            title: post.title,
+            excerpt: post.excerpt,
+            content: post.content,
+            author: post.author,
+            date: new Date(post.published_at).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+            }),
+            category: post.category,
+            image: post.image_url,
+            slug: post.slug,
+          }));
+          setPosts(transformedPosts);
+        }
+      } catch (error) {
+        console.error('Error fetching blog posts:', error);
+        // Keep using hardcoded posts as fallback
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+
     // Animate elements on scroll
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
@@ -941,7 +984,7 @@ const Blog = () => {
       <section className="section-padding">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
+            {posts.map((post, index) => (
               <Card key={post.id} className={`fade-in hover:shadow-lg transition-all duration-300 group cursor-pointer`} style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="aspect-video overflow-hidden rounded-t-lg">
                   <img 
@@ -973,7 +1016,7 @@ const Blog = () => {
                       <User size={14} />
                       <span>{post.author}</span>
                     </div>
-                    <Link to={`/blog/${post.id}`}>
+                    <Link to={`/blog/${post.slug || post.id}`}>
                       <Button variant="ghost" size="sm" className="text-primary hover:text-primary group-hover:translate-x-1 transition-all duration-200">
                         Baca Selengkapnya
                         <ArrowRight size={14} className="ml-1" />

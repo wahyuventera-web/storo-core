@@ -55,6 +55,51 @@ export type Database = {
           },
         ]
       }
+      blog_posts: {
+        Row: {
+          author: string | null
+          category: string
+          content: string
+          created_at: string | null
+          excerpt: string
+          id: string
+          image_url: string | null
+          published_at: string | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author?: string | null
+          category: string
+          content: string
+          created_at?: string | null
+          excerpt: string
+          id?: string
+          image_url?: string | null
+          published_at?: string | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author?: string | null
+          category?: string
+          content?: string
+          created_at?: string | null
+          excerpt?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       board_columns: {
         Row: {
           color: string | null
