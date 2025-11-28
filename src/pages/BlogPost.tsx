@@ -3170,7 +3170,7 @@ const BlogPost = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div 
-              className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-ul:text-muted-foreground prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-3"
+              className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-p:mb-6 prose-p:leading-relaxed prose-strong:text-foreground prose-ul:text-muted-foreground prose-ul:mb-6 prose-li:mb-2 prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-5 prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-4"
             >
               {post.content && post.content.startsWith('<') ? (
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
