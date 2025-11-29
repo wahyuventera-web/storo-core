@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { X } from "lucide-react";
+import { trackConversion } from "@/lib/gtag";
 
 const leadCaptureSchema = z.object({
   email: z.string().trim().email({ message: "Email tidak valid" }).max(255, { message: "Email terlalu panjang" }),
@@ -64,6 +65,9 @@ const LeadCapturePopup = () => {
       // Open WhatsApp
       window.open(`https://wa.me/6285148416700?text=${message}`, '_blank');
       
+      // Track Google Ads conversion
+      trackConversion();
+      
       toast({
         title: "Terima kasih!",
         description: "Data Anda tersimpan dan kami akan segera menghubungi Anda via WhatsApp.",
@@ -88,6 +92,9 @@ const LeadCapturePopup = () => {
         
         const message = `Halo Storo.id! Saya tertarik untuk membuat webstore.%0A%0AEmail: ${encodeURIComponent(validatedData.email)}${validatedData.whatsapp ? `%0AWhatsApp: ${encodeURIComponent(validatedData.whatsapp)}` : ''}`;
         window.open(`https://wa.me/6285148416700?text=${message}`, '_blank');
+        
+        // Track Google Ads conversion
+        trackConversion();
         
         toast({
           title: "Terima kasih!",

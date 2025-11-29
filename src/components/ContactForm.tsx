@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { trackConversion } from "@/lib/gtag";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -43,6 +44,9 @@ const ContactForm = () => {
       // Open WhatsApp
       window.open(`https://wa.me/6285148416700?text=${waMessage}`, '_blank');
       
+      // Track Google Ads conversion
+      trackConversion();
+      
       // Show success toast
       toast({
         title: "Pesan Terkirim!",
@@ -56,6 +60,9 @@ const ContactForm = () => {
       // Still show WhatsApp on error
       const waMessage = `Halo Storo.id,%0A%0ANama: ${formData.name}%0ANo. WhatsApp: ${formData.phone}%0APesan: ${formData.message}%0A%0ASaya tertarik dengan layanan webstore dari Storo.id.`;
       window.open(`https://wa.me/6285148416700?text=${waMessage}`, '_blank');
+      
+      // Track Google Ads conversion
+      trackConversion();
       
       toast({
         title: "Pesan Terkirim!",
