@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { X } from "lucide-react";
+import { trackConversion } from "@/lib/gtag";
 
 const exitIntentSchema = z.object({
   email: z.string().trim().email({ message: "Email tidak valid" }).max(255, { message: "Email terlalu panjang" }),
@@ -76,6 +77,9 @@ const ExitIntentPopup = () => {
       // Open WhatsApp
       window.open(`https://wa.me/6285148416700?text=${message}`, '_blank');
       
+      // Track Google Ads conversion
+      trackConversion();
+      
       toast({
         title: "Pilihan yang tepat! 🎉",
         description: "Data Anda tersimpan dan tim kami akan segera menghubungi Anda untuk membantu membuat webstore mandiri.",
@@ -100,6 +104,9 @@ const ExitIntentPopup = () => {
         
         const message = `Halo Storo.id! Saya tertarik untuk membuat webstore mandiri.%0A%0AEmail: ${encodeURIComponent(validatedData.email)}${validatedData.whatsapp ? `%0AWhatsApp: ${encodeURIComponent(validatedData.whatsapp)}` : ''}`;
         window.open(`https://wa.me/6285148416700?text=${message}`, '_blank');
+        
+        // Track Google Ads conversion
+        trackConversion();
         
         toast({
           title: "Pilihan yang tepat! 🎉",
