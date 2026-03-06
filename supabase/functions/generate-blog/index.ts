@@ -44,6 +44,40 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // Cek apakah sudah ada post dalam 2 hari terakhir — jika sudah, skip
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+    const { data: recentPosts, error: recentError } = await supabase
+      .from('blog_posts')
+      .select('id, published_at')
+      .gte('published_at', twoDaysAgo.toISOString())
+      .order('published_at', { ascending: false })
+      .limit(1);
+
+    if (recentError) {
+      console.error('[generate-blog] Error checking recent posts:', recentError);
+      // Lanjutkan saja jika gagal cek, jangan sampai block generate
+    }
+
+    if (recentPosts && recentPosts.length > 0) {
+      console.log('[generate-blog] Sudah ada post dalam 2 hari terakhir, skip generate.');
+      console.log('[generate-blog] Post terakhir:', recentPosts[0].published_at);
+      return new Response(
+        JSON.stringify({
+          success: true,
+          skipped: true,
+          message: 'Sudah ada post dalam 2 hari terakhir. Generate di-skip.',
+          lastPost: recentPosts[0],
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    console.log('[generate-blog] Tidak ada post dalam 2 hari terakhir, mulai generate...');
+
     // Topics untuk artikel blog
     const topics = [
       'Tips meningkatkan penjualan online untuk UMKM',
