@@ -38,7 +38,7 @@ export default async function AllStoresPage() {
 
   const { data: stores } = await supabase
     .from("onboarding_requests")
-    .select("id, status, plan, template_name, store_url, created_at, clients(full_name, clerk_user_id)")
+    .select("id, status, plan, template_name, store_url, created_at, clients(full_name, user_id)")
     .order("created_at", { ascending: false });
 
   return (
@@ -95,7 +95,7 @@ export default async function AllStoresPage() {
                   const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.pending;
                   const client = store.clients as {
                     full_name?: string;
-                    clerk_user_id?: string;
+                    user_id?: string;
                   } | null;
                   return (
                     <tr key={store.id} className="border-b border-gray-50 hover:bg-gray-50">
@@ -104,7 +104,7 @@ export default async function AllStoresPage() {
                         {client?.full_name ?? "-"}
                       </td>
                       <td className="py-3 px-4 text-gray-500 font-mono text-xs truncate max-w-[120px]">
-                        {client?.clerk_user_id ?? "-"}
+                        {client?.user_id ?? "-"}
                       </td>
                       <td className="py-3 px-4 capitalize text-gray-600">{store.plan}</td>
                       <td className="py-3 px-4 text-gray-600">{store.template_name ?? "-"}</td>

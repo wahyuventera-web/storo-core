@@ -9,9 +9,18 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "lovable.dev",
+        hostname: "images.unsplash.com",
       },
     ],
+  },
+  // Transpile browser-only ESM packages through webpack
+  transpilePackages: ["@react-pdf/renderer"],
+  webpack: (config) => {
+    // Allow webpack to handle ESM packages in client bundles
+    config.resolve.extensionAlias = {
+      ".js": [".js", ".ts", ".tsx"],
+    };
+    return config;
   },
 };
 

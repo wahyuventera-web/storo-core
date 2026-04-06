@@ -1,3 +1,4 @@
+"use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -3041,8 +3042,8 @@ const blogPosts = [
 ];
 
 const BlogPost = () => {
-  const params = useParams();
-  const id = typeof params.id === "string" ? params.id : params.id?.[0];
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 

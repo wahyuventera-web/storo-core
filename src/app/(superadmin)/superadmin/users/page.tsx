@@ -28,7 +28,7 @@ export default async function AllUsersPage() {
 
   const { data: clients } = await supabase
     .from("clients")
-    .select("id, full_name, phone, referral_code, clerk_user_id, created_at")
+    .select("id, full_name, phone, referral_code, user_id, created_at")
     .order("created_at", { ascending: false });
 
   // Get store counts per client
@@ -91,7 +91,7 @@ export default async function AllUsersPage() {
                     <td className="py-3 px-4 text-gray-400 text-xs">{idx + 1}</td>
                     <td className="py-3 px-4 font-medium text-gray-900">{client.full_name ?? "-"}</td>
                     <td className="py-3 px-4 text-gray-400 font-mono text-xs truncate max-w-[140px]">
-                      {client.clerk_user_id ?? "-"}
+                      {client.user_id ?? "-"}
                     </td>
                     <td className="py-3 px-4 text-gray-600 font-mono text-xs">
                       {client.phone ?? "-"}

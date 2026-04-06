@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   const { data: client } = await supabase
     .from("clients")
     .select("id, full_name")
-    .eq("clerk_user_id", user.id)
+    .eq("user_id", user.id)
     .single();
 
   // Fetch onboarding requests (stores)

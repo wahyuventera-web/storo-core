@@ -52,7 +52,7 @@ export default async function UserDetailPage({
 
   const { data: client } = await supabase
     .from("clients")
-    .select("id, full_name, phone, referral_code, clerk_user_id, created_at")
+    .select("id, full_name, phone, referral_code, user_id, created_at")
     .eq("id", id)
     .single();
 
@@ -97,7 +97,7 @@ export default async function UserDetailPage({
           </div>
           <div className="sm:col-span-2">
             <dt className="text-xs text-gray-500 mb-1">User ID</dt>
-            <dd className="text-sm text-gray-400 font-mono text-xs">{client.clerk_user_id ?? "-"}</dd>
+            <dd className="text-sm text-gray-400 font-mono text-xs">{client.user_id ?? "-"}</dd>
           </div>
           <div>
             <dt className="text-xs text-gray-500 mb-1">Tanggal Daftar</dt>

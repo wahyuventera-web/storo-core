@@ -107,11 +107,11 @@ export async function POST(request: NextRequest) {
 
     const { data: existing } = await supabase
       .from("clients")
-      .select("clerk_user_id")
+      .select("user_id")
       .eq("shopee_store_id", storeId)
       .maybeSingle();
 
-    if (existing && existing.clerk_user_id !== user?.id) {
+    if (existing && existing.user_id !== user?.id) {
       return NextResponse.json(
         {
           error:

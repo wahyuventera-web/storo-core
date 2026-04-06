@@ -78,7 +78,7 @@ export default function ProductsPage() {
       const { data: client } = await supabase
         .from("clients")
         .select("id")
-        .eq("clerk_user_id", user.id)
+        .eq("user_id", user.id)
         .single();
 
       if (!client) {
