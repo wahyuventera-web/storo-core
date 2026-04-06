@@ -1,7 +1,7 @@
 -- Create clients table if it doesn't exist yet
 CREATE TABLE IF NOT EXISTS public.clients (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
-  clerk_user_id TEXT NOT NULL UNIQUE,
+  user_id TEXT NOT NULL UNIQUE,
   full_name TEXT,
   phone TEXT,
   address TEXT,
@@ -45,18 +45,18 @@ ALTER TABLE public.onboarding_requests ENABLE ROW LEVEL SECURITY;
 
 -- Clients: user can only see/edit their own row
 CREATE POLICY "clients_owner_access" ON public.clients
-  FOR ALL USING (clerk_user_id = auth.uid()::text);
+  FOR ALL USING (user_id = auth.uid()::text);
 
 -- Onboarding requests: user can only see requests linked to their client row
 CREATE POLICY "onboarding_requests_owner_access" ON public.onboarding_requests
   FOR ALL USING (
     client_id IN (
-      SELECT id FROM public.clients WHERE clerk_user_id = auth.uid()::text
+      SELECT id FROM public.clients WHERE user_id = auth.uid()::text
     )
   );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_clients_clerk_user_id ON public.clients(clerk_user_id);
+CREATE INDEX IF NOT EXISTS idx_clients_user_id ON public.clients(user_id);
 CREATE INDEX IF NOT EXISTS idx_onboarding_requests_client_id ON public.onboarding_requests(client_id);
 
 -- updated_at triggers

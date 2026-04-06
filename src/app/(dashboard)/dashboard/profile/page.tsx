@@ -52,7 +52,7 @@ export default function ProfilePage() {
       const { data: client } = await supabase
         .from("clients")
         .select("id, full_name, phone, address, bank_name, bank_account_number, created_at")
-        .eq("clerk_user_id", user.id)
+        .eq("user_id", user.id)
         .single();
 
       if (client) {

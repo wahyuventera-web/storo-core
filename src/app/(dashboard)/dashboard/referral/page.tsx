@@ -86,7 +86,7 @@ export default function ReferralPage() {
       const { data: client } = await supabase
         .from("clients")
         .select("id, referral_code")
-        .eq("clerk_user_id", user.id)
+        .eq("user_id", user.id)
         .single();
 
       if (client) {

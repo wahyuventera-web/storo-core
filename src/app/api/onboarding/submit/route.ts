@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     .from("clients")
     .upsert(
       {
-        clerk_user_id: guestId,
+        user_id: guestId,
         full_name: body.fullName ?? null,
         phone: body.phone ?? null,
         address: body.address ?? null,
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         shopee_store_id: body.shopeeStoreId ?? null,
         shopee_store_name: body.shopeeStoreName ?? null,
       },
-      { onConflict: "clerk_user_id" }
+      { onConflict: "user_id" }
     )
     .select("id")
     .single();

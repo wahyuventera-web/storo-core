@@ -46,7 +46,7 @@ export default async function StoreDetailPage({
 
   const { data: store } = await supabase
     .from("onboarding_requests")
-    .select("id, status, plan, template_name, store_url, created_at, notes, clients(id, full_name, phone, clerk_user_id)")
+    .select("id, status, plan, template_name, store_url, created_at, notes, clients(id, full_name, phone, user_id)")
     .eq("id", id)
     .single();
 
@@ -58,7 +58,7 @@ export default async function StoreDetailPage({
     id?: string;
     full_name?: string;
     phone?: string;
-    clerk_user_id?: string;
+    user_id?: string;
   } | null;
 
   return (
@@ -135,7 +135,7 @@ export default async function StoreDetailPage({
             <div className="flex justify-between">
               <dt className="text-sm text-gray-500">User ID</dt>
               <dd className="text-sm text-gray-400 font-mono text-xs truncate max-w-[180px]">
-                {client?.clerk_user_id ?? "-"}
+                {client?.user_id ?? "-"}
               </dd>
             </div>
           </dl>
