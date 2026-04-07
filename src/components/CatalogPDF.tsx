@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
 
-  // ── COVER PAGE ──────────────────────────────────────────
+  // ── COVER PAGE ──
   coverPage: {
     fontFamily: 'Helvetica',
     backgroundColor: WHITE,
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 30,
-    gap: 12,
   },
   coverHighlightBox: {
     flex: 1,
@@ -70,6 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
+    marginHorizontal: 4,
   },
   coverHighlightNum: {
     fontSize: 22,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 
-  // ── PAGE HEADER ──────────────────────────────────────────
+  // ── PAGE HEADER ──
   pageHeader: {
     backgroundColor: BRAND,
     paddingHorizontal: 40,
@@ -144,23 +144,23 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
 
-  // ── CONTENT AREA ──────────────────────────────────────────
+  // ── CONTENT AREA ──
   content: {
     paddingHorizontal: 30,
     paddingTop: 24,
   },
 
-  // ── PACKAGE CARD ──────────────────────────────────────────
+  // ── PACKAGE CARD ──
   cardRow: {
     flexDirection: 'row',
-    gap: 12,
     marginBottom: 12,
   },
   card: {
     flex: 1,
-    border: '1.5pt solid',
+    borderWidth: 1.5,
     borderColor: BORDER,
     borderRadius: 8,
+    marginHorizontal: 4,
     overflow: 'hidden',
   },
   cardPopular: {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8FAFC',
     paddingHorizontal: 14,
     paddingVertical: 12,
-    borderBottom: '1.5pt solid',
+    borderBottomWidth: 1.5,
     borderBottomColor: BORDER,
   },
   cardHeaderBarPopular: {
@@ -213,9 +213,6 @@ const styles = StyleSheet.create({
     color: BRAND,
     marginBottom: 3,
   },
-  cardPricePopular: {
-    color: BRAND,
-  },
   cardPriceSub: {
     fontSize: 8,
     color: MUTED,
@@ -246,34 +243,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.4,
   },
 
-  // ── SINGLE WIDE CARD ──────────────────────────────────────
-  wideCard: {
-    border: '1.5pt solid',
-    borderColor: BORDER,
-    borderRadius: 8,
-    overflow: 'hidden',
-    marginBottom: 12,
-  },
-  wideCardHeader: {
-    backgroundColor: '#F8FAFC',
-    borderBottom: '1.5pt solid',
-    borderBottomColor: BORDER,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  wideCardBody: {
-    padding: 20,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  wideCardFeatureCol: {
-    width: '50%',
-  },
-
-  // ── WHY STORO SECTION ──────────────────────────────────────
+  // ── WHY STORO SECTION ──
   whyBox: {
     backgroundColor: BRAND_LIGHT,
     borderRadius: 8,
@@ -313,7 +283,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.4,
   },
 
-  // ── CTA BOX ──────────────────────────────────────────────
+  // ── CTA BOX ──
   ctaBox: {
     backgroundColor: DARK,
     borderRadius: 8,
@@ -333,10 +303,10 @@ const styles = StyleSheet.create({
   },
   ctaContactRow: {
     flexDirection: 'row',
-    gap: 20,
   },
   ctaContactItem: {
     alignItems: 'center',
+    marginHorizontal: 12,
   },
   ctaContactLabel: {
     fontSize: 8,
@@ -349,7 +319,7 @@ const styles = StyleSheet.create({
     color: ACCENT,
   },
 
-  // ── PAGE FOOTER ──────────────────────────────────────────
+  // ── PAGE FOOTER ──
   pageFooter: {
     position: 'absolute',
     bottom: 0,
@@ -357,7 +327,7 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: 40,
     paddingVertical: 14,
-    borderTop: '1pt solid',
+    borderTopWidth: 1,
     borderTopColor: BORDER,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -378,40 +348,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// ── Feature item helper ───────────────────────────────────
-const Feature = ({ text }: { text: string }) => (
-  <View style={styles.featureItem}>
-    <Text style={styles.featureDot}>✓</Text>
-    <Text style={styles.featureText}>{text}</Text>
-  </View>
-);
-
-// ── Page footer helper ────────────────────────────────────
-const PageFooter = ({ page, total }: { page: number; total: number }) => (
-  <View style={styles.pageFooter}>
-    <Text style={styles.footerLeft}>© 2025 Storo.id — Powered by VenteraAI</Text>
-    <Text style={styles.footerCenter}>storo.id</Text>
-    <Text style={styles.footerRight}>Halaman {page} / {total}</Text>
-  </View>
-);
-
-// ── Package Card (for 2-column / 3-column layout) ─────────
-const PackageCard = ({ pkg }: { pkg: typeof packages[0] }) => (
-  <View style={[styles.card, pkg.popular ? styles.cardPopular : {}]}>
-    <View style={[styles.cardHeaderBar, pkg.popular ? styles.cardHeaderBarPopular : {}]}>
-      {pkg.popular && <Text style={styles.popularBadge}>★ PALING POPULER</Text>}
-      <Text style={[styles.cardName, pkg.popular ? styles.cardNamePopular : {}]}>{pkg.name}</Text>
-      <Text style={[styles.cardDesc, pkg.popular ? styles.cardDescPopular : {}]}>{pkg.description}</Text>
-    </View>
-    <View style={styles.cardBody}>
-      <Text style={[styles.cardPrice, pkg.popular ? styles.cardPricePopular : {}]}>{pkg.price}</Text>
-      <Text style={styles.cardPriceSub}>{pkg.setupNote}</Text>
-      <View style={styles.featureDivider} />
-      {pkg.features.map((f, i) => <Feature key={i} text={f} />)}
-    </View>
-  </View>
-);
-
+// ── Data ──────────────────────────────────────────────────
 const packages = [
   {
     name: 'Starter',
@@ -493,10 +430,43 @@ const packages = [
   },
 ];
 
+// ── Helpers ───────────────────────────────────────────────
+const Feature = ({ text }: { text: string }) => (
+  <View style={styles.featureItem}>
+    <Text style={styles.featureDot}>{'>'}</Text>
+    <Text style={styles.featureText}>{text}</Text>
+  </View>
+);
+
+const PageFooter = ({ page, total }: { page: number; total: number }) => (
+  <View style={styles.pageFooter}>
+    <Text style={styles.footerLeft}>{'(c)'} 2025 Storo.id — Powered by VenteraAI</Text>
+    <Text style={styles.footerCenter}>storo.id</Text>
+    <Text style={styles.footerRight}>Halaman {page} / {total}</Text>
+  </View>
+);
+
+const PackageCard = ({ pkg }: { pkg: (typeof packages)[0] }) => (
+  <View style={[styles.card, pkg.popular ? styles.cardPopular : {}]}>
+    <View style={[styles.cardHeaderBar, pkg.popular ? styles.cardHeaderBarPopular : {}]}>
+      {pkg.popular && <Text style={styles.popularBadge}>PALING POPULER</Text>}
+      <Text style={[styles.cardName, pkg.popular ? styles.cardNamePopular : {}]}>{pkg.name}</Text>
+      <Text style={[styles.cardDesc, pkg.popular ? styles.cardDescPopular : {}]}>{pkg.description}</Text>
+    </View>
+    <View style={styles.cardBody}>
+      <Text style={styles.cardPrice}>{pkg.price}</Text>
+      <Text style={styles.cardPriceSub}>{pkg.setupNote}</Text>
+      <View style={styles.featureDivider} />
+      {pkg.features.map((f, i) => <Feature key={i} text={f} />)}
+    </View>
+  </View>
+);
+
+// ── Main Component ────────────────────────────────────────
 const CatalogPDF = () => (
   <Document>
 
-    {/* ── PAGE 1: COVER ──────────────────────────────────── */}
+    {/* PAGE 1: COVER */}
     <Page size="A4" style={styles.coverPage}>
       <View style={styles.coverTopBar}>
         <Text style={styles.coverBrand}>STORO.ID — POWERED BY VENTEAAI</Text>
@@ -511,22 +481,17 @@ const CatalogPDF = () => (
         </Text>
 
         <View style={styles.coverHighlightRow}>
-          <View style={styles.coverHighlightBox}>
-            <Text style={styles.coverHighlightNum}>500+</Text>
-            <Text style={styles.coverHighlightLabel}>Seller Aktif{'\n'}Bergabung</Text>
-          </View>
-          <View style={styles.coverHighlightBox}>
-            <Text style={styles.coverHighlightNum}>1–3</Text>
-            <Text style={styles.coverHighlightLabel}>Hari Kerja{'\n'}Setup Selesai</Text>
-          </View>
-          <View style={styles.coverHighlightBox}>
-            <Text style={styles.coverHighlightNum}>10K+</Text>
-            <Text style={styles.coverHighlightLabel}>Produk Bisa{'\n'}Diimport</Text>
-          </View>
-          <View style={styles.coverHighlightBox}>
-            <Text style={styles.coverHighlightNum}>24/7</Text>
-            <Text style={styles.coverHighlightLabel}>Support Tim{'\n'}Berpengalaman</Text>
-          </View>
+          {[
+            { num: '500+', label: 'Seller Aktif\nBergabung' },
+            { num: '1–3',  label: 'Hari Kerja\nSetup Selesai' },
+            { num: '10K+', label: 'Produk Bisa\nDiimport' },
+            { num: '24/7', label: 'Support Tim\nBerpengalaman' },
+          ].map((item, i) => (
+            <View key={i} style={styles.coverHighlightBox}>
+              <Text style={styles.coverHighlightNum}>{item.num}</Text>
+              <Text style={styles.coverHighlightLabel}>{item.label}</Text>
+            </View>
+          ))}
         </View>
 
         <View style={styles.coverDivider} />
@@ -538,11 +503,13 @@ const CatalogPDF = () => (
           <Text style={styles.coverFooterUrl}>www.storo.id</Text>
         </View>
 
-        <Text style={styles.coverYear}>Dokumen ini berlaku per Januari 2025 · Harga dapat berubah sewaktu-waktu</Text>
+        <Text style={styles.coverYear}>
+          Dokumen berlaku per Januari 2025 · Harga dapat berubah sewaktu-waktu
+        </Text>
       </View>
     </Page>
 
-    {/* ── PAGE 2: PAKET STARTER, PRO, ADVANCE ──────────── */}
+    {/* PAGE 2: STARTER, PRO, ADVANCE */}
     <Page size="A4" style={styles.page}>
       <View style={styles.pageHeader}>
         <View>
@@ -559,7 +526,7 @@ const CatalogPDF = () => (
           ))}
         </View>
 
-        <View style={[styles.whyBox, { marginTop: 8 }]}>
+        <View style={styles.whyBox}>
           <Text style={styles.whyTitle}>Semua Paket Sudah Termasuk</Text>
           <View style={styles.whyRow}>
             {[
@@ -571,7 +538,7 @@ const CatalogPDF = () => (
               'Training & onboarding awal',
             ].map((item, i) => (
               <View key={i} style={styles.whyItem}>
-                <Text style={styles.whyDot}>✓</Text>
+                <Text style={styles.whyDot}>+</Text>
                 <Text style={styles.whyText}>{item}</Text>
               </View>
             ))}
@@ -582,7 +549,7 @@ const CatalogPDF = () => (
       <PageFooter page={2} total={3} />
     </Page>
 
-    {/* ── PAGE 3: FLEXIBLE, CUSTOM + WHY + CTA ─────────── */}
+    {/* PAGE 3: FLEXIBLE, CUSTOM + WHY + CTA */}
     <Page size="A4" style={styles.page}>
       <View style={styles.pageHeader}>
         <View>
@@ -593,15 +560,12 @@ const CatalogPDF = () => (
       </View>
 
       <View style={styles.content}>
-
-        {/* Flexible & Custom side by side */}
         <View style={styles.cardRow}>
           {packages.slice(3, 5).map((pkg, i) => (
             <PackageCard key={i} pkg={pkg} />
           ))}
         </View>
 
-        {/* Why Storo */}
         <View style={styles.whyBox}>
           <Text style={styles.whyTitle}>Mengapa Memilih Storo.id?</Text>
           <View style={styles.whyRow}>
@@ -614,33 +578,29 @@ const CatalogPDF = () => (
               'Aset webstore sepenuhnya milik Anda',
             ].map((item, i) => (
               <View key={i} style={styles.whyItem}>
-                <Text style={styles.whyDot}>✦</Text>
+                <Text style={styles.whyDot}>*</Text>
                 <Text style={styles.whyText}>{item}</Text>
               </View>
             ))}
           </View>
         </View>
 
-        {/* CTA */}
         <View style={styles.ctaBox}>
           <Text style={styles.ctaTitle}>Siap Membangun Webstore Anda?</Text>
           <Text style={styles.ctaSub}>Konsultasi gratis, tanpa komitmen. Tim kami siap membantu.</Text>
           <View style={styles.ctaContactRow}>
-            <View style={styles.ctaContactItem}>
-              <Text style={styles.ctaContactLabel}>WhatsApp</Text>
-              <Text style={styles.ctaContactValue}>+62 851-4841-6700</Text>
-            </View>
-            <View style={styles.ctaContactItem}>
-              <Text style={styles.ctaContactLabel}>Email</Text>
-              <Text style={styles.ctaContactValue}>info@storo.id</Text>
-            </View>
-            <View style={styles.ctaContactItem}>
-              <Text style={styles.ctaContactLabel}>Website</Text>
-              <Text style={styles.ctaContactValue}>www.storo.id</Text>
-            </View>
+            {[
+              { label: 'WhatsApp', value: '+62 851-4841-6700' },
+              { label: 'Email',    value: 'info@storo.id' },
+              { label: 'Website',  value: 'www.storo.id' },
+            ].map((c, i) => (
+              <View key={i} style={styles.ctaContactItem}>
+                <Text style={styles.ctaContactLabel}>{c.label}</Text>
+                <Text style={styles.ctaContactValue}>{c.value}</Text>
+              </View>
+            ))}
           </View>
         </View>
-
       </View>
 
       <PageFooter page={3} total={3} />
