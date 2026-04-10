@@ -10,7 +10,7 @@ const PDFDownloadLink = dynamic(
   { ssr: false }
 );
 
-const CatalogPDF = dynamic(() => import("./CatalogPDF"), { ssr: false });
+import CatalogPDF from "./CatalogPDF";
 
 const DownloadCatalog = () => {
   return (
