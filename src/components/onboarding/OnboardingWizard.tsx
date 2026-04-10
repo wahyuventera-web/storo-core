@@ -829,9 +829,20 @@ function Step5Summary({
     setApiError(null);
 
     try {
+      // If Google auth, get access token to send for server-side verification
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (state.authMethod === "google") {
+        const { getSupabaseBrowserClient } = await import("@/lib/supabase/client");
+        const supabase = getSupabaseBrowserClient();
+        const { data: session } = await supabase.auth.getSession();
+        if (session?.session?.access_token) {
+          headers["Authorization"] = `Bearer ${session.session.access_token}`;
+        }
+      }
+
       const res = await fetch("/api/onboarding/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({
           fullName: state.fullName,
           phone: state.phone,

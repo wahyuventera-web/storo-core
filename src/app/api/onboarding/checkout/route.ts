@@ -67,32 +67,46 @@ export async function POST(request: NextRequest) {
     let userId: string;
 
     if (isGoogleAuth) {
-      // ── Google auth: user already exists, find by email ─────────
-      // Use listUsers with perPage to search — Supabase admin API doesn't have getUserByEmail
-      const { data: listData, error: listError } = await supabase.auth.admin.listUsers({
-        page: 1,
-        perPage: 1000,
-      });
-      const existingUser = listData?.users?.find(
-        (u: { email?: string }) => u.email === email.trim()
-      );
-
-      if (listError || !existingUser) {
-        console.error("[checkout] Google user lookup error:", listError);
+      // ── Google auth: verify token server-side ───────────────────
+      const authHeader = request.headers.get("authorization");
+      if (!authHeader?.startsWith("Bearer ")) {
         return NextResponse.json(
-          { error: "Akun Google tidak ditemukan. Coba daftar ulang." },
-          { status: 400 }
+          { error: "Authorization token diperlukan untuk Google sign-up." },
+          { status: 401 }
         );
       }
-      userId = existingUser.id;
+
+      const { data: { user: tokenUser }, error: tokenError } = await supabase.auth.getUser(
+        authHeader.replace("Bearer ", "")
+      );
+
+      if (tokenError || !tokenUser) {
+        return NextResponse.json(
+          { error: "Token tidak valid. Coba login ulang via Google." },
+          { status: 401 }
+        );
+      }
+
+      // Verify the token email matches the submitted email
+      if (tokenUser.email !== email.trim()) {
+        return NextResponse.json(
+          { error: "Email tidak sesuai dengan akun Google." },
+          { status: 403 }
+        );
+      }
+
+      userId = tokenUser.id;
 
       // Update user metadata
-      await supabase.auth.admin.updateUserById(userId, {
+      const { error: updateError } = await supabase.auth.admin.updateUserById(userId, {
         user_metadata: {
           full_name: fullName.trim(),
           referral_code: referralCode || undefined,
         },
       });
+      if (updateError) {
+        console.error("[checkout] Failed to update user metadata:", updateError);
+      }
     } else {
       // ── Email auth: create new user ─────────────────────────────
       const { data: authData, error: authError } = await supabase.auth.admin.createUser({
