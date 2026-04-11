@@ -26,7 +26,7 @@ export async function createSupabaseServerClient() {
   );
 }
 
-// Alias for files that import createClient()
+// Alias for server action files that import createClient()
 export const createClient = createSupabaseServerClient;
 
 export async function createSupabaseServiceClient() {
