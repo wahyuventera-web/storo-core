@@ -13,41 +13,65 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://storo.id"),
   title: {
-    default: "Storo.id — Dari Shopee ke Webstore Sendiri, Tanpa Ribet",
+    default: "Buat Webstore dari Shopee — Tanpa Ribet | Storo.id",
     template: "%s | Storo.id",
   },
   description:
-    "Storo.id adalah jasa pembuatan website toko online khusus seller Shopee. Import produk otomatis dari Excel, payment gateway, ongkir real-time. Setup dalam 1-3 hari kerja.",
+    "Punya toko online sendiri dari Shopee tanpa coding. Setup lengkap oleh tim kami — domain custom, pembayaran (GoPay, OVO, transfer bank), 11+ kurir real-time. Jasa pembuatan webstore terkelola, siap transaksi dalam 1-3 hari kerja.",
   keywords: [
-    "webstore shopee",
-    "jasa buat toko online",
-    "website toko online",
-    "import produk shopee",
+    // Primary — high intent
+    "buat webstore dari shopee",
+    "jasa pembuatan toko online",
+    "webstore builder indonesia",
+    "migrasi shopee ke website sendiri",
+    "buat website toko online tanpa ribet",
+    // Secondary — supporting
+    "cara punya toko online sendiri",
+    "toko online di luar marketplace",
+    "website jualan sendiri tanpa coding",
+    "biaya buat toko online",
+    "webstore murah indonesia",
+    // Long-tail — content/blog targets
+    "cara pindah dari shopee ke website sendiri",
+    "keuntungan punya webstore sendiri vs marketplace",
+    "berapa biaya buat toko online profesional",
+    "cara import produk shopee ke website",
+    "webstore dengan ongkir gratis otomatis",
+    "toko online dengan pembayaran xendit",
+    "webstore custom domain indonesia",
+    // Brand & niche
+    "storo webstore",
+    "webstore terkelola",
+    "managed webstore indonesia",
+    "webstore seller shopee",
+    "toko online tanpa ribet",
     "storo.id",
-    "woocommerce shopee",
   ],
+  alternates: {
+    canonical: "https://storo.id",
+  },
   openGraph: {
     type: "website",
     locale: "id_ID",
     url: "https://storo.id",
     siteName: "Storo.id",
-    title: "Storo.id — Dari Shopee ke Webstore Sendiri, Tanpa Ribet",
+    title: "Buat Webstore dari Shopee — Tanpa Ribet | Storo.id",
     description:
-      "Import produk dari Shopee, langsung jadi webstore profesional. Payment gateway, ongkir otomatis, dashboard WooCommerce.",
+      "Punya toko online sendiri dari Shopee tanpa coding. Setup lengkap — domain custom, payment gateway, 11+ kurir otomatis. Siap transaksi dalam 1-3 hari kerja.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Storo.id — Webstore untuk Seller Shopee",
+        alt: "Storo.id — Jasa Buat Webstore untuk Seller Shopee",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Storo.id — Dari Shopee ke Webstore Sendiri",
+    title: "Buat Webstore dari Shopee — Tanpa Ribet | Storo.id",
     description:
-      "Import produk dari Shopee, langsung jadi webstore profesional.",
+      "Punya toko online sendiri dari Shopee tanpa coding. Domain custom, payment gateway, 11+ kurir otomatis. Setup 1-3 hari kerja.",
     images: ["/og-image.png"],
   },
   robots: {
