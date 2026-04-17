@@ -65,11 +65,11 @@ const Solution = () => {
             Kenapa Storo.id?
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Toko Online Lengkap,{" "}
+            Webstore Lengkap Siap Transaksi,{" "}
             <span className="text-primary">Anda Terima Beres</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Bukan sekadar template kosong — Tim Storo setup semua dari nol sampai toko siap transaksi
+            Bukan sekadar template kosong — Tim Storo setup semua dari nol sampai webstore siap menerima pesanan
           </p>
         </div>
 

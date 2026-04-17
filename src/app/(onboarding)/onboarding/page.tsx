@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OnboardingWizard from "@/components/onboarding/OnboardingWizard";
@@ -13,8 +14,10 @@ export default function OnboardingPage() {
   return (
     <div className="font-inter min-h-screen flex flex-col bg-gradient-to-br from-primary/5 via-white to-secondary/5">
       <Header />
-      <main className="pt-24 pb-16 flex-1">
-        <OnboardingWizard />
+      <main className="pt-24 pb-16">
+        <Suspense>
+          <OnboardingWizard />
+        </Suspense>
       </main>
       <Footer />
     </div>

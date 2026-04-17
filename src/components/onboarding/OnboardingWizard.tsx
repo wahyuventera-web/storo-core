@@ -35,12 +35,26 @@ type State = {
   plan: PlanId | "";
   // Step 2: Domain
   websiteName: string; // slug for <slug>.storo.id
-  customDomain: string; // selected custom domain (e.g. "namatoko.com"), empty = subdomain only
+  subdomain: string;
+  domainType: "subdomain" | "custom" | "own";
+  ownDomain: string;
+  customDomain: string;
   // Step 3: Profile
   fullName: string;
   storeName: string;
   phone: string;
+  address: string;
   shopeeStoreLink: string;
+  shopeeVerified: boolean;
+  shopeeStoreId: string;
+  shopeeStoreName: string;
+  // Step 2: Identity
+  ktpImageUrl: string;
+  bankName: string;
+  bankAccountNumber: string;
+  // Step 4: Template
+  templateId: string;
+  templateName: string;
   // Step 4: Account
   authMethod: "email" | "google" | "";
   email: string;
@@ -48,7 +62,11 @@ type State = {
   // Step 5: Summary & pay
   invoiceId: string;
   xenditInvoiceUrl: string;
+  // Step 7: Review
+  agreed: boolean;
 };
+
+export type WizardState = State;
 
 type Action =
   | { type: "UPDATE"; payload: Partial<State> }
@@ -98,16 +116,29 @@ export default function OnboardingWizard() {
     step: 1,
     plan: "pro" as PlanId,
     websiteName: "",
+    subdomain: "",
+    domainType: "subdomain",
+    ownDomain: "",
     customDomain: "",
     fullName: "",
     storeName: "",
     phone: "",
+    address: "",
     shopeeStoreLink: "",
+    shopeeVerified: false,
+    shopeeStoreId: "",
+    shopeeStoreName: "",
+    ktpImageUrl: "",
+    bankName: "",
+    bankAccountNumber: "",
+    templateId: "",
+    templateName: "",
     authMethod: "",
     email: "",
     password: "",
     invoiceId: "",
     xenditInvoiceUrl: "",
+    agreed: false,
   });
 
   // Restore state from query params on mount
