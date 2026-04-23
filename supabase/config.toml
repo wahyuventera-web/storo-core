@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.chat-storo]
 verify_jwt = false
+
+[functions.storo-billing-invoice]
+verify_jwt = false

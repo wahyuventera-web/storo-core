@@ -24,10 +24,10 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone git@github.com:adewap23/storo-id-landingpage.git
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd storo-id-landingpage
 
 # Step 3: Install the necessary dependencies.
 npm i
@@ -54,11 +54,12 @@ npm run dev
 
 This project is built with:
 
-- Vite
+- Next.js (App Router)
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase (Auth + Database)
 
 ## How can I deploy this project?
 

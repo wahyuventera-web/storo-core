@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Env files
+.env
+.env.*
+!.env.example
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +32,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# supabase temp files
+supabase/.temp/
+
+# typescript build info
+*.tsbuildinfo
