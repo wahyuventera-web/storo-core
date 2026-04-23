@@ -6,7 +6,7 @@ interface Message {
   content: string;
 }
 
-const CHAT_API = "https://wfthvovlhphnrodrqxqt.supabase.co/functions/v1/chat-storo";
+const CHAT_API = "https://unpqekghcpjclzvpeyse.supabase.co/functions/v1/chat-storo";
 const WELCOME_MESSAGE = "Halo! Saya asisten virtual Storo.id. Ada yang bisa saya bantu seputar pembuatan webstore?";
 
 const FloatingChatbot = () => {
