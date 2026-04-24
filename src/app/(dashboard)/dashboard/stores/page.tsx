@@ -84,7 +84,7 @@ export default async function StoresPage() {
             Belum ada toko. Mulai onboarding untuk membuat toko pertama Anda.
           </p>
           <Button asChild className="bg-primary hover:bg-primary/90 text-white cursor-pointer">
-            <Link href="/onboarding">Mulai Onboarding</Link>
+            <Link href="/dashboard/stores/new">Tambah Toko Pertama</Link>
           </Button>
         </div>
       )}

@@ -120,10 +120,10 @@ export default async function DashboardPage() {
             Belum ada toko
           </h2>
           <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
-            Mulai onboarding untuk mendirikan webstore Anda dari Shopee.
+            Tambah toko pertama Anda dan mulai berjualan online bersama VenteraAI.
           </p>
           <Button asChild className="btn-hero cursor-pointer">
-            <Link href="/onboarding">Mulai Sekarang</Link>
+            <Link href="/dashboard/stores/new">Tambah Toko Sekarang</Link>
           </Button>
         </div>
       )}
