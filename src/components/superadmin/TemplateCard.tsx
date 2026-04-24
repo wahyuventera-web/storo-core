@@ -111,7 +111,7 @@ export default function TemplateCard({
   return (
     <div className="bg-background border border-border rounded-xl overflow-hidden flex flex-col hover:shadow-md transition-shadow">
       {/* Thumbnail */}
-      <div className="aspect-video bg-gradient-to-br from-muted to-gray-100 relative">
+      <div className="aspect-video bg-gradient-to-br from-muted to-muted/60 relative">
         {template.preview_image_url ? (
           <Image
             src={template.preview_image_url}
@@ -274,7 +274,7 @@ export default function TemplateCard({
           {template.deploy_status === "draft" && (
             <button
               onClick={() => onRedeploy(template)}
-              className="px-3 py-2 text-xs font-medium bg-[#4169df] hover:bg-[#3458c8] text-white rounded-lg transition-colors cursor-pointer"
+              className="px-3 py-2 text-xs font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-colors cursor-pointer"
             >
               Deploy
             </button>

@@ -69,7 +69,7 @@ export default async function OnboardingQueuePage({
         </div>
         <Link
           href="/superadmin/onboarding"
-          className="text-sm text-primary hover:text-primary/80 font-medium border border-border px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+          className="text-sm text-primary hover:text-primary/80 font-medium border border-border px-3 py-1.5 rounded-lg hover:bg-muted/50 transition-colors"
         >
           Refresh
         </Link>
@@ -84,7 +84,7 @@ export default async function OnboardingQueuePage({
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               activeFilter === tab.key
                 ? "bg-primary text-primary-foreground"
-                : "text-foreground/60 hover:text-foreground hover:bg-gray-50"
+                : "text-foreground/60 hover:text-foreground hover:bg-muted/50"
             }`}
           >
             {tab.label}
@@ -138,7 +138,7 @@ export default async function OnboardingQueuePage({
                   const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.pending;
                   const client = req.clients as { full_name?: string; phone?: string } | null;
                   return (
-                    <tr key={req.id} className="hover:bg-gray-50">
+                    <tr key={req.id} className="hover:bg-muted/50">
                       <td className="py-3 px-4 text-foreground/40 text-xs">{idx + 1}</td>
                       <td className="py-3 px-4 font-medium text-foreground">
                         {client?.full_name ?? "-"}

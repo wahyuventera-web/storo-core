@@ -352,7 +352,7 @@ export default function TemplateDeployModal({
                   />
                   <p className="text-[11px] text-foreground/50 mt-1 break-all">
                     URL preview:{" "}
-                    <span className="font-mono text-[#4169df]">
+                    <span className="font-mono text-primary">
                       {form.slug || "{slug}"}.preview.storo.id
                     </span>
                   </p>
@@ -411,7 +411,7 @@ export default function TemplateDeployModal({
                         href={`https://github.com/${form.source_repo}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-mono text-[#4169df] hover:underline inline-flex items-center gap-1"
+                        className="font-mono text-primary hover:underline inline-flex items-center gap-1"
                       >
                         github.com/{form.source_repo}
                         <ExternalLink className="w-3 h-3" />
@@ -443,7 +443,7 @@ export default function TemplateDeployModal({
                           href={`https://github.com/${form.source_repo}/branches`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#4169df] hover:underline inline-flex items-center gap-1"
+                          className="text-primary hover:underline inline-flex items-center gap-1"
                         >
                           Lihat daftar branch <ExternalLink className="w-3 h-3" />
                         </a>{" "}
@@ -452,7 +452,7 @@ export default function TemplateDeployModal({
                           href={`https://github.com/${form.source_repo}/tags`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#4169df] hover:underline inline-flex items-center gap-1"
+                          className="text-primary hover:underline inline-flex items-center gap-1"
                         >
                           tag <ExternalLink className="w-3 h-3" />
                         </a>
@@ -526,7 +526,7 @@ export default function TemplateDeployModal({
                       alt="Thumbnail"
                       width={80}
                       height={48}
-                      className="rounded border border-gray-100 object-cover"
+                      className="rounded border border-border object-cover"
                     />
                   )}
                   {thumbnailFile && !form.preview_image_url && (
@@ -551,7 +551,7 @@ export default function TemplateDeployModal({
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 bg-[#4169df] hover:bg-[#3458c8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer"
                 >
                   <Rocket className="w-4 h-4" />
                   Deploy Preview
@@ -566,7 +566,7 @@ export default function TemplateDeployModal({
               <div className="flex items-center gap-3 p-4 rounded-lg border border-border bg-muted">
                 {phase === "deploying" && (
                   <>
-                    <Loader2 className="w-5 h-5 text-[#4169df] animate-spin flex-shrink-0" />
+                    <Loader2 className="w-5 h-5 text-primary animate-spin flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-foreground">
                         Deploying ke Vercel...
@@ -589,7 +589,7 @@ export default function TemplateDeployModal({
                           href={status.template.demo_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-[#4169df] hover:underline"
+                          className="text-xs text-primary hover:underline"
                         >
                           {status.template.demo_url}
                         </a>
@@ -667,7 +667,7 @@ export default function TemplateDeployModal({
                 <button
                   onClick={onClose}
                   disabled={phase === "deploying"}
-                  className="bg-[#4169df] hover:bg-[#3458c8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {phase === "deploying" ? "Tunggu..." : "Tutup"}
                 </button>

@@ -268,7 +268,7 @@ export default function TemplatesPage() {
           </button>
           <button
             onClick={() => setShowAddModal(true)}
-            className="inline-flex items-center gap-2 bg-[#4169df] hover:bg-[#3458c8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Tambah Template
@@ -305,7 +305,7 @@ export default function TemplatesPage() {
           <p className="text-sm text-foreground/60 mb-4">Belum ada template.</p>
           <button
             onClick={() => setShowAddModal(true)}
-            className="inline-flex items-center gap-2 bg-[#4169df] hover:bg-[#3458c8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Tambah Template Pertama

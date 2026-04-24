@@ -178,7 +178,7 @@ export default async function SuperadminOverviewPage() {
                   const clientName =
                     (req.clients as { full_name?: string } | null)?.full_name ?? "-";
                   return (
-                    <tr key={req.id} className="hover:bg-gray-50">
+                    <tr key={req.id} className="hover:bg-muted/50">
                       <td className="py-3 pr-4 font-medium text-foreground">{clientName}</td>
                       <td className="py-3 pr-4 capitalize text-foreground/70">{req.plan}</td>
                       <td className="py-3 pr-4">
@@ -239,7 +239,7 @@ export default async function SuperadminOverviewPage() {
                   const clientName =
                     (inv.clients as { full_name?: string } | null)?.full_name ?? "-";
                   return (
-                    <tr key={inv.id} className="hover:bg-gray-50">
+                    <tr key={inv.id} className="hover:bg-muted/50">
                       <td className="py-3 pr-4 font-medium text-foreground">{clientName}</td>
                       <td className="py-3 pr-4 text-foreground font-mono text-xs">
                         {formatCurrency(inv.amount)}
