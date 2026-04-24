@@ -232,21 +232,21 @@ export default async function StoreDetailPage({
       {/* Back */}
       <Link
         href="/superadmin/stores"
-        className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+        className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-foreground transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         Kembali ke Semua Store
       </Link>
 
       {/* Header */}
-      <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+      <div className="bg-background border border-border rounded-2xl p-6 shadow-sm">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex items-start gap-4 min-w-0 flex-1">
-            <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
               <Store className="w-6 h-6 text-white" />
             </div>
             <div className="min-w-0">
-              <h1 className="text-2xl font-bold text-gray-900 capitalize truncate">
+              <h1 className="text-2xl font-bold text-foreground capitalize truncate">
                 {storeName}
               </h1>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -254,22 +254,22 @@ export default async function StoreDetailPage({
                   Paket {planName}
                 </span>
                 {store.template_name && (
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-0.5 rounded-full border bg-gray-50 text-gray-700 border-gray-200 capitalize">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-0.5 rounded-full border bg-muted text-foreground/70 border-border capitalize">
                     <LayoutTemplate className="w-3 h-3" />
                     {store.template_name}
                   </span>
                 )}
-                <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                <span className="inline-flex items-center gap-1.5 text-xs text-foreground/60">
                   <Calendar className="w-3.5 h-3.5" />
                   Didaftar {formatDate(store.created_at)}
                 </span>
                 {store.updated_at && store.updated_at !== store.created_at && (
-                  <span className="inline-flex items-center gap-1.5 text-xs text-gray-400">
+                  <span className="inline-flex items-center gap-1.5 text-xs text-foreground/40">
                     · Update terakhir {formatDateTime(store.updated_at)}
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-400 font-mono mt-2 truncate">
+              <p className="text-xs text-foreground/40 font-mono mt-2 truncate">
                 ID: {store.id}
               </p>
             </div>
@@ -284,8 +284,8 @@ export default async function StoreDetailPage({
       {/* Info Grid: Store + Client */}
       <div className="grid lg:grid-cols-2 gap-4">
         {/* Store Info */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-5 flex items-center gap-2">
+        <div className="bg-background border border-border rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xs font-semibold text-foreground/60 uppercase tracking-wide mb-5 flex items-center gap-2">
             <Store className="w-3.5 h-3.5" />
             Informasi Store
           </h2>
@@ -293,7 +293,7 @@ export default async function StoreDetailPage({
             <InfoRow icon={Receipt} label="Paket">
               {planName}
               {planSetup != null && (
-                <span className="text-gray-400 text-xs font-normal ml-2">
+                <span className="text-foreground/40 text-xs font-normal ml-2">
                   · setup {formatIDR(planSetup)}
                 </span>
               )}
@@ -302,14 +302,14 @@ export default async function StoreDetailPage({
               {store.template_name ? (
                 <span className="capitalize">{store.template_name}</span>
               ) : (
-                <span className="text-gray-400 italic">Belum ditentukan</span>
+                <span className="text-foreground/40 italic">Belum ditentukan</span>
               )}
             </InfoRow>
             <InfoRow icon={Globe} label="Subdomain">
-              {subdomainPreview ?? <span className="text-gray-400 italic">—</span>}
+              {subdomainPreview ?? <span className="text-foreground/40 italic">—</span>}
             </InfoRow>
             <InfoRow icon={Globe} label="Custom Domain">
-              {store.custom_domain ?? <span className="text-gray-400 italic">Tidak ada</span>}
+              {store.custom_domain ?? <span className="text-foreground/40 italic">Tidak ada</span>}
             </InfoRow>
             <InfoRow icon={ExternalLink} label="URL Live">
               {store.store_url ? (
@@ -322,12 +322,12 @@ export default async function StoreDetailPage({
                   {store.store_url}
                 </a>
               ) : (
-                <span className="text-gray-400 italic">Belum di-deploy</span>
+                <span className="text-foreground/40 italic">Belum di-deploy</span>
               )}
             </InfoRow>
             <InfoRow icon={UserCog} label="Engineer">
               {store.assigned_engineer ?? (
-                <span className="text-gray-400 italic">Belum di-assign</span>
+                <span className="text-foreground/40 italic">Belum di-assign</span>
               )}
             </InfoRow>
             <InfoRow icon={store.upload_method === "whatsapp" ? MessageSquare : Upload} label="Metode Upload">
@@ -342,14 +342,14 @@ export default async function StoreDetailPage({
         </div>
 
         {/* Client Info */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-5 flex items-center gap-2">
+        <div className="bg-background border border-border rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xs font-semibold text-foreground/60 uppercase tracking-wide mb-5 flex items-center gap-2">
             <User className="w-3.5 h-3.5" />
             Informasi Klien
           </h2>
           <dl className="space-y-4">
             <InfoRow icon={User} label="Nama">
-              {client?.full_name ?? <span className="text-gray-400 italic">—</span>}
+              {client?.full_name ?? <span className="text-foreground/40 italic">—</span>}
             </InfoRow>
             <InfoRow icon={Phone} label="WhatsApp">
               {client?.phone ? (
@@ -368,7 +368,7 @@ export default async function StoreDetailPage({
                   )}
                 </div>
               ) : (
-                <span className="text-gray-400 italic">—</span>
+                <span className="text-foreground/40 italic">—</span>
               )}
             </InfoRow>
             <InfoRow icon={ShoppingBag} label="Shopee">
@@ -382,7 +382,7 @@ export default async function StoreDetailPage({
                   {client.shopee_store_name ?? client.shopee_store_link}
                 </a>
               ) : (
-                <span className="text-gray-400 italic">Belum terhubung</span>
+                <span className="text-foreground/40 italic">Belum terhubung</span>
               )}
             </InfoRow>
             {client?.address && (
@@ -391,7 +391,7 @@ export default async function StoreDetailPage({
               </InfoRow>
             )}
             <InfoRow icon={User} label="User ID">
-              <span className="text-xs text-gray-400 font-mono truncate block">
+              <span className="text-xs text-foreground/40 font-mono truncate block">
                 {client?.user_id ?? "—"}
               </span>
             </InfoRow>
@@ -401,8 +401,8 @@ export default async function StoreDetailPage({
 
       {/* Invoice */}
       {invoice && (
-        <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4 flex items-center gap-2">
+        <div className="bg-background border border-border rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xs font-semibold text-foreground/60 uppercase tracking-wide mb-4 flex items-center gap-2">
             <CreditCard className="w-3.5 h-3.5" />
             Invoice Setup
           </h2>
@@ -412,17 +412,17 @@ export default async function StoreDetailPage({
                 <Receipt className="w-5 h-5 text-primary" />
               </div>
               <div className="min-w-0">
-                <p className="font-semibold text-gray-900 text-lg">{formatIDR(invoice.amount)}</p>
-                <p className="text-xs text-gray-500 mt-0.5">
+                <p className="font-semibold text-foreground text-lg">{formatIDR(invoice.amount)}</p>
+                <p className="text-xs text-foreground/60 mt-0.5">
                   Provider: <span className="font-mono">{invoice.provider}</span>
                 </p>
                 {invoice.paid_at && (
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-foreground/40 mt-0.5">
                     Dibayar {formatDateTime(invoice.paid_at)}
                   </p>
                 )}
                 {!invoice.paid_at && invoice.due_date && (
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-foreground/40 mt-0.5">
                     Jatuh tempo {formatDate(invoice.due_date)}
                   </p>
                 )}
@@ -444,7 +444,7 @@ export default async function StoreDetailPage({
                   href={invoice.invoice_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-foreground/60 hover:text-foreground cursor-pointer"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
                   Buka Invoice
@@ -459,91 +459,91 @@ export default async function StoreDetailPage({
       {storeId ? (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-900">Aktivitas Toko</h2>
-            <span className="text-xs text-gray-400 font-mono truncate max-w-[60%]">
+            <h2 className="text-sm font-semibold text-foreground">Aktivitas Toko</h2>
+            <span className="text-xs text-foreground/40 font-mono truncate max-w-[60%]">
               store_id: {storeId}
             </span>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             {/* Produk */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm flex flex-col">
+            <div className="bg-background border border-border rounded-2xl p-6 shadow-sm flex flex-col">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center">
                     <Package className="w-4 h-4 text-primary" />
                   </div>
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Produk</h3>
+                  <h3 className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">Produk</h3>
                 </div>
-                <span className="text-2xl font-bold text-gray-900">{productCount}</span>
+                <span className="text-2xl font-bold text-foreground">{productCount}</span>
               </div>
               {products.length > 0 ? (
                 <ul className="space-y-2 flex-1">
                   {products.map((p) => (
-                    <li key={p.id} className="flex items-start justify-between gap-3 py-2 border-b border-gray-50 last:border-0">
+                    <li key={p.id} className="flex items-start justify-between gap-3 py-2 border-b border-border last:border-0">
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium text-gray-900 truncate">{p.name}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">
+                        <p className="text-sm font-medium text-foreground truncate">{p.name}</p>
+                        <p className="text-xs text-foreground/40 mt-0.5">
                           Stok: {p.stock ?? 0}
                           {p.is_active === false && (
                             <span className="ml-2 text-red-500">· Nonaktif</span>
                           )}
                         </p>
                       </div>
-                      <span className="text-xs font-semibold text-gray-700 flex-shrink-0">
+                      <span className="text-xs font-semibold text-foreground/70 flex-shrink-0">
                         {formatIDR(p.price)}
                       </span>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-xs text-gray-400 italic flex-1 flex items-center">Belum ada produk</p>
+                <p className="text-xs text-foreground/40 italic flex-1 flex items-center">Belum ada produk</p>
               )}
             </div>
 
             {/* Pelanggan */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm flex flex-col">
+            <div className="bg-background border border-border rounded-2xl p-6 shadow-sm flex flex-col">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-9 h-9 bg-emerald-50 rounded-lg flex items-center justify-center">
                     <Users className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Pelanggan</h3>
+                  <h3 className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">Pelanggan</h3>
                 </div>
-                <span className="text-2xl font-bold text-gray-900">{customerCount}</span>
+                <span className="text-2xl font-bold text-foreground">{customerCount}</span>
               </div>
               {customers.length > 0 ? (
                 <ul className="space-y-2 flex-1">
                   {customers.map((c) => (
-                    <li key={c.id} className="flex items-start justify-between gap-3 py-2 border-b border-gray-50 last:border-0">
+                    <li key={c.id} className="flex items-start justify-between gap-3 py-2 border-b border-border last:border-0">
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                        <p className="text-sm font-medium text-foreground truncate">
                           {c.name ?? c.email ?? "—"}
                         </p>
-                        <p className="text-xs text-gray-400 mt-0.5 truncate">
+                        <p className="text-xs text-foreground/40 mt-0.5 truncate">
                           {c.total_orders ?? 0} pesanan
                         </p>
                       </div>
-                      <span className="text-xs font-semibold text-gray-700 flex-shrink-0">
+                      <span className="text-xs font-semibold text-foreground/70 flex-shrink-0">
                         {formatIDR(c.total_spent)}
                       </span>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-xs text-gray-400 italic flex-1 flex items-center">Belum ada pelanggan</p>
+                <p className="text-xs text-foreground/40 italic flex-1 flex items-center">Belum ada pelanggan</p>
               )}
             </div>
 
             {/* Pesanan */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm flex flex-col">
+            <div className="bg-background border border-border rounded-2xl p-6 shadow-sm flex flex-col">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-9 h-9 bg-orange-50 rounded-lg flex items-center justify-center">
                     <Archive className="w-4 h-4 text-orange-600" />
                   </div>
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Pesanan</h3>
+                  <h3 className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">Pesanan</h3>
                 </div>
-                <span className="text-2xl font-bold text-gray-900">{orderCount}</span>
+                <span className="text-2xl font-bold text-foreground">{orderCount}</span>
               </div>
               {orders.length > 0 ? (
                 <ul className="space-y-2 flex-1">
@@ -551,17 +551,17 @@ export default async function StoreDetailPage({
                     const customer = Array.isArray(o.customers) ? o.customers[0] : o.customers;
                     const orderCfg = ORDER_STATUS_CONFIG[o.status] ?? ORDER_STATUS_CONFIG.pending;
                     return (
-                      <li key={o.id} className="py-2 border-b border-gray-50 last:border-0">
+                      <li key={o.id} className="py-2 border-b border-border last:border-0">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0 flex-1">
-                            <p className="text-sm font-medium text-gray-900 truncate font-mono">
+                            <p className="text-sm font-medium text-foreground truncate font-mono">
                               {o.order_number}
                             </p>
-                            <p className="text-xs text-gray-400 mt-0.5 truncate">
+                            <p className="text-xs text-foreground/40 mt-0.5 truncate">
                               {customer?.name ?? customer?.email ?? "Guest"}
                             </p>
                           </div>
-                          <span className="text-xs font-semibold text-gray-700 flex-shrink-0">
+                          <span className="text-xs font-semibold text-foreground/70 flex-shrink-0">
                             {formatIDR(o.total)}
                           </span>
                         </div>
@@ -573,14 +573,14 @@ export default async function StoreDetailPage({
                   })}
                 </ul>
               ) : (
-                <p className="text-xs text-gray-400 italic flex-1 flex items-center">Belum ada pesanan</p>
+                <p className="text-xs text-foreground/40 italic flex-1 flex items-center">Belum ada pesanan</p>
               )}
             </div>
           </div>
         </div>
       ) : (
-        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 text-center">
-          <p className="text-xs text-gray-500">
+        <div className="bg-muted border border-border rounded-2xl p-5 text-center">
+          <p className="text-xs text-foreground/60">
             Aktivitas toko (produk, pelanggan, pesanan) akan muncul setelah toko di-provisioning di storoengine.
           </p>
         </div>
@@ -588,8 +588,8 @@ export default async function StoreDetailPage({
 
       {/* Files uploaded */}
       {files.length > 0 && (
-        <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4 flex items-center gap-2">
+        <div className="bg-background border border-border rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xs font-semibold text-foreground/60 uppercase tracking-wide mb-4 flex items-center gap-2">
             <FileText className="w-3.5 h-3.5" />
             File Upload dari Klien ({files.length})
           </h2>
@@ -597,18 +597,18 @@ export default async function StoreDetailPage({
             {files.map((file, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between gap-3 p-3 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between gap-3 p-3 border border-border rounded-xl hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-4 h-4 text-gray-500" />
+                  <div className="w-9 h-9 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-4 h-4 text-foreground/60" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium text-foreground truncate">
                       {file.name ?? `File ${idx + 1}`}
                     </p>
                     {file.size != null && (
-                      <p className="text-xs text-gray-400">{(file.size / 1024).toFixed(1)} KB</p>
+                      <p className="text-xs text-foreground/40">{(file.size / 1024).toFixed(1)} KB</p>
                     )}
                   </div>
                 </div>
@@ -640,9 +640,9 @@ export default async function StoreDetailPage({
       )}
 
       {/* Status Update Form */}
-      <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-        <h2 className="font-semibold text-gray-900 mb-1">Update Status Store</h2>
-        <p className="text-xs text-gray-500 mb-5">
+      <div className="bg-background border border-border rounded-2xl p-6 shadow-sm">
+        <h2 className="font-semibold text-foreground mb-1">Update Status Store</h2>
+        <p className="text-xs text-foreground/60 mb-5">
           Perubahan akan langsung terlihat di dashboard klien.
           Set ke <strong>Live</strong> akan mengirim notifikasi otomatis + auto-stamp tanggal go-live.
         </p>
@@ -669,11 +669,11 @@ function InfoRow({
 }) {
   return (
     <div className="flex items-start justify-between gap-4">
-      <dt className="text-xs text-gray-500 flex items-center gap-1.5 flex-shrink-0 pt-0.5">
+      <dt className="text-xs text-foreground/60 flex items-center gap-1.5 flex-shrink-0 pt-0.5">
         <Icon className="w-3.5 h-3.5" />
         {label}
       </dt>
-      <dd className="text-sm font-medium text-gray-900 text-right min-w-0 max-w-[65%]">
+      <dd className="text-sm font-medium text-foreground text-right min-w-0 max-w-[65%]">
         {children}
       </dd>
     </div>

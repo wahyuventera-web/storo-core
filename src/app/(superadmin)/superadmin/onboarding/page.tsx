@@ -64,33 +64,33 @@ export default async function OnboardingQueuePage({
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Onboarding Queue</h1>
-          <p className="text-gray-500 mt-1 text-sm">Kelola permintaan onboarding klien</p>
+          <h1 className="text-2xl font-bold text-foreground">Onboarding Queue</h1>
+          <p className="text-foreground/60 mt-1 text-sm">Kelola permintaan onboarding klien</p>
         </div>
         <Link
           href="/superadmin/onboarding"
-          className="text-sm text-blue-400 hover:text-blue-500 font-medium border border-blue-200 px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors"
+          className="text-sm text-primary hover:text-primary/80 font-medium border border-border px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
         >
           Refresh
         </Link>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex gap-1 bg-white border border-gray-100 rounded-xl p-1 w-fit shadow-sm">
+      <div className="flex gap-1 bg-background border border-border rounded-xl p-1 w-fit">
         {tabs.map((tab) => (
           <Link
             key={tab.key}
             href={tab.key === "all" ? "/superadmin/onboarding" : `/superadmin/onboarding?status=${tab.key}`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               activeFilter === tab.key
-                ? "bg-slate-700 text-white"
-                : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                ? "bg-primary text-primary-foreground"
+                : "text-foreground/60 hover:text-foreground hover:bg-gray-50"
             }`}
           >
             {tab.label}
             <span
               className={`text-xs px-1.5 py-0.5 rounded-full font-mono ${
-                activeFilter === tab.key ? "bg-slate-600 text-white" : "bg-gray-100 text-gray-600"
+                activeFilter === tab.key ? "bg-primary/80 text-primary-foreground" : "bg-muted text-foreground/60"
               }`}
             >
               {tab.count}
@@ -100,54 +100,54 @@ export default async function OnboardingQueuePage({
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-background border border-border rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100 bg-gray-50">
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase w-10">
+              <tr className="bg-muted border-b border-border">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase w-10">
                   No
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase">
                   Klien
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase">
                   Kontak WA
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase">
                   Paket
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase">
                   Template
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase">
                   Status
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase">
                   Tanggal Daftar
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-3 px-4 font-medium text-foreground/60 text-xs uppercase">
                   Aksi
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border">
               {filtered.length > 0 ? (
                 filtered.map((req, idx) => {
                   const status = (req.status as StatusKey) ?? "pending";
                   const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.pending;
                   const client = req.clients as { full_name?: string; phone?: string } | null;
                   return (
-                    <tr key={req.id} className="border-b border-gray-50 hover:bg-gray-50">
-                      <td className="py-3 px-4 text-gray-400 text-xs">{idx + 1}</td>
-                      <td className="py-3 px-4 font-medium text-gray-900">
+                    <tr key={req.id} className="hover:bg-gray-50">
+                      <td className="py-3 px-4 text-foreground/40 text-xs">{idx + 1}</td>
+                      <td className="py-3 px-4 font-medium text-foreground">
                         {client?.full_name ?? "-"}
                       </td>
-                      <td className="py-3 px-4 text-gray-600 font-mono text-xs">
+                      <td className="py-3 px-4 text-foreground/70 font-mono text-xs">
                         {client?.phone ?? "-"}
                       </td>
-                      <td className="py-3 px-4 capitalize text-gray-600">{req.plan}</td>
-                      <td className="py-3 px-4 text-gray-600">{req.template_name ?? "-"}</td>
+                      <td className="py-3 px-4 capitalize text-foreground/70">{req.plan}</td>
+                      <td className="py-3 px-4 text-foreground/70">{req.template_name ?? "-"}</td>
                       <td className="py-3 px-4">
                         <span
                           className={`inline-flex text-xs font-medium px-2 py-1 rounded-full border ${config.color}`}
@@ -155,13 +155,13 @@ export default async function OnboardingQueuePage({
                           {config.label}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-gray-500 text-xs">
+                      <td className="py-3 px-4 text-foreground/60 text-xs">
                         {formatDate(req.created_at)}
                       </td>
                       <td className="py-3 px-4">
                         <Link
                           href={`/superadmin/stores/${req.id}`}
-                          className="text-blue-400 hover:text-blue-600 text-xs font-medium hover:underline"
+                          className="text-primary hover:text-primary/80 text-xs font-medium hover:underline"
                         >
                           Detail
                         </Link>
@@ -171,7 +171,7 @@ export default async function OnboardingQueuePage({
                 })
               ) : (
                 <tr>
-                  <td colSpan={8} className="py-10 text-center text-gray-400 text-sm">
+                  <td colSpan={8} className="py-10 text-center text-foreground/40 text-sm">
                     Tidak ada data untuk filter ini
                   </td>
                 </tr>

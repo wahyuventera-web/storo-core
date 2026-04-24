@@ -88,22 +88,22 @@ export default function NewDisbursementPage() {
     <div className="max-w-2xl mx-auto space-y-6">
       <Link
         href="/superadmin/disbursements"
-        className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-foreground transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Kembali ke Disbursement
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Buat Disbursement</h1>
-        <p className="text-gray-500 mt-1 text-sm">Isi detail disbursement untuk store</p>
+        <h1 className="text-2xl font-bold text-foreground">Buat Disbursement</h1>
+        <p className="text-foreground/60 mt-1 text-sm">Isi detail disbursement untuk store</p>
       </div>
 
-      <div className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm">
+      <div className="bg-background border border-border rounded-xl p-6 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Store */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-foreground mb-1">
               Store <span className="text-red-400">*</span>
             </label>
             <select
@@ -111,7 +111,7 @@ export default function NewDisbursementPage() {
               value={form.storeId}
               onChange={handleChange}
               required
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="">Pilih store...</option>
               {stores.map((s) => (
@@ -124,7 +124,7 @@ export default function NewDisbursementPage() {
 
           {/* Period */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-foreground mb-1">
               Periode <span className="text-red-400">*</span>
             </label>
             <input
@@ -134,13 +134,13 @@ export default function NewDisbursementPage() {
               onChange={handleChange}
               placeholder="cth. Maret 2025"
               required
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
           {/* Gross Amount */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-foreground mb-1">
               Gross Amount (Rp) <span className="text-red-400">*</span>
             </label>
             <input
@@ -151,14 +151,14 @@ export default function NewDisbursementPage() {
               placeholder="0"
               min="0"
               required
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
           {/* Fee row */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 PG Fee %
               </label>
               <input
@@ -169,11 +169,11 @@ export default function NewDisbursementPage() {
                 min="0"
                 max="100"
                 step="0.1"
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Ops Fee %
               </label>
               <input
@@ -184,32 +184,32 @@ export default function NewDisbursementPage() {
                 min="0"
                 max="100"
                 step="0.1"
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
 
           {/* Breakdown preview */}
           {gross > 0 && (
-            <div className="bg-gray-50 rounded-lg p-4 space-y-2 text-sm">
+            <div className="bg-muted rounded-lg p-4 space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">Gross</span>
-                <span className="font-mono text-gray-900">{formatCurrency(gross)}</span>
+                <span className="text-foreground/70">Gross</span>
+                <span className="font-mono text-foreground">{formatCurrency(gross)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">
+                <span className="text-foreground/70">
                   PG Fee ({form.pgFeePct}%)
                 </span>
                 <span className="font-mono text-red-500">- {formatCurrency(pgFee)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">
+                <span className="text-foreground/70">
                   Ops Fee ({form.opsFeePct}%)
                 </span>
                 <span className="font-mono text-red-500">- {formatCurrency(opsFee)}</span>
               </div>
-              <div className="flex justify-between border-t border-gray-200 pt-2 font-semibold">
-                <span className="text-gray-900">Net Amount</span>
+              <div className="flex justify-between border-t border-border pt-2 font-semibold">
+                <span className="text-foreground">Net Amount</span>
                 <span className="font-mono text-green-600">{formatCurrency(net)}</span>
               </div>
             </div>
@@ -217,14 +217,14 @@ export default function NewDisbursementPage() {
 
           {/* Net Amount (read-only display) */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-foreground mb-1">
               Net Amount (otomatis)
             </label>
             <input
               type="text"
               value={formatCurrency(net)}
               readOnly
-              className="w-full border border-gray-100 bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-600 cursor-not-allowed"
+              className="w-full border border-border bg-muted rounded-lg px-3 py-2 text-sm text-foreground/60 cursor-not-allowed"
             />
           </div>
 
@@ -238,13 +238,13 @@ export default function NewDisbursementPage() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               {loading ? "Menyimpan..." : "Buat Disbursement"}
             </button>
             <Link
               href="/superadmin/disbursements"
-              className="border border-gray-200 text-gray-600 hover:bg-gray-50 text-sm font-medium px-5 py-2 rounded-lg transition-colors"
+              className="border border-border text-foreground/70 hover:bg-muted text-sm font-medium px-5 py-2 rounded-lg transition-colors"
             >
               Batal
             </Link>

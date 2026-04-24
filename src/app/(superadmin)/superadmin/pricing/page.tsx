@@ -102,7 +102,7 @@ export default function PricingPage() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto">
-        <div className="text-center py-20 text-gray-400">Memuat data...</div>
+        <div className="text-center py-20 text-foreground/40">Memuat data...</div>
       </div>
     );
   }
@@ -110,8 +110,8 @@ export default function PricingPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Pricing & Plans</h1>
-        <p className="text-gray-500 mt-1 text-sm">Kelola harga paket platform</p>
+        <h1 className="text-2xl font-bold text-foreground">Pricing & Plans</h1>
+        <p className="text-foreground/60 mt-1 text-sm">Kelola harga paket platform</p>
       </div>
 
       {!tableExists && (
@@ -124,16 +124,16 @@ export default function PricingPage() {
         {PLANS.map((plan) => (
           <div
             key={plan.key}
-            className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm space-y-4"
+            className="bg-background border border-border rounded-xl p-5 space-y-4"
           >
             <div>
-              <h2 className="font-semibold text-gray-900 text-lg">{plan.name}</h2>
-              <p className="text-xs text-gray-400 mt-0.5">Paket {plan.name}</p>
+              <h2 className="font-semibold text-foreground text-lg">{plan.name}</h2>
+              <p className="text-xs text-foreground/40 mt-0.5">Paket {plan.name}</p>
             </div>
 
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">
+                <label className="block text-xs font-medium text-foreground/70 mb-1">
                   Setup Price
                 </label>
                 <input
@@ -146,15 +146,15 @@ export default function PricingPage() {
                     }))
                   }
                   disabled={!tableExists}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                  className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed"
                 />
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-foreground/40 mt-1">
                   {formatCurrency(prices[plan.key]?.setup ?? plan.defaultSetup)}
                 </p>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">
+                <label className="block text-xs font-medium text-foreground/70 mb-1">
                   Monthly Price
                 </label>
                 <input
@@ -167,9 +167,9 @@ export default function PricingPage() {
                     }))
                   }
                   disabled={!tableExists}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                  className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed"
                 />
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-foreground/40 mt-1">
                   {formatCurrency(prices[plan.key]?.monthly ?? plan.defaultMonthly)}
                 </p>
               </div>
@@ -190,7 +190,7 @@ export default function PricingPage() {
             <button
               onClick={() => handleSave(plan.key)}
               disabled={!tableExists || saving[plan.key]}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="w-full bg-primary hover:bg-primary/90 text-white text-sm font-medium py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {saving[plan.key] ? "Menyimpan..." : "Simpan"}
             </button>

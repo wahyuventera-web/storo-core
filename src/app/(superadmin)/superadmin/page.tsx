@@ -119,8 +119,8 @@ export default async function SuperadminOverviewPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
-        <p className="text-gray-500 mt-1 text-sm">Ringkasan platform Storo.id</p>
+        <h1 className="text-2xl font-bold text-foreground">Overview</h1>
+        <p className="text-foreground/60 mt-1 text-sm">Ringkasan platform Storo.id</p>
       </div>
 
       {/* KPI Cards */}
@@ -128,26 +128,26 @@ export default async function SuperadminOverviewPage() {
         {kpis.map(({ label, value, icon: Icon, color, bg }) => (
           <div
             key={label}
-            className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm"
+            className="bg-background border border-border rounded-xl p-5"
           >
             <div className="flex items-center gap-3 mb-3">
               <div className={`w-9 h-9 ${bg} rounded-lg flex items-center justify-center`}>
                 <Icon className={`w-4.5 h-4.5 ${color}`} />
               </div>
-              <span className="text-xs text-gray-500 font-medium">{label}</span>
+              <span className="text-xs text-foreground/60 font-medium">{label}</span>
             </div>
-            <p className="text-2xl font-bold text-gray-900">{value}</p>
+            <p className="text-2xl font-bold text-foreground">{value}</p>
           </div>
         ))}
       </div>
 
       {/* Recent Onboarding */}
-      <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
+      <div className="bg-background border border-border rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-900">Onboarding Terbaru</h2>
+          <h2 className="font-semibold text-foreground">Onboarding Terbaru</h2>
           <Link
             href="/superadmin/onboarding"
-            className="text-sm text-blue-400 hover:text-blue-500 font-medium"
+            className="text-sm text-primary hover:text-primary/80 font-medium"
           >
             Lihat Semua
           </Link>
@@ -155,22 +155,22 @@ export default async function SuperadminOverviewPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100">
-                <th className="text-left py-2 pr-4 font-medium text-gray-500 text-xs uppercase">
+              <tr className="bg-muted">
+                <th className="text-left py-2 pr-4 font-medium text-foreground/60 text-xs uppercase">
                   Klien
                 </th>
-                <th className="text-left py-2 pr-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-2 pr-4 font-medium text-foreground/60 text-xs uppercase">
                   Plan
                 </th>
-                <th className="text-left py-2 pr-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-2 pr-4 font-medium text-foreground/60 text-xs uppercase">
                   Status
                 </th>
-                <th className="text-left py-2 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-2 font-medium text-foreground/60 text-xs uppercase">
                   Tanggal
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border">
               {recentOnboarding && recentOnboarding.length > 0 ? (
                 recentOnboarding.map((req) => {
                   const status = (req.status as keyof typeof STATUS_CONFIG) ?? "pending";
@@ -178,9 +178,9 @@ export default async function SuperadminOverviewPage() {
                   const clientName =
                     (req.clients as { full_name?: string } | null)?.full_name ?? "-";
                   return (
-                    <tr key={req.id} className="border-b border-gray-50 hover:bg-gray-50">
-                      <td className="py-3 pr-4 font-medium text-gray-900">{clientName}</td>
-                      <td className="py-3 pr-4 capitalize text-gray-600">{req.plan}</td>
+                    <tr key={req.id} className="hover:bg-gray-50">
+                      <td className="py-3 pr-4 font-medium text-foreground">{clientName}</td>
+                      <td className="py-3 pr-4 capitalize text-foreground/70">{req.plan}</td>
                       <td className="py-3 pr-4">
                         <span
                           className={`inline-flex text-xs font-medium px-2 py-1 rounded-full border ${config.color}`}
@@ -188,13 +188,13 @@ export default async function SuperadminOverviewPage() {
                           {config.label}
                         </span>
                       </td>
-                      <td className="py-3 text-gray-500 text-xs">{formatDate(req.created_at)}</td>
+                      <td className="py-3 text-foreground/60 text-xs">{formatDate(req.created_at)}</td>
                     </tr>
                   );
                 })
               ) : (
                 <tr>
-                  <td colSpan={4} className="py-6 text-center text-gray-400 text-sm">
+                  <td colSpan={4} className="py-6 text-center text-foreground/40 text-sm">
                     Belum ada data onboarding
                   </td>
                 </tr>
@@ -205,12 +205,12 @@ export default async function SuperadminOverviewPage() {
       </div>
 
       {/* Recent Invoices */}
-      <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
+      <div className="bg-background border border-border rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-900">Invoice Terbaru</h2>
+          <h2 className="font-semibold text-foreground">Invoice Terbaru</h2>
           <Link
             href="/superadmin/billing"
-            className="text-sm text-blue-400 hover:text-blue-500 font-medium"
+            className="text-sm text-primary hover:text-primary/80 font-medium"
           >
             Lihat Semua
           </Link>
@@ -218,30 +218,30 @@ export default async function SuperadminOverviewPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100">
-                <th className="text-left py-2 pr-4 font-medium text-gray-500 text-xs uppercase">
+              <tr className="bg-muted">
+                <th className="text-left py-2 pr-4 font-medium text-foreground/60 text-xs uppercase">
                   Klien
                 </th>
-                <th className="text-left py-2 pr-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-2 pr-4 font-medium text-foreground/60 text-xs uppercase">
                   Jumlah
                 </th>
-                <th className="text-left py-2 pr-4 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-2 pr-4 font-medium text-foreground/60 text-xs uppercase">
                   Status
                 </th>
-                <th className="text-left py-2 font-medium text-gray-500 text-xs uppercase">
+                <th className="text-left py-2 font-medium text-foreground/60 text-xs uppercase">
                   Tanggal
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border">
               {recentInvoices && recentInvoices.length > 0 ? (
                 recentInvoices.map((inv) => {
                   const clientName =
                     (inv.clients as { full_name?: string } | null)?.full_name ?? "-";
                   return (
-                    <tr key={inv.id} className="border-b border-gray-50 hover:bg-gray-50">
-                      <td className="py-3 pr-4 font-medium text-gray-900">{clientName}</td>
-                      <td className="py-3 pr-4 text-gray-900 font-mono text-xs">
+                    <tr key={inv.id} className="hover:bg-gray-50">
+                      <td className="py-3 pr-4 font-medium text-foreground">{clientName}</td>
+                      <td className="py-3 pr-4 text-foreground font-mono text-xs">
                         {formatCurrency(inv.amount)}
                       </td>
                       <td className="py-3 pr-4">
@@ -257,13 +257,13 @@ export default async function SuperadminOverviewPage() {
                           {inv.status === "paid" ? "Lunas" : inv.status === "overdue" ? "Jatuh Tempo" : "Pending"}
                         </span>
                       </td>
-                      <td className="py-3 text-gray-500 text-xs">{formatDate(inv.created_at)}</td>
+                      <td className="py-3 text-foreground/60 text-xs">{formatDate(inv.created_at)}</td>
                     </tr>
                   );
                 })
               ) : (
                 <tr>
-                  <td colSpan={4} className="py-6 text-center text-gray-400 text-sm">
+                  <td colSpan={4} className="py-6 text-center text-foreground/40 text-sm">
                     Belum ada data invoice
                   </td>
                 </tr>

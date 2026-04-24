@@ -63,7 +63,7 @@ const STATUS_BADGE: Record<
   },
   archived: {
     label: "Archived",
-    className: "bg-slate-100 text-slate-600 border-slate-200",
+    className: "bg-gray-100 text-gray-600 border-gray-200",
     Icon: PauseCircle,
   },
 };
@@ -109,9 +109,9 @@ export default function TemplateCard({
   }, [menuOpen]);
 
   return (
-    <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+    <div className="bg-background border border-border rounded-xl overflow-hidden flex flex-col hover:shadow-md transition-shadow">
       {/* Thumbnail */}
-      <div className="aspect-video bg-gradient-to-br from-slate-100 to-slate-200 relative">
+      <div className="aspect-video bg-gradient-to-br from-muted to-gray-100 relative">
         {template.preview_image_url ? (
           <Image
             src={template.preview_image_url}
@@ -128,7 +128,7 @@ export default function TemplateCard({
           </div>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <Layers className="w-10 h-10 text-slate-300" />
+            <Layers className="w-10 h-10 text-foreground/20" />
           </div>
         )}
 
@@ -148,19 +148,19 @@ export default function TemplateCard({
         <div className="absolute top-3 right-3" ref={menuRef}>
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-slate-600 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-foreground/60 transition-colors cursor-pointer"
             title="Menu"
           >
             <MoreVertical className="w-4 h-4" />
           </button>
           {menuOpen && (
-            <div className="absolute right-0 top-10 w-44 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1 text-sm">
+            <div className="absolute right-0 top-10 w-44 bg-background border border-border rounded-lg shadow-lg z-10 py-1 text-sm">
               <button
                 onClick={() => {
                   setMenuOpen(false);
                   onEdit(template);
                 }}
-                className="w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-2 text-gray-700 cursor-pointer"
+                className="w-full text-left px-3 py-2 hover:bg-muted flex items-center gap-2 text-foreground/70 cursor-pointer"
               >
                 <Pencil className="w-3.5 h-3.5" /> Edit Detail
               </button>
@@ -170,7 +170,7 @@ export default function TemplateCard({
                   onRedeploy(template);
                 }}
                 disabled={!template.id || template.deploy_status === "deploying"}
-                className="w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-2 text-gray-700 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full text-left px-3 py-2 hover:bg-muted flex items-center gap-2 text-foreground/70 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <RefreshCw className="w-3.5 h-3.5" /> Redeploy
               </button>
@@ -179,7 +179,7 @@ export default function TemplateCard({
                   setMenuOpen(false);
                   onToggleActive(template);
                 }}
-                className="w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-2 text-gray-700 cursor-pointer"
+                className="w-full text-left px-3 py-2 hover:bg-muted flex items-center gap-2 text-foreground/70 cursor-pointer"
               >
                 {template.is_active ? "Nonaktifkan" : "Aktifkan"}
               </button>
@@ -188,11 +188,11 @@ export default function TemplateCard({
                   setMenuOpen(false);
                   onViewLogs(template);
                 }}
-                className="w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-2 text-gray-700 cursor-pointer"
+                className="w-full text-left px-3 py-2 hover:bg-muted flex items-center gap-2 text-foreground/70 cursor-pointer"
               >
                 Lihat Log
               </button>
-              <div className="border-t border-gray-100 my-1" />
+              <div className="border-t border-border my-1" />
               <button
                 onClick={() => {
                   setMenuOpen(false);
@@ -210,26 +210,26 @@ export default function TemplateCard({
       {/* Body */}
       <div className="p-4 flex-1 flex flex-col">
         <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-semibold text-gray-900 text-sm leading-tight">
+          <h3 className="font-semibold text-foreground text-sm leading-tight">
             {template.display_name}
           </h3>
           {template.category && (
-            <span className="text-[10px] uppercase tracking-wide text-slate-400 font-medium flex-shrink-0">
+            <span className="text-[10px] uppercase tracking-wide text-foreground/40 font-medium flex-shrink-0">
               {template.category}
             </span>
           )}
         </div>
-        <p className="text-xs text-gray-500 mb-3 line-clamp-2 flex-1">
+        <p className="text-xs text-foreground/60 mb-3 line-clamp-2 flex-1">
           {template.description || "Tanpa deskripsi"}
         </p>
 
         {/* Pricing override */}
         {(template.price_setup_override || template.price_monthly_override) && (
-          <div className="text-[11px] text-slate-500 mb-3 flex gap-3">
+          <div className="text-[11px] text-foreground/50 mb-3 flex gap-3">
             {template.price_setup_override && (
               <span>
                 Setup:{" "}
-                <span className="font-medium text-slate-700">
+                <span className="font-medium text-foreground/70">
                   Rp {formatRupiah(template.price_setup_override)}
                 </span>
               </span>
@@ -237,7 +237,7 @@ export default function TemplateCard({
             {template.price_monthly_override && (
               <span>
                 /bulan:{" "}
-                <span className="font-medium text-slate-700">
+                <span className="font-medium text-foreground/70">
                   Rp {formatRupiah(template.price_monthly_override)}
                 </span>
               </span>
@@ -258,7 +258,7 @@ export default function TemplateCard({
               href={template.demo_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-medium border border-gray-200 rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors cursor-pointer"
+              className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-medium border border-border rounded-lg px-3 py-2 hover:bg-muted transition-colors cursor-pointer"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               Buka Demo
@@ -266,7 +266,7 @@ export default function TemplateCard({
           ) : (
             <button
               disabled
-              className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-medium border border-gray-100 rounded-lg px-3 py-2 text-gray-300 cursor-not-allowed"
+              className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-medium border border-border rounded-lg px-3 py-2 text-foreground/30 cursor-not-allowed"
             >
               Belum tersedia
             </button>

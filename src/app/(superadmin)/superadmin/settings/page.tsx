@@ -88,7 +88,7 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto">
-        <div className="text-center py-20 text-gray-400">Memuat pengaturan...</div>
+        <div className="text-center py-20 text-foreground/40">Memuat pengaturan...</div>
       </div>
     );
   }
@@ -96,10 +96,10 @@ export default function SettingsPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center gap-3">
-        <Settings className="w-6 h-6 text-slate-500" />
+        <Settings className="w-6 h-6 text-foreground/60" />
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Pengaturan</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Konfigurasi platform Storo.id</p>
+          <h1 className="text-2xl font-bold text-foreground">Pengaturan</h1>
+          <p className="text-foreground/60 text-sm mt-0.5">Konfigurasi platform Storo.id</p>
         </div>
       </div>
 
@@ -113,16 +113,16 @@ export default function SettingsPage() {
         </div>
       )}
 
-      <div className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm space-y-5">
+      <div className="bg-background border border-border rounded-xl p-6 space-y-5">
         {FIELDS.map((field) => (
           <div key={field.key}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">{field.label}</label>
+            <label className="block text-sm font-medium text-foreground/70 mb-1">{field.label}</label>
             {field.type === "select" ? (
               <select
                 value={values[field.key] ?? DEFAULT_SETTINGS[field.key]}
                 onChange={(e) => setValues((prev) => ({ ...prev, [field.key]: e.target.value }))}
                 disabled={!tableExists}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed"
               >
                 {field.options?.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -136,7 +136,7 @@ export default function SettingsPage() {
                 value={values[field.key] ?? DEFAULT_SETTINGS[field.key]}
                 onChange={(e) => setValues((prev) => ({ ...prev, [field.key]: e.target.value }))}
                 disabled={!tableExists}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed"
               />
             )}
           </div>
@@ -157,7 +157,7 @@ export default function SettingsPage() {
         <button
           onClick={handleSave}
           disabled={!tableExists || saving}
-          className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           {saving ? "Menyimpan..." : "Simpan Pengaturan"}
         </button>

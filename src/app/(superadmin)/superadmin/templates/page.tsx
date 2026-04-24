@@ -251,8 +251,8 @@ export default function TemplatesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Template Gallery</h1>
-          <p className="text-gray-500 mt-1 text-sm">
+          <h1 className="text-2xl font-bold text-foreground">Template Gallery</h1>
+          <p className="text-foreground/60 mt-1 text-sm">
             Kelola template storoengine yang tersedia. Tambah baru = otomatis deploy ke
             Vercel + DNS Cloudflare.
           </p>
@@ -260,7 +260,7 @@ export default function TemplatesPage() {
         <div className="flex items-center gap-2">
           <button
             onClick={fetchTemplates}
-            className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-sm text-foreground/60 hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted transition-colors cursor-pointer"
             title="Refresh"
           >
             <RefreshCw className="w-4 h-4" />
@@ -296,13 +296,13 @@ export default function TemplatesPage() {
 
       {/* Grid */}
       {loading ? (
-        <div className="flex items-center justify-center py-16 text-gray-400">
+        <div className="flex items-center justify-center py-16 text-foreground/40">
           <Loader2 className="w-5 h-5 animate-spin mr-2" />
           <span className="text-sm">Memuat template...</span>
         </div>
       ) : templates.length === 0 ? (
-        <div className="text-center py-16 bg-white border border-dashed border-gray-200 rounded-xl">
-          <p className="text-sm text-gray-500 mb-4">Belum ada template.</p>
+        <div className="text-center py-16 bg-background border border-dashed border-border rounded-xl">
+          <p className="text-sm text-foreground/60 mb-4">Belum ada template.</p>
           <button
             onClick={() => setShowAddModal(true)}
             className="inline-flex items-center gap-2 bg-[#4169df] hover:bg-[#3458c8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer"

@@ -42,14 +42,10 @@ export default async function SuperadminLayout({
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
       <SuperadminSidebar />
-
-      {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Topbar */}
-        <div className="h-14 bg-white border-b border-gray-100 flex items-center px-6 text-sm text-gray-500 flex-shrink-0">
-          Storo Admin Panel
+        <div className="h-16 bg-background border-b border-border flex items-center px-6 flex-shrink-0">
+          <span className="text-sm font-medium text-foreground/50">Admin Panel</span>
         </div>
         <main className="flex-1 p-6 overflow-auto">{children}</main>
       </div>

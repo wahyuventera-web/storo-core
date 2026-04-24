@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -15,6 +16,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import storoLogo from "@/assets/storo-logo.png";
 
 const navItems = [
   { href: "/superadmin", label: "Overview", icon: LayoutDashboard, exact: true },
@@ -45,10 +47,17 @@ export default function SuperadminSidebar() {
   };
 
   return (
-    <aside className="flex flex-col bg-slate-900 w-56 min-h-screen flex-shrink-0">
+    <aside className="flex flex-col bg-background border-r border-border w-56 min-h-screen flex-shrink-0">
       {/* Logo */}
-      <div className="flex items-center h-14 px-5 border-b border-slate-800 flex-shrink-0">
-        <span className="text-white font-bold text-base tracking-tight">⚙ Storo Admin</span>
+      <div className="flex items-center h-16 px-5 border-b border-border flex-shrink-0">
+        <Image
+          src={storoLogo}
+          alt="Storo.id"
+          height={28}
+          width={90}
+          className="h-7 w-auto object-contain"
+          priority
+        />
       </div>
 
       {/* Nav items */}
@@ -61,8 +70,8 @@ export default function SuperadminSidebar() {
               href={href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                 active
-                  ? "bg-slate-700 text-white"
-                  : "text-slate-400 hover:text-white hover:bg-slate-800"
+                  ? "bg-primary/10 text-primary"
+                  : "text-foreground/70 hover:text-foreground hover:bg-muted"
               }`}
             >
               <Icon className="w-4 h-4 flex-shrink-0" />
@@ -73,10 +82,10 @@ export default function SuperadminSidebar() {
       </nav>
 
       {/* Sign out */}
-      <div className="px-2 pb-4 border-t border-slate-800 pt-3">
+      <div className="px-2 pb-4 border-t border-border pt-3">
         <button
           onClick={handleSignOut}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-red-400 hover:bg-slate-800 transition-colors w-full cursor-pointer"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-foreground/70 hover:text-red-500 hover:bg-red-50 transition-colors w-full cursor-pointer"
         >
           <LogOut className="w-4 h-4 flex-shrink-0" />
           <span>Keluar</span>
