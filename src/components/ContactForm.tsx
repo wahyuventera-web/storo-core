@@ -22,7 +22,7 @@ const ContactForm = () => {
     
     try {
       // Save lead to database via edge function
-      const response = await fetch('https://wfthvovlhphnrodrqxqt.supabase.co/functions/v1/leads-collector', {
+      const response = await fetch('https://unpqekghcpjclzvpeyse.supabase.co/functions/v1/leads-collector', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
