@@ -1,0 +1,79 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          command_timeout: 30m
+          script: |
+            set -euo pipefail
+
+            APP_DIR=/var/www/html/storo-id-landingpage
+            STAGE_DIR=/var/www/html/storo-id-landingpage-stage
+            BRANCH=main
+            PM2_NAME=storo-id
+
+            echo "==> [1/6] Siapkan stage directory"
+            if [ ! -d "$STAGE_DIR/.git" ]; then
+              REMOTE_URL="$(cd "$APP_DIR" && git remote get-url origin)"
+              git clone -b "$BRANCH" "$REMOTE_URL" "$STAGE_DIR"
+            fi
+
+            echo "==> [2/6] Sync stage ke commit terbaru origin/$BRANCH"
+            cd "$STAGE_DIR"
+            git fetch origin "$BRANCH"
+            git reset --hard "origin/$BRANCH"
+            git clean -fd -e node_modules -e .next
+
+            echo "==> [3/6] Salin env dari production ke stage"
+            cp "$APP_DIR/.env" "$STAGE_DIR/.env" 2>/dev/null || true
+            cp "$APP_DIR/.env.local" "$STAGE_DIR/.env.local" 2>/dev/null || true
+
+            echo "==> [4/6] Install dependencies & build di stage"
+            npm ci
+            npm run build
+
+            echo "==> [5/6] Swap artifacts ke production (production tidak diutak-atik sebelum titik ini)"
+            cd "$APP_DIR"
+            git fetch origin "$BRANCH"
+            git reset --hard "origin/$BRANCH"
+            git clean -fd -e .env -e .env.local -e node_modules -e .next
+
+            rm -rf "$APP_DIR/.next.old" "$APP_DIR/node_modules.old"
+            [ -d "$APP_DIR/.next" ] && mv "$APP_DIR/.next" "$APP_DIR/.next.old"
+            [ -d "$APP_DIR/node_modules" ] && mv "$APP_DIR/node_modules" "$APP_DIR/node_modules.old"
+
+            cp -al "$STAGE_DIR/.next" "$APP_DIR/.next" 2>/dev/null \
+              || cp -r "$STAGE_DIR/.next" "$APP_DIR/.next"
+            cp -al "$STAGE_DIR/node_modules" "$APP_DIR/node_modules" 2>/dev/null \
+              || cp -r "$STAGE_DIR/node_modules" "$APP_DIR/node_modules"
+
+            echo "==> [6/6] Restart pm2"
+            cd "$APP_DIR"
+            if pm2 describe "$PM2_NAME" >/dev/null 2>&1; then
+              pm2 reload "$PM2_NAME" --update-env
+            else
+              pm2 start ecosystem.config.js
+            fi
+            pm2 save
+
+            echo "==> Cleanup artefak lama"
+            rm -rf "$APP_DIR/.next.old" "$APP_DIR/node_modules.old"
+
+            echo "==> Deploy sukses pada $(date -Iseconds)"
