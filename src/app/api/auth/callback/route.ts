@@ -9,8 +9,11 @@ export async function GET(request: Request) {
 
   // Di belakang Apache reverse proxy, request.url pakai socket lokal Next.js
   // (localhost:3000) bukan host asli. Construct origin dari forwarded headers.
-  const forwardedHost = request.headers.get("x-forwarded-host");
-  const forwardedProto = request.headers.get("x-forwarded-proto");
+  // Headers bisa di-append jadi "host1, host2" oleh proxy chain (Cloudflare → Apache),
+  // jadi ambil nilai pertama saja.
+  const firstValue = (h: string | null) => h?.split(",")[0].trim() || null;
+  const forwardedHost = firstValue(request.headers.get("x-forwarded-host"));
+  const forwardedProto = firstValue(request.headers.get("x-forwarded-proto"));
   const host = forwardedHost || request.headers.get("host") || "storo.id";
   const proto = forwardedProto || (host.startsWith("localhost") ? "http" : "https");
   const origin = `${proto}://${host}`;
