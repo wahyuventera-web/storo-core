@@ -2,10 +2,18 @@ import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/dashboard";
   const popup = searchParams.get("popup");
+
+  // Di belakang Apache reverse proxy, request.url pakai socket lokal Next.js
+  // (localhost:3000) bukan host asli. Construct origin dari forwarded headers.
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const forwardedProto = request.headers.get("x-forwarded-proto");
+  const host = forwardedHost || request.headers.get("host") || "storo.id";
+  const proto = forwardedProto || (host.startsWith("localhost") ? "http" : "https");
+  const origin = `${proto}://${host}`;
 
   if (code) {
     const supabase = await createSupabaseServerClient();
