@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { createClient as createSupabaseAdmin } from "@supabase/supabase-js";
+import {
+  createSupabaseServerClient,
+  createSupabaseServiceClient,
+} from "@/lib/supabase/server";
 import Link from "next/link";
 import OnboardingFilters from "@/components/superadmin/OnboardingFilters";
 
@@ -29,10 +31,10 @@ export default async function OnboardingQueuePage({
 }: {
   searchParams: Promise<{ status?: string; page?: string; pageSize?: string; q?: string }>;
 }) {
-  const sessionClient = await createSupabaseServerClient();
+  const authClient = await createSupabaseServerClient();
   const {
     data: { user },
-  } = await sessionClient.auth.getUser();
+  } = await authClient.auth.getUser();
 
   if (!user) redirect("/sign-in");
   const params = await searchParams;
@@ -45,16 +47,11 @@ export default async function OnboardingQueuePage({
   const requestedPage = Math.max(1, parseInt(params.page ?? "1", 10) || 1);
   const searchQuery = (params.q ?? "").trim();
 
-  // Layout sudah gating superadmin → pakai service role di sini supaya RLS
-  // tidak filter `onboarding_requests` ke milik user login saja, dan supaya
-  // bisa baca `onboarding_leads` (RLS `FOR ALL USING (false)`).
-  const adminClient = createSupabaseAdmin(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false, autoRefreshToken: false } }
-  );
+  // Service client supaya bypass RLS dan menampilkan SEMUA permintaan onboarding,
+  // termasuk akses ke `onboarding_leads` (RLS `FOR ALL USING (false)`).
+  const supabase = await createSupabaseServiceClient();
 
-  const { data: requests } = await adminClient
+  const { data: requests } = await supabase
     .from("onboarding_requests")
     .select(
       "id, status, plan, template_name, store_url, requested_slug, custom_domain, client_id, created_at, clients(full_name, phone)"
@@ -67,7 +64,7 @@ export default async function OnboardingQueuePage({
     new Set(all.map((r) => r.client_id).filter((id): id is string => Boolean(id)))
   );
   const { data: leads } = clientIds.length
-    ? await adminClient
+    ? await supabase
         .from("onboarding_leads")
         .select("client_id, email, created_at")
         .in("client_id", clientIds)
@@ -85,7 +82,7 @@ export default async function OnboardingQueuePage({
   // ambil email dari auth.users via admin API.
   const missingClientIds = clientIds.filter((id) => !emailByClient.has(id));
   if (missingClientIds.length) {
-    const { data: clientRows } = await adminClient
+    const { data: clientRows } = await supabase
       .from("clients")
       .select("id, user_id")
       .in("id", missingClientIds);
@@ -95,7 +92,7 @@ export default async function OnboardingQueuePage({
       .filter((id): id is string => Boolean(id));
 
     if (userIds.length) {
-      const { data: usersResp } = await adminClient.auth.admin.listUsers({
+      const { data: usersResp } = await supabase.auth.admin.listUsers({
         page: 1,
         perPage: 1000,
       });

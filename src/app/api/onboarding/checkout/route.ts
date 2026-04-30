@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { getPlan, formatIDR } from "@/lib/plans";
+import { signAutoLoginToken } from "@/lib/auth/auto-login-token";
 
 // Use raw supabase-js client (not SSR) since this is a stateless API route
 // that needs admin access without cookie context
@@ -225,6 +226,10 @@ export async function POST(request: NextRequest) {
 
     const edgeFnUrl = `${SUPABASE_URL}/functions/v1/storo-billing-invoice`;
 
+    // HMAC token supaya /payment/success bisa auto-login user yang baru
+    // bayar sekalipun cookie session-nya hilang (mis. bayar via QR di HP).
+    const autoLoginToken = signAutoLoginToken(invoice.id);
+
     try {
       const edgeFnRes = await fetch(edgeFnUrl, {
         method: "POST",
@@ -239,7 +244,7 @@ export async function POST(request: NextRequest) {
             given_names: fullName.trim(),
             email: email.trim(),
           },
-          success_redirect_url: `${APP_URL}/payment/success?invoice_id=${invoice.id}`,
+          success_redirect_url: `${APP_URL}/payment/success?invoice_id=${invoice.id}&t=${autoLoginToken}`,
           failure_redirect_url: `${APP_URL}/payment/failed?invoice_id=${invoice.id}`,
         }),
       });
