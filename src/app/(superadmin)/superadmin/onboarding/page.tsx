@@ -5,6 +5,7 @@ import {
 } from "@/lib/supabase/server";
 import Link from "next/link";
 import OnboardingFilters from "@/components/superadmin/OnboardingFilters";
+import DeleteOnboardingButton from "@/components/superadmin/DeleteOnboardingButton";
 
 const STATUS_CONFIG = {
   pending: { label: "Pending", color: "bg-yellow-100 text-yellow-700 border-yellow-200" },
@@ -305,12 +306,18 @@ export default async function OnboardingQueuePage({
                         {formatDate(req.created_at)}
                       </td>
                       <td className="py-3 px-4">
-                        <Link
-                          href={`/superadmin/stores/${req.id}`}
-                          className="text-primary hover:text-primary/80 text-xs font-medium hover:underline"
-                        >
-                          Detail
-                        </Link>
+                        <div className="flex items-center gap-3">
+                          <Link
+                            href={`/superadmin/stores/${req.id}`}
+                            className="text-primary hover:text-primary/80 text-xs font-medium hover:underline"
+                          >
+                            Detail
+                          </Link>
+                          <DeleteOnboardingButton
+                            id={req.id}
+                            clientName={client?.full_name ?? "klien ini"}
+                          />
+                        </div>
                       </td>
                     </tr>
                   );
