@@ -55,7 +55,7 @@ export function StoreEditDialog({ storeId, currentName, currentDomain }: Props) 
         return;
       }
       setOpen(false);
-      router.push("/dashboard/stores");
+      router.refresh();
     } catch {
       setError("Terjadi kesalahan. Coba lagi.");
     } finally {
@@ -64,8 +64,7 @@ export function StoreEditDialog({ storeId, currentName, currentDomain }: Props) 
   }
 
   return (
-    <>
-      <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+    <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
       <button
         type="button"
         onClick={handleOpen}
@@ -74,7 +73,6 @@ export function StoreEditDialog({ storeId, currentName, currentDomain }: Props) 
       >
         <Pencil className="w-3.5 h-3.5" />
       </button>
-      </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
@@ -142,6 +140,6 @@ export function StoreEditDialog({ storeId, currentName, currentDomain }: Props) 
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }

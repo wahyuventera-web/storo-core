@@ -26,6 +26,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { PLANS } from "@/lib/plans";
+import { StoreEditDialog } from "@/components/dashboard/StoreEditDialog";
 
 type StatusKey = "pending" | "reviewing" | "in_progress" | "live" | "rejected";
 
@@ -148,7 +149,7 @@ export default async function StoreDetailPage({
   const { data: store } = await supabase
     .from("onboarding_requests")
     .select(
-      "id, status, store_url, plan, template_name, template_id, created_at, live_at, updated_at, requested_slug, custom_domain, status_note, assigned_engineer, files_uploaded, upload_method, client_id, store_id"
+      "id, status, store_url, plan, template_name, template_id, store_name, created_at, live_at, updated_at, requested_slug, custom_domain, status_note, assigned_engineer, files_uploaded, upload_method, client_id, store_id"
     )
     .eq("id", id)
     .eq("client_id", client.id)
@@ -174,7 +175,7 @@ export default async function StoreDetailPage({
   const planSetup = PLAN_SETUP_MAP[store.plan] ?? null;
 
   const subdomainPreview = store.requested_slug ? `${store.requested_slug}.storo.id` : null;
-  const storeName = store.requested_slug ?? store.custom_domain ?? "Toko";
+  const storeName = store.store_name ?? store.requested_slug ?? store.custom_domain ?? "Toko";
 
   const filesRaw = (store.files_uploaded ?? []) as unknown;
   const files: UploadedFile[] = Array.isArray(filesRaw) ? (filesRaw as UploadedFile[]) : [];
@@ -199,7 +200,14 @@ export default async function StoreDetailPage({
               <Store className="w-6 h-6 text-primary" />
             </div>
             <div className="min-w-0">
-              <h1 className="text-2xl font-bold text-gray-900 capitalize truncate">{storeName}</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-bold text-gray-900 capitalize truncate">{storeName}</h1>
+                <StoreEditDialog
+                  storeId={store.id}
+                  currentName={store.store_name ?? store.requested_slug ?? null}
+                  currentDomain={store.custom_domain ?? null}
+                />
+              </div>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 <span className="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded-full border bg-blue-50 text-blue-700 border-blue-100">
                   Paket {planName}

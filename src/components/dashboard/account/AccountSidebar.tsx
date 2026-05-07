@@ -18,6 +18,7 @@ import {
   Settings,
   Menu,
   X,
+  ShoppingBag,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -42,6 +43,7 @@ const navGroups: { label: string; items: NavItem[] }[] = [
     items: [
       { title: "Beranda", href: "/dashboard", icon: LayoutDashboard, exact: true },
       { title: "Toko Saya", href: "/dashboard/stores", icon: Store },
+      { title: "Pesanan", href: "/dashboard/orders", icon: ShoppingBag },
       { title: "Tagihan", href: "/dashboard/billing", icon: Receipt },
       { title: "Domain", href: "/dashboard/domains", icon: Globe },
     ],
