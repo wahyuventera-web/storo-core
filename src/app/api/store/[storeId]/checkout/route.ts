@@ -443,47 +443,47 @@ export async function POST(
 
     try {
       if (billingModel === "storo_gateway") {
-        // Platform default: Xendit VenteraAI via storo-billing-invoice Edge Function
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-        const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+        // Platform default: VenteraAI Xendit account, external_id = STORO-ORD-{orderId}
+        const platformKey = process.env.XENDIT_SECRET_KEY;
+        if (!platformKey) {
+          throw new Error("Platform payment not configured.");
+        }
 
-        const invoiceRes = await fetch(
-          `${supabaseUrl}/functions/v1/storo-billing-invoice`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${serviceKey}`,
+        const xenditRes = await fetch("https://api.xendit.co/v2/invoices", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authHeaderXendit(platformKey),
+          },
+          body: JSON.stringify({
+            external_id: `STORO-ORD-${order.id}`,
+            amount: total,
+            payer_email: customer.email,
+            description: `Pembayaran Pesanan ${orderNumber}`,
+            customer: {
+              given_names: customer.name ?? "Customer",
+              email: customer.email,
             },
-            body: JSON.stringify({
-              order_id: order.id,
-              description: `Pembayaran Pesanan ${orderNumber}`,
-              customer: {
-                given_names: customer.name ?? "Customer",
-                email: customer.email,
-                mobile_number: customer.phone ?? undefined,
-              },
-              items: validatedItems.map((i) => ({
-                name: i.name,
-                quantity: i.quantity,
-                price: i.price,
-              })),
-              success_redirect_url: `${siteUrl}/api/store/${storeId}/checkout/redirect?order=${orderNumber}&status=success`,
-              failure_redirect_url: `${siteUrl}/api/store/${storeId}/checkout/redirect?order=${orderNumber}&status=failed`,
-            }),
-          }
-        );
+            items: validatedItems.map((i) => ({
+              name: i.name,
+              quantity: i.quantity,
+              price: i.price,
+            })),
+            success_redirect_url: `${siteUrl}/api/store/${storeId}/checkout/redirect?order=${orderNumber}&status=success`,
+            failure_redirect_url: `${siteUrl}/api/store/${storeId}/checkout/redirect?order=${orderNumber}&status=failed`,
+            currency: "IDR",
+          }),
+        });
 
-        const invoiceData = await invoiceRes.json();
-        if (!invoiceRes.ok) {
+        const xenditData = await xenditRes.json();
+        if (!xenditRes.ok) {
           throw new Error(
-            invoiceData?.error ??
-              `Invoice function error ${invoiceRes.status}`
+            `Xendit error ${xenditRes.status}: ${JSON.stringify(xenditData)}`
           );
         }
 
-        paymentUrl = invoiceData.invoice_url;
-        paymentReference = invoiceData.xendit_invoice_id;
+        paymentUrl = xenditData.invoice_url;
+        paymentReference = xenditData.id;
       } else {
         // own_prepaid: use store's own Xendit key
         const xenditSecretKey =
