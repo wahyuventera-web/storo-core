@@ -11,6 +11,7 @@ import {
   formatIDR,
   formatDate,
 } from "@/components/dashboard/store/ui";
+import OrderStatusActions from "@/components/dashboard/store/OrderStatusActions";
 
 const STATUS_TONE: Record<string, "success" | "danger" | "warning" | "info" | "neutral"> = {
   pending: "warning",
@@ -103,6 +104,13 @@ export default async function OrderDetailPage({
                 {STATUS_LABEL[order.status as string] ?? (order.status as string)}
               </StatusBadge>
             </div>
+            <OrderStatusActions
+              storeId={storeId}
+              orderId={id}
+              currentStatus={order.status as string}
+              currentTracking={(order.shipping_tracking_number as string | null) ?? null}
+              currentCourier={(order.shipping_courier as string | null) ?? null}
+            />
             <div className="divide-y divide-[#F1F4FA]">
               {items.map((it) => (
                 <div key={it.id} className="flex items-start gap-3 py-3">
