@@ -1,6 +1,10 @@
 # STORO PLATFORM — Master Build Plan
-**Version:** 1.0 | **Date:** 2026-04-06  
-**Repos:** storo.id (client portal) · storoengine (webstore template) · sharelink.id (referral API)
+**Version:** 1.3 | **Last Updated:** 2026-05-07  
+**Repos:** storo.id (client portal) · storo-storefront (buyer storefront) · sharelink.id (referral API)
+
+> **Architecture update 2026-05-07:** storoengine has been replaced by two repos:
+> - `storo-id-landingpage` = platform (landing page + client dashboard + all admin APIs)
+> - `storo-storefront` = buyer-facing storefront (T1-classic template, subdomain wildcard `*.storo.id`)
 
 ---
 
@@ -10,26 +14,31 @@ Storo is a **managed webstore service** (agency model). VenteraAI does all techn
 
 **Three repos, one platform:**
 ```
-storo.id (this repo)
-  └── Marketing landing page          ✅ Done
-  └── Client portal + dashboard       ❌ Build
-  └── Onboarding wizard               ❌ Build
-  └── Superadmin dashboard            ❌ Build
-  └── Referral system (via API)       ❌ Integrate
+storo-id-landingpage (this repo)
+  └── Marketing landing page          ✅ Live — storo.id
+  └── Client portal + dashboard       ✅ Live — multi-store, full CRUD
+  └── Onboarding wizard (5-step)      ✅ Live — order-first, guest flow
+  └── Superadmin dashboard            ✅ Live — billing, stores, templates
+  └── Xendit webhook (order payment)  ✅ Live — STORO-ORD-* handler
+  └── Wallet system (own_prepaid)     ✅ Live — topup + ops fee deduct
+  └── Notification bell               ✅ Live — store_notifications polling
+  └── Product image upload            ✅ Live — drag-drop → Supabase Storage
+  └── Per-client payment gateway      ✅ Live — own_prepaid + callback token
+  └── Referral system (via API)       ❌ Not yet integrated
 
-storoengine (adewap23/storoengine)
-  └── Storefront (products, cart, checkout)  ✅ Implemented
-  └── Admin dashboard                         ✅ Implemented
-  └── Payment (Xendit + Midtrans)            ✅ Implemented
-  └── Shipping (Biteship 11+ couriers)       ✅ Implemented
-  └── Shopee import (6 Excel files)          ✅ Implemented
-  └── Blog CMS + API automation              ✅ Implemented
-  └── Payment/shipping config wiring        ⏳ Incomplete
-  └── Template versioning system            ❌ Build
+storo-storefront (buyer-facing)
+  └── T1-classic template             ✅ Live — *.storo.id wildcard
+  └── Product browsing + search       ✅ Live
+  └── Cart + checkout (Xendit)        ✅ Live
+  └── Banner carousel                 ✅ Live
+  └── Blog CMS display                ✅ Live
+  └── Order tracking                  ✅ Live
+  └── Loyalty points preview          ✅ Live
+  └── Custom domain support           ✅ Live
 
 sharelink.id (PTVENTERA-AI/sharelink.id)
-  └── Referral API: api.reflink.id/v1       ✅ Running
-  └── Storo campaign setup                  ❌ Configure
+  └── Referral API: api.reflink.id/v1 ✅ Running
+  └── Storo campaign setup            ❌ Not yet configured
 ```
 
 ---
@@ -492,3 +501,36 @@ Week 5:  Sprint 5 + 6 — Public pages + all API routes
 Week 6:  Sprint 7 — storoengine wiring (payment/shipping/data)
 Week 7:  Sprint 8 — Template versioning + superadmin version tracker
 ```
+
+---
+
+## 11. CHANGELOG — SESSION LOG
+
+### 2026-05-07 (Big Refactor Session)
+
+**Architecture decision:** storoengine split into two repos. All features live in storefront. Per-client website is engineer customization layer only.
+
+**storo-id-landingpage (platform)**
+- ✅ Xendit order webhook `POST /api/webhooks/xendit` — dual-token auth (platform + per-store), PAID/EXPIRED handling, ops fee deduction, stock restore, store_notifications insert
+- ✅ Checkout route fixed — `storo_gateway` calls Xendit API directly (`XENDIT_SECRET_KEY`), not edge function
+- ✅ Public API routes: product detail, order tracking, loyalty config
+- ✅ Notification bell — `store_notifications` polling every 30s, unread badge, mark-read
+- ✅ Order status actions UI — paid→processing/shipped/cancel, tracking number form
+- ✅ Product image upload — drag-drop zone, file validation, Supabase Storage bucket `product-images`
+- ✅ Sidebar accordion — collapsible groups, auto-open active section, ChevronDown
+- ✅ Storefront URL fixed — `custom_domain` now selected from DB, shown in StoreSwitcher, `buildStorefrontUrl` prefers custom_domain over slug
+- ✅ Payment settings — `xendit_callback_token` field added (own_prepaid webhook verification)
+- ✅ Landing page — Testimonials + FOMOSection added between HowItWorks and Pricing
+- ✅ Build plan updated to reflect current repo architecture
+
+**storo-storefront (buyer-facing)**
+- ✅ T1-classic template complete — Header (search, blog, order track), BannerCarousel, BlogCard, OrderTrackerClient, CheckoutForm (loyalty preview)
+- ✅ Centralized `platformApi` client (`_shared/api.ts`) — all storefront data via platform REST
+- ✅ `next/image` optimization — remotePatterns for supabase.co
+- ✅ `*.storo.id` wildcard → `storo-storefront` on Vercel, `storo.id` + `www.storo.id` → platform
+
+**Pending / Next**
+- ❌ Referral system integration (sharelink.id)
+- ❌ Template versioning system
+- ❌ Disbursement auto-flow (KYC gate)
+- ❌ Shopee product import (engineer-only, low priority)

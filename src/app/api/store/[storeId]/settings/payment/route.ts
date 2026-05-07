@@ -37,6 +37,7 @@ export async function PUT(
   settings.payment = {
     xendit_secret_key: body.xendit_secret_key ?? "",
     xendit_public_key: body.xendit_public_key ?? "",
+    xendit_callback_token: body.xendit_callback_token ?? "",
     midtrans_server_key: body.midtrans_server_key ?? "",
     midtrans_client_key: body.midtrans_client_key ?? "",
   };

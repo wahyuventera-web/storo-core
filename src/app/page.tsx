@@ -14,6 +14,8 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import LeadCapturePopup from "@/components/LeadCapturePopup";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import TemplateShowcase from "@/components/TemplateShowcase";
+import Testimonials from "@/components/Testimonials";
+import FOMOSection from "@/components/FOMOSection";
 import ScrollAnimator from "@/components/ScrollAnimator";
 
 export const metadata: Metadata = {
@@ -131,6 +133,8 @@ export default function HomePage() {
         <Solution />
         <TemplateShowcase />
         <HowItWorks />
+        <Testimonials />
+        <FOMOSection />
         <Pricing />
         <FAQ />
         <ContactForm />

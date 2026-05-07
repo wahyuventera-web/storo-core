@@ -11,6 +11,7 @@ export type PaymentSettingsInitial = {
   billing_model: BillingModel;
   xendit_secret_key: string;
   xendit_public_key: string;
+  xendit_callback_token: string;
   midtrans_server_key: string;
   midtrans_client_key: string;
 };
@@ -29,6 +30,7 @@ export default function PaymentSettingsForm({
   const [billingModel, setBillingModel] = useState<BillingModel>(initial.billing_model);
   const [xenditSecret, setXenditSecret] = useState(initial.xendit_secret_key);
   const [xenditPublic, setXenditPublic] = useState(initial.xendit_public_key);
+  const [xenditCallbackToken, setXenditCallbackToken] = useState(initial.xendit_callback_token);
   const [midtransServer, setMidtransServer] = useState(initial.midtrans_server_key);
   const [midtransClient, setMidtransClient] = useState(initial.midtrans_client_key);
   const [busy, setBusy] = useState(false);
@@ -43,6 +45,7 @@ export default function PaymentSettingsForm({
           billing_model: billingModel,
           xendit_secret_key: xenditSecret,
           xendit_public_key: xenditPublic,
+          xendit_callback_token: xenditCallbackToken,
           midtrans_server_key: midtransServer,
           midtrans_client_key: midtransClient,
         }),
@@ -159,6 +162,24 @@ export default function PaymentSettingsForm({
                   onChange={(e) => setXenditPublic(e.target.value)}
                   className={`${inputCls} font-mono`}
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#0F172A] mb-1.5">
+                  Webhook Callback Token
+                </label>
+                <input
+                  type="password"
+                  value={xenditCallbackToken}
+                  onChange={(e) => setXenditCallbackToken(e.target.value)}
+                  placeholder="Token dari Xendit Dashboard → Webhook Settings"
+                  className={`${inputCls} font-mono`}
+                />
+                <p className="text-xs text-[#94A3B8] mt-1">
+                  Daftarkan URL webhook:{" "}
+                  <code className="bg-gray-100 px-1 rounded text-[11px]">
+                    https://www.storo.id/api/webhooks/xendit
+                  </code>
+                </p>
               </div>
             </div>
           </StoreCard>
