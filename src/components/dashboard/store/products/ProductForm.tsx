@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Plus, Trash2, X } from "lucide-react";
+import { Loader2, Plus, Trash2, X, ImagePlus } from "lucide-react";
 import { toast } from "sonner";
 import { StoreCard, ChipButton } from "@/components/dashboard/store/ui";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type Category = { id: string; name: string };
 
@@ -16,7 +17,7 @@ type VariantRow = {
   stock: number;
 };
 
-type ImageRow = { key: string; url: string };
+type ImageRow = { key: string; url: string; preview?: string; file?: File };
 
 export type ProductInitialData = {
   id?: string;
@@ -39,6 +40,15 @@ const STATUS_OPTIONS = [
   { value: "delisted", label: "Delist" },
   { value: "archived", label: "Arsip" },
 ];
+
+function getExtension(file: File) {
+  const map: Record<string, string> = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/webp": "webp",
+  };
+  return map[file.type] ?? "jpg";
+}
 
 function slugify(s: string) {
   return s
@@ -88,7 +98,8 @@ export default function ProductForm({
       url: i.url,
     }))
   );
-  const [newImageUrl, setNewImageUrl] = useState("");
+  const [draggingOver, setDraggingOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [variants, setVariants] = useState<VariantRow[]>(
     (initial?.variants ?? []).map((v) => ({
       key: crypto.randomUUID(),
@@ -108,15 +119,38 @@ export default function ProductForm({
       ? Math.round((1 - price / Number(compareAtPrice)) * 100)
       : null;
 
-  function addImage() {
-    const url = newImageUrl.trim();
-    if (!url) return;
-    setImages((prev) => [...prev, { key: crypto.randomUUID(), url }]);
-    setNewImageUrl("");
-  }
+  const addFiles = useCallback((files: FileList | File[]) => {
+    const allowed = ["image/jpeg", "image/png", "image/webp"];
+    Array.from(files).forEach((file) => {
+      if (!allowed.includes(file.type)) {
+        toast.error(`${file.name}: hanya JPEG, PNG, WebP`);
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(`${file.name}: maksimal 5 MB`);
+        return;
+      }
+      const preview = URL.createObjectURL(file);
+      setImages((prev) => [...prev, { key: crypto.randomUUID(), url: "", preview, file }]);
+    });
+  }, []);
+
   function removeImage(key: string) {
-    setImages((prev) => prev.filter((i) => i.key !== key));
+    setImages((prev) => {
+      const item = prev.find((i) => i.key === key);
+      if (item?.preview) URL.revokeObjectURL(item.preview);
+      return prev.filter((i) => i.key !== key);
+    });
   }
+
+  const onFileDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setDraggingOver(false);
+      if (e.dataTransfer.files.length > 0) addFiles(e.dataTransfer.files);
+    },
+    [addFiles]
+  );
   function addVariant() {
     setVariants((prev) => [
       ...prev,
@@ -142,6 +176,34 @@ export default function ProductForm({
       return;
     }
     setSaving(true);
+
+    // Upload any new files to Supabase Storage
+    const supabase = getSupabaseBrowserClient();
+    const uploadedImages = await Promise.all(
+      images.map(async (img) => {
+        if (!img.file) return img;
+        const ext = getExtension(img.file);
+        const filename = `products/${crypto.randomUUID()}.${ext}`;
+        const { error } = await supabase.storage
+          .from("product-images")
+          .upload(filename, img.file, { contentType: img.file.type, upsert: false });
+        if (error) {
+          toast.error(`Gagal upload gambar: ${error.message}`);
+          throw error;
+        }
+        const { data: { publicUrl } } = supabase.storage
+          .from("product-images")
+          .getPublicUrl(filename);
+        if (img.preview) URL.revokeObjectURL(img.preview);
+        return { ...img, url: publicUrl, file: undefined, preview: undefined };
+      })
+    ).catch(() => null);
+
+    if (!uploadedImages) {
+      setSaving(false);
+      return;
+    }
+
     const body = {
       name: name.trim(),
       slug: slug || slugify(name),
@@ -155,7 +217,7 @@ export default function ProductForm({
       sku: sku.trim() || null,
       status,
       category_id: categoryId || null,
-      images: images.map((i) => ({ url: i.url })),
+      images: uploadedImages.map((i) => ({ url: i.url })),
       variants:
         variants.length > 0
           ? variants.map((v) => ({
@@ -249,21 +311,21 @@ export default function ProductForm({
 
         <StoreCard>
           <h2 className="text-sm font-semibold text-[#0F172A] mb-4">Gambar Produk</h2>
-          {images.length > 0 ? (
+          {images.length > 0 && (
             <div className="grid grid-cols-4 gap-3 mb-3">
               {images.map((img, i) => (
                 <div key={img.key} className="relative aspect-square">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={img.url}
+                    src={img.preview ?? img.url}
                     alt=""
                     className="h-full w-full rounded-xl object-cover border border-[#E5E8EF]"
                   />
-                  {i === 0 ? (
+                  {i === 0 && (
                     <span className="absolute bottom-1.5 left-1.5 rounded-md text-[10px] font-semibold bg-black/70 text-white px-1.5 py-0.5">
                       Utama
                     </span>
-                  ) : null}
+                  )}
                   <button
                     type="button"
                     onClick={() => removeImage(img.key)}
@@ -274,30 +336,33 @@ export default function ProductForm({
                 </div>
               ))}
             </div>
-          ) : (
-            <p className="text-sm text-[#94A3B8] mb-3">Belum ada gambar.</p>
           )}
-          <div className="flex items-center gap-2">
-            <input
-              type="url"
-              value={newImageUrl}
-              onChange={(e) => setNewImageUrl(e.target.value)}
-              placeholder="https://contoh.com/gambar.jpg"
-              className={inputCls}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  addImage();
-                }
-              }}
-            />
-            <ChipButton onClick={addImage} variant="default">
-              Tambah
-            </ChipButton>
+          <div
+            className={`flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-xl py-8 px-4 transition cursor-pointer ${
+              draggingOver
+                ? "border-primary bg-primary/5"
+                : "border-[#E5E8EF] hover:border-primary/40 hover:bg-gray-50"
+            }`}
+            onClick={() => fileInputRef.current?.click()}
+            onDragOver={(e) => { e.preventDefault(); setDraggingOver(true); }}
+            onDragLeave={() => setDraggingOver(false)}
+            onDrop={onFileDrop}
+          >
+            <ImagePlus className="size-7 text-[#94A3B8]" />
+            <p className="text-sm text-[#64748B]">
+              Klik atau drag-drop gambar ke sini
+            </p>
+            <p className="text-xs text-[#94A3B8]">JPEG, PNG, WebP — maks. 5 MB per file</p>
           </div>
-          <p className="text-xs text-[#94A3B8] mt-2">
-            Gambar pertama jadi gambar utama. Drag-drop & upload langsung akan ditambahkan di iterasi berikutnya.
-          </p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            className="hidden"
+            onChange={(e) => { if (e.target.files) addFiles(e.target.files); e.target.value = ""; }}
+          />
+          <p className="text-xs text-[#94A3B8] mt-2">Gambar pertama jadi gambar utama.</p>
         </StoreCard>
 
         <StoreCard>
