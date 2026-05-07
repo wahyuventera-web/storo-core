@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { authorizeStoreApi } from "@/lib/store/context";
 
-export async function POST(
+export async function GET(
   _request: Request,
   context: { params: Promise<{ storeId: string }> }
 ) {
@@ -9,11 +9,13 @@ export async function POST(
   const auth = await authorizeStoreApi(storeId);
   if (auth instanceof NextResponse) return auth;
 
-  const { error } = await auth.service
+  const { data, error } = await auth.service
     .from("store_notifications")
-    .update({ is_read: true })
+    .select("id, type, title, body, is_read, created_at, metadata")
     .eq("store_id", storeId)
-    .eq("is_read", false);
+    .order("created_at", { ascending: false })
+    .limit(20);
+
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ notifications: data ?? [] });
 }

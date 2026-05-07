@@ -14,7 +14,7 @@ export async function PATCH(
   if (body?.is_read !== undefined) update.is_read = body.is_read;
 
   const { data, error } = await auth.service
-    .from("notifications")
+    .from("store_notifications")
     .update(update)
     .eq("id", id)
     .eq("store_id", storeId)

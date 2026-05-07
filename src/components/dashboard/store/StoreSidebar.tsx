@@ -31,6 +31,7 @@ import {
   HelpCircle,
   Wallet,
 } from "lucide-react";
+import NotificationBell from "./NotificationBell";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,6 +47,7 @@ type NavItem = {
   href: string;
   icon: typeof LayoutDashboard;
   exact?: boolean;
+  bell?: boolean;
 };
 
 function getNavGroups(basePath: string): { label: string; items: NavItem[] }[] {
@@ -76,7 +78,7 @@ function getNavGroups(basePath: string): { label: string; items: NavItem[] }[] {
       label: "Komunikasi",
       items: [
         { title: "Pesan", href: `${basePath}/messages`, icon: MessageCircle },
-        { title: "Notifikasi", href: `${basePath}/notifications`, icon: Bell },
+        { title: "Notifikasi", href: `${basePath}/notifications`, icon: Bell, bell: true },
         { title: "Leads", href: `${basePath}/leads`, icon: Mail },
       ],
     },
@@ -168,11 +170,18 @@ function SidebarBody({
               {group.label}
             </p>
             <ul className="space-y-0.5">
-              {group.items.map((item) => (
-                <li key={item.href}>
-                  <NavLink {...item} pathname={pathname} onClick={onItemClick} />
-                </li>
-              ))}
+              {group.items.map((item) =>
+                item.bell ? (
+                  <li key={item.href} className="flex items-center gap-2.5 px-3 py-1.5">
+                    <NotificationBell storeId={storeId} />
+                    <span className="text-sm text-[#64748B]">{item.title}</span>
+                  </li>
+                ) : (
+                  <li key={item.href}>
+                    <NavLink {...item} pathname={pathname} onClick={onItemClick} />
+                  </li>
+                )
+              )}
             </ul>
           </div>
         ))}
