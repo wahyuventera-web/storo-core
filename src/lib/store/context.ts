@@ -67,20 +67,35 @@ export async function getStoreForUser(storeId: string): Promise<{
   client: ClientRow;
   stores: StoreSummary[];
 }> {
-  const { client } = await requireUserAndClient();
+  const { user, client } = await requireUserAndClient();
   const service = await createSupabaseServiceClient();
 
-  const { data: store } = await service
+  // Superadmin bypass: tim VenteraAI yg ada di superadmin_users boleh akses
+  // dashboard toko klien manapun (untuk support / troubleshooting).
+  const { data: adminUser } = await service
+    .from("superadmin_users")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("is_active", true)
+    .maybeSingle();
+  const isSuperadmin = Boolean(adminUser);
+
+  const storeQuery = service
     .from("stores")
     .select(
       "id, name, slug, custom_domain, description, logo_url, banner_url, client_id, user_id, is_active, settings, billing_model, template_variant, theme_config, created_at, updated_at"
     )
-    .eq("id", storeId)
-    .eq("client_id", client.id)
-    .maybeSingle();
+    .eq("id", storeId);
+
+  const { data: store } = isSuperadmin
+    ? await storeQuery.maybeSingle()
+    : await storeQuery.eq("client_id", client.id).maybeSingle();
 
   if (!store) notFound();
 
+  // Untuk superadmin: tampilkan stores miliknya sendiri di switcher (bukan
+  // toko target), supaya tidak jadi besar daftarnya. Cliend dashboard normal
+  // pakai client.id (toko-toko milik client login).
   const stores = await getUserStores(client.id);
 
   return {
