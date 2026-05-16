@@ -19,6 +19,9 @@ import {
   Menu,
   X,
   ShoppingBag,
+  MessageCircle,
+  Bell,
+  Mail,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -46,6 +49,16 @@ const navGroups: { label: string; items: NavItem[] }[] = [
       { title: "Pesanan", href: "/dashboard/orders", icon: ShoppingBag },
       { title: "Tagihan", href: "/dashboard/billing", icon: Receipt },
       { title: "Domain", href: "/dashboard/domains", icon: Globe },
+    ],
+  },
+  {
+    // Cross-store: agregasi semua toko milik client. Tiap item di halaman
+    // tujuan ditandai badge nama toko per data row.
+    label: "Komunikasi",
+    items: [
+      { title: "Pesan", href: "/dashboard/messages", icon: MessageCircle },
+      { title: "Notifikasi", href: "/dashboard/notifications", icon: Bell },
+      { title: "Leads", href: "/dashboard/leads", icon: Mail },
     ],
   },
   {
