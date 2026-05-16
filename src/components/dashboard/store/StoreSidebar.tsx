@@ -32,7 +32,6 @@ import {
   Wallet,
   ChevronDown,
 } from "lucide-react";
-import NotificationBell from "./NotificationBell";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,7 +47,6 @@ type NavItem = {
   href: string;
   icon: typeof LayoutDashboard;
   exact?: boolean;
-  bell?: boolean;
 };
 
 function getNavGroups(basePath: string): { label: string; items: NavItem[] }[] {
@@ -76,11 +74,14 @@ function getNavGroups(basePath: string): { label: string; items: NavItem[] }[] {
       ],
     },
     {
+      // Komunikasi sengaja account-level (cross-store) — agregasi pesan,
+      // notifikasi, leads dari SEMUA toko milik client. Tiap item ditandai
+      // badge nama toko di halaman tersebut.
       label: "Komunikasi",
       items: [
-        { title: "Pesan", href: `${basePath}/messages`, icon: MessageCircle },
-        { title: "Notifikasi", href: `${basePath}/notifications`, icon: Bell, bell: true },
-        { title: "Leads", href: `${basePath}/leads`, icon: Mail },
+        { title: "Pesan", href: "/dashboard/messages", icon: MessageCircle },
+        { title: "Notifikasi", href: "/dashboard/notifications", icon: Bell },
+        { title: "Leads", href: "/dashboard/leads", icon: Mail },
       ],
     },
     {
@@ -209,18 +210,11 @@ function SidebarBody({
               </button>
               {isOpen && (
                 <ul className="space-y-0.5 mt-0.5 mb-1">
-                  {group.items.map((item) =>
-                    item.bell ? (
-                      <li key={item.href} className="flex items-center gap-2.5 px-3 py-1.5">
-                        <NotificationBell storeId={storeId} />
-                        <span className="text-sm text-[#64748B]">{item.title}</span>
-                      </li>
-                    ) : (
-                      <li key={item.href}>
-                        <NavLink {...item} pathname={pathname} onClick={onItemClick} />
-                      </li>
-                    )
-                  )}
+                  {group.items.map((item) => (
+                    <li key={item.href}>
+                      <NavLink {...item} pathname={pathname} onClick={onItemClick} />
+                    </li>
+                  ))}
                 </ul>
               )}
             </div>
