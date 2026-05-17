@@ -415,7 +415,7 @@ function Step2Domain({
       <div className="mb-6">
         <h2 className="text-xl font-bold text-gray-900">Nama Toko & Website</h2>
         <p className="text-sm text-gray-500 mt-1">
-          Pilih satu domain di bawah. Semua opsi gratis (dicover VenteraAI), tinggal klik.
+          <strong className="text-primary">Semua domain (.com, .id, .co.id, dll.) gratis langsung</strong> — biaya domain ditanggung VenteraAI. Cukup klik domain pilihan Anda.
         </p>
       </div>
 
@@ -457,7 +457,7 @@ function Step2Domain({
           {showResults && (
             <div>
               <p className="text-xs text-gray-500 mb-2 font-medium">
-                Pilih domain untuk toko Anda <span className="text-red-500">*</span>
+                Pilih domain favorit Anda — semua gratis langsung <span className="text-red-500">*</span>
               </p>
               <div className="border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-50">
                 {/* Subdomain .storo.id selalu tersedia (gratis, instant) */}

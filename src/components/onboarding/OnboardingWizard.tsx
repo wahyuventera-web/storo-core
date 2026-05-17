@@ -24,7 +24,7 @@ import {
   CreditCard,
   ClipboardList,
 } from "lucide-react";
-import { PLANS, getPlan, formatIDR, type PlanId } from "@/lib/plans";
+import { getPlan, getActivePlans, formatIDR, type PlanId } from "@/lib/plans";
 
 // ── Types ────────────────────────────────────────────────────────────────
 type Step = 1 | 2 | 3 | 4 | 5 | 6; // 6 = success
@@ -39,6 +39,7 @@ type State = {
   domainType: "subdomain" | "custom" | "own";
   ownDomain: string;
   customDomain: string;
+  domainPicked: boolean; // user has explicitly clicked a domain option (subdomain or custom)
   // Step 3: Profile
   fullName: string;
   storeName: string;
@@ -78,7 +79,7 @@ type Action =
 // dari nol (sesuai permintaan produk: kembali = start over untuk step itu).
 const STEP_RESET_FIELDS: Record<number, Partial<State>> = {
   1: { plan: "" },
-  2: { websiteName: "", customDomain: "" },
+  2: { websiteName: "", customDomain: "", domainPicked: false },
   3: {
     fullName: "",
     storeName: "",
@@ -160,6 +161,7 @@ export default function OnboardingWizard() {
     domainType: "subdomain",
     ownDomain: "",
     customDomain: "",
+    domainPicked: false,
     fullName: "",
     storeName: "",
     phone: "",
@@ -292,7 +294,7 @@ function Step1Plan({
   onNext: () => void;
 }) {
   const [error, setError] = useState("");
-  const selectablePlans = PLANS.filter((p) => p.setup !== null);
+  const selectablePlans = getActivePlans().filter((p) => p.setup !== null);
 
   const handleNext = () => {
     if (!state.plan) {
@@ -320,7 +322,7 @@ function Step1Plan({
         <p className="text-gray-600 mt-2">Pilih paket yang sesuai dengan kebutuhan bisnis Anda</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 pt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-4 max-w-5xl mx-auto">
         {selectablePlans.map((plan) => {
           const isSelected = state.plan === plan.id;
           return (
@@ -433,7 +435,7 @@ function Step2Domain({
 
   const handleChange = (value: string) => {
     const slug = slugify(value);
-    update({ websiteName: slug, customDomain: "" });
+    update({ websiteName: slug, customDomain: "", domainPicked: false });
     setError("");
 
     // Auto-search after typing stops
@@ -471,7 +473,10 @@ function Step2Domain({
       setError("Hanya huruf kecil, angka, dan tanda hubung (-)");
       return;
     }
-    // Custom domain opsional — subdomain gratis .storo.id selalu cukup
+    if (!state.domainPicked) {
+      setError("Pilih satu domain terlebih dahulu");
+      return;
+    }
     setError("");
     onNext();
   };
@@ -481,7 +486,7 @@ function Step2Domain({
       <div className="mb-6">
         <h2 className="text-xl font-bold text-gray-900">Pilih Nama Website</h2>
         <p className="text-sm text-gray-500 mt-1">
-          Nama ini akan menjadi alamat toko online Anda. Subdomain <strong>.storo.id</strong> gratis untuk semua paket.
+          Nama ini akan jadi alamat toko Anda. <strong className="text-primary">Semua domain (.com, .id, .co.id, dll.) gratis langsung</strong> — biaya domain ditanggung VenteraAI.
         </p>
       </div>
 
@@ -508,8 +513,36 @@ function Step2Domain({
 
         {searched && !searching && results.length > 0 && (
           <div>
-            <p className="text-xs text-gray-500 mb-2 font-medium">Mau custom domain? Cek ketersediaan:</p>
+            <p className="text-xs text-gray-500 mb-2 font-medium">Pilih satu domain — semua gratis langsung <span className="text-red-500">*</span></p>
             <div className="border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-50">
+              {/* Subdomain .storo.id — always available, free, instant */}
+              {(() => {
+                const subdomainFull = `${state.websiteName}.storo.id`;
+                const isSelected = state.domainPicked && !state.customDomain;
+                return (
+                  <button
+                    key={subdomainFull}
+                    type="button"
+                    onClick={() => update({ customDomain: "", domainPicked: true })}
+                    className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors cursor-pointer ${
+                      isSelected
+                        ? "bg-primary/5 ring-1 ring-inset ring-primary"
+                        : "bg-white hover:bg-gray-50"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className={`w-4 h-4 shrink-0 ${isSelected ? "text-primary" : "text-green-500"}`} />
+                      <span className={isSelected ? "text-primary font-semibold" : "text-gray-900 font-medium"}>
+                        {subdomainFull}
+                      </span>
+                      <span className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded font-medium">
+                        Subdomain
+                      </span>
+                    </div>
+                    <span className="text-green-600 font-semibold text-sm">Gratis</span>
+                  </button>
+                );
+              })()}
               {results.map((r) => {
                 const isSelected = r.available && state.customDomain === r.fullDomain;
                 return (
@@ -519,7 +552,7 @@ function Step2Domain({
                     disabled={!r.available}
                     onClick={() => {
                       if (!r.available) return;
-                      update({ customDomain: isSelected ? "" : r.fullDomain });
+                      update({ customDomain: r.fullDomain, domainPicked: true });
                     }}
                     className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors cursor-pointer
                       ${isSelected
@@ -551,13 +584,17 @@ function Step2Domain({
                 );
               })}
             </div>
-            {state.customDomain ? (
+            {state.domainPicked && state.customDomain ? (
               <p className="text-[11px] text-primary mt-2 font-medium">
-                Domain <strong>{state.customDomain}</strong> akan dikonfigurasi untuk toko Anda. Klik lagi untuk membatalkan.
+                Domain <strong>{state.customDomain}</strong> akan dikonfigurasi untuk toko Anda.
+              </p>
+            ) : state.domainPicked ? (
+              <p className="text-[11px] text-primary mt-2 font-medium">
+                Subdomain <strong>{state.websiteName}.storo.id</strong> akan langsung aktif untuk toko Anda.
               </p>
             ) : (
               <p className="text-[11px] text-gray-400 mt-2">
-                Pilih domain gratis di atas, atau lanjutkan dengan subdomain <strong>{state.websiteName}.storo.id</strong>.
+                Klik salah satu domain di atas untuk lanjut — semua gratis langsung.
               </p>
             )}
           </div>
@@ -575,8 +612,8 @@ function Step2Domain({
         </Button>
         <Button
           onClick={handleNext}
-          disabled={!state.websiteName.trim()}
-          className="flex-1 bg-primary text-white hover:bg-primary/90 h-11 text-sm font-semibold cursor-pointer disabled:opacity-50"
+          disabled={!state.websiteName.trim() || !state.domainPicked}
+          className="flex-1 bg-primary text-white hover:bg-primary/90 h-11 text-sm font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Lanjut Isi Profil
           <ArrowRight className="w-4 h-4 ml-2" />
@@ -931,7 +968,13 @@ function Step4Account({
         </Button>
         <Button
           onClick={handleNext}
-          className="flex-1 bg-primary text-white hover:bg-primary/90 h-11 text-sm font-semibold cursor-pointer"
+          disabled={
+            state.authMethod !== "google" &&
+            (!state.email.trim() ||
+              !state.password ||
+              state.password.length < 8)
+          }
+          className="flex-1 bg-primary text-white hover:bg-primary/90 h-11 text-sm font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Lihat Ringkasan
           <ArrowRight className="w-4 h-4 ml-2" />
