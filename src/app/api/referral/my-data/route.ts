@@ -192,8 +192,23 @@ export async function GET() {
   }
 
   // 5. Aggregate stats
-  const totalReferred = referrals.reduce((s, r) => s + (r.current_uses ?? 0), 0);
-  const totalEarnedIDR = rewards.reduce((s, r) => {
+  //
+  // `totalReferred` counts paid customers (= valid rewards), NOT total events
+  // or current_uses. Background:
+  //   - current_uses increments per validated event, so 1 person firing
+  //     signup + purchase = current_uses += 2. Caused Sellora to see
+  //     "8 teman" when only 3 had actually paid (others were dupe sign-ups +
+  //     signup-event rewards that got clawed back).
+  //   - Each non-clawed-back reward = 1 paid customer that earned Sellora
+  //     a commission. That's the semantically meaningful number for the
+  //     "teman yang sudah bergabung" / commission counter on this page.
+  //
+  // `totalEarnedIDR` mirrors the same filter (skip clawed-back / failed).
+  const validRewards = rewards.filter(
+    (r) => r.status !== "clawed_back" && r.status !== "failed",
+  );
+  const totalReferred = validRewards.length;
+  const totalEarnedIDR = validRewards.reduce((s, r) => {
     // Sharelink stores actual amount in metadata.calculation_config.flat.amount
     // because mrs_rewards.amount is null at insert time (pipeline.ts:234).
     const fromAmount = typeof r.amount === "number" ? r.amount : null;
