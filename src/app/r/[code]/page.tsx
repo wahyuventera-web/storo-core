@@ -1,10 +1,66 @@
-import { after } from "next/server";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2, ArrowRight, Gift, Tag } from "lucide-react";
 import storoLogo from "@/assets/storo-logo.png";
 import { createSupabaseServiceClient } from "@/lib/supabase/server";
 import { getDiscountPercentForPlan, getPlan } from "@/lib/plans";
+
+const CLICK_PING_VERSION = "v2";
+
+/**
+ * Ping Sharelink's public click endpoint to bump `metadata.clicks`.
+ *
+ * Why inline-await (vs `after()`): we lost a day debugging an `after()`-based
+ * version that fired silently. Inline awaiting lets us:
+ *   1. Surface ping status via the rendered HTML (hidden marker div), so we
+ *      can verify end-to-end from `curl` without SSH.
+ *   2. Catch DNS round-robin to the wrong A record (sharelink.id had Vercel
+ *      + new server IPs both live during DNS migration) — we retry once.
+ *
+ * Latency cost: ~50-300ms (parallelized with the Supabase personalization
+ * fetch via `Promise.all` below, so no added wall-clock time).
+ *
+ * Env precedence: SHARELINK_INTERNAL_BASE_URL > SHARELINK_BASE_URL. Use the
+ * internal one when Storo + Sharelink share a host (e.g. http://localhost:3000)
+ * to bypass DNS entirely.
+ */
+async function pingClickCounter(code: string): Promise<string> {
+  const base =
+    process.env.SHARELINK_INTERNAL_BASE_URL ||
+    process.env.SHARELINK_BASE_URL;
+  if (!base) return "skipped-noenv";
+  if (!code || code.length > 50) return "skipped-badcode";
+
+  const url = `${base.replace(/\/+$/, "")}/api/public/codes/${encodeURIComponent(code)}/click`;
+
+  async function attempt(): Promise<Response> {
+    return fetch(url, {
+      method: "POST",
+      signal: AbortSignal.timeout(3000),
+      cache: "no-store",
+    });
+  }
+
+  try {
+    let res = await attempt();
+    // Retry once on 404 — covers DNS round-robin where the first lookup
+    // hit a stale A record (e.g. Vercel) that doesn't have the route.
+    if (res.status === 404) {
+      res = await attempt();
+    }
+    if (!res.ok) return `http-${res.status}`;
+    const body = (await res.json().catch(() => ({}))) as {
+      tracked?: boolean;
+      clicks?: number;
+      reason?: string;
+    };
+    if (body.tracked) return `ok-${body.clicks ?? "?"}`;
+    return `notfound-${body.reason ?? "unknown"}`;
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "unknown";
+    return `err-${msg.substring(0, 40)}`;
+  }
+}
 
 interface ReferralPageProps {
   params: Promise<{ code: string }>;
@@ -27,58 +83,46 @@ export default async function ReferralPage({ params }: ReferralPageProps) {
   // Next.js 15 melarang cookies().set() di dalam Server Component, jadi tugas
   // itu pindah ke middleware. Jangan tambahkan cookieStore.set() di sini.
 
-  // Click tracking — Sharelink's portal dashboard reads `metadata.clicks` on
-  // the referral code. Sharelink only auto-increments it for visits to
-  // sharelink.id/r/<code>; visits to storo.id/r/<code> never hit that route,
-  // so we ping Sharelink ourselves. `after()` runs the fetch AFTER the page
-  // response is sent, so the landing-page render is never blocked.
-  const sharelinkBase = process.env.SHARELINK_BASE_URL;
-  if (sharelinkBase && code && code.length <= 50) {
-    after(async () => {
-      try {
-        await fetch(
-          `${sharelinkBase.replace(/\/+$/, "")}/api/public/codes/${encodeURIComponent(code)}/click`,
-          { method: "POST", signal: AbortSignal.timeout(5000) },
-        );
-      } catch {
-        // Missed clicks are acceptable — landing still rendered, visitor
-        // unaffected. Don't log noisily; track via Sharelink request logs.
-      }
-    });
-  }
-
-  // Fetch referrer + active plan to personalize landing (name + discount %)
+  // Run click ping in parallel with personalization fetch — no added latency.
   let referrerName: string | null = null;
   let discountPercent = 0;
   let referrerPlanName: string | null = null;
-  try {
-    const supabase = await createSupabaseServiceClient();
-    const { data: client } = await supabase
-      .from("clients")
-      .select("id, full_name")
-      .eq("own_referral_code", code)
-      .maybeSingle();
 
-    if (client) {
-      referrerName = client.full_name || null;
+  const personalizationTask = (async () => {
+    try {
+      const supabase = await createSupabaseServiceClient();
+      const { data: client } = await supabase
+        .from("clients")
+        .select("id, full_name")
+        .eq("own_referral_code", code)
+        .maybeSingle();
 
-      const { data: requests } = await supabase
-        .from("onboarding_requests")
-        .select("plan, status")
-        .eq("client_id", client.id)
-        .order("created_at", { ascending: false })
-        .limit(5);
+      if (client) {
+        referrerName = client.full_name || null;
 
-      const liveOrPending = (requests ?? []).find((r) => r.status === "live")
-        ?? (requests ?? []).find((r) => r.status !== "rejected");
-      if (liveOrPending?.plan) {
-        discountPercent = getDiscountPercentForPlan(liveOrPending.plan);
-        referrerPlanName = getPlan(liveOrPending.plan)?.name ?? null;
+        const { data: requests } = await supabase
+          .from("onboarding_requests")
+          .select("plan, status")
+          .eq("client_id", client.id)
+          .order("created_at", { ascending: false })
+          .limit(5);
+
+        const liveOrPending = (requests ?? []).find((r) => r.status === "live")
+          ?? (requests ?? []).find((r) => r.status !== "rejected");
+        if (liveOrPending?.plan) {
+          discountPercent = getDiscountPercentForPlan(liveOrPending.plan);
+          referrerPlanName = getPlan(liveOrPending.plan)?.name ?? null;
+        }
       }
+    } catch {
+      // Silently fail — generic message will be shown
     }
-  } catch {
-    // Silently fail — generic message will be shown
-  }
+  })();
+
+  const [, clickPingStatus] = await Promise.all([
+    personalizationTask,
+    pingClickCounter(code),
+  ]);
 
   const benefits = [
     "Import produk dari Shopee otomatis",
@@ -89,6 +133,15 @@ export default async function ReferralPage({ params }: ReferralPageProps) {
 
   return (
     <>
+      {/* Hidden marker so we can verify the ping flow externally via curl
+       * without needing SSH. `grep data-click-ping` on the response HTML —
+       * value tells us exactly what happened on the server. */}
+      <div
+        data-click-ping={clickPingStatus}
+        data-click-ping-version={CLICK_PING_VERSION}
+        style={{ display: "none" }}
+      />
+
       {/* sessionStorage script — ensures sign-up page picks up referral code */}
       <script
         dangerouslySetInnerHTML={{
