@@ -6,6 +6,17 @@ import { creditWallet, ensureWallet } from "@/lib/wallet";
 export const dynamic = "force-dynamic";
 
 /**
+ * Reachability probe — Sharelink's WebhookConnector.healthCheck() pings the
+ * endpoint with HEAD before declaring a connector healthy. Without an explicit
+ * handler, Next.js answers HEAD with 405 and the connector card shows red even
+ * though the POST handler below is fine. Return 204 here so the dashboard
+ * accurately reflects "endpoint reachable".
+ */
+export async function HEAD() {
+  return new NextResponse(null, { status: 204 });
+}
+
+/**
  * HMAC-protected callback dari Sharelink saat reward `credit` di-distribute
  * via connector tipe `webhook` ("Storo Credit Webhook").
  *

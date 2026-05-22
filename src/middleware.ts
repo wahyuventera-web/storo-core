@@ -48,6 +48,27 @@ export async function middleware(request: NextRequest) {
     return res;
   }
 
+  // External-origin referral entry — share platforms (Sharelink, social media,
+  // ads) often deep-link straight to a marketing page with `?ref=CODE` instead
+  // of routing through `/r/CODE`. Capture it the same way so the onboarding
+  // flow downstream sees the referral. Only sets when the cookie isn't already
+  // present so the first attribution wins (matches the `/r/CODE` lookup which
+  // overrides via direct visit).
+  const queryRef = searchParams.get("ref");
+  if (
+    queryRef &&
+    queryRef.length <= 50 &&
+    !request.cookies.get("storo_referral_code")
+  ) {
+    const res = NextResponse.next();
+    res.cookies.set("storo_referral_code", queryRef, {
+      maxAge: 60 * 60 * 24 * 30,
+      path: "/",
+      sameSite: "lax",
+    });
+    return res;
+  }
+
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
   const isAuthPage = AUTH_PAGES.some((p) => pathname.startsWith(p));
 
