@@ -96,20 +96,53 @@ export async function GET(req: NextRequest) {
   }
 
   const claims = tokens.claims();
-  if (!claims || typeof claims.sub !== "string" || typeof claims.email !== "string") {
-    return redirectToSignIn(req, "sso_missing_claims");
+  if (!claims || typeof claims.sub !== "string") {
+    return redirectToSignIn(req, "sso_missing_claims", "no_sub");
+  }
+
+  // ID token can legitimately omit email when the IdP issues "thin" tokens —
+  // openid-client doesn't auto-fetch userinfo. Pull it explicitly and merge
+  // any string fields we care about before deciding the claims are missing.
+  let email = typeof claims.email === "string" ? claims.email : undefined;
+  let name = typeof claims.name === "string" ? claims.name : undefined;
+  let phone_number =
+    typeof claims.phone_number === "string" ? claims.phone_number : undefined;
+  const realm = typeof claims.realm === "string" ? claims.realm : undefined;
+
+  if (!email) {
+    try {
+      const config = await getOidcConfig();
+      const userinfo = await client.fetchUserInfo(
+        config,
+        tokens.access_token,
+        claims.sub,
+      );
+      if (typeof userinfo.email === "string") email = userinfo.email;
+      if (!name && typeof userinfo.name === "string") name = userinfo.name;
+      if (!phone_number && typeof userinfo.phone_number === "string") {
+        phone_number = userinfo.phone_number;
+      }
+    } catch (e) {
+      console.error("[SSO] userinfo fetch failed", {
+        sub: claims.sub,
+        error: String(e),
+      });
+    }
+  }
+
+  if (!email) {
+    return redirectToSignIn(req, "sso_missing_claims", "no_email");
   }
 
   try {
     await syncSsoUserToSupabase({
       sub: claims.sub,
-      email: claims.email,
-      name: typeof claims.name === "string" ? claims.name : undefined,
-      phone_number:
-        typeof claims.phone_number === "string" ? claims.phone_number : undefined,
-      realm: typeof claims.realm === "string" ? claims.realm : undefined,
+      email,
+      name,
+      phone_number,
+      realm,
     });
-    await mintSupabaseSession(claims.email);
+    await mintSupabaseSession(email);
   } catch (e) {
     return redirectToSignIn(req, "sso_sync_failed", String(e));
   }

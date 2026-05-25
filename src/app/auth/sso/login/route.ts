@@ -16,6 +16,23 @@ function safeNext(raw: string | null): string {
 }
 
 export async function GET(req: NextRequest) {
+  // Defense-in-depth: refuse to start the OAuth dance for non-top-level
+  // navigations. If a <Link> (or browser/extension speculation) prefetches
+  // this route, the resulting 302 to sso.ventera.ai/oidc/auth is followed by
+  // the browser as a fetch — triggering a CORS preflight that the IdP can't
+  // (and by OIDC spec shouldn't) answer. Returning 204 here keeps the
+  // preflight from ever happening. Real login clicks use plain anchors which
+  // do a top-level navigation and never set these signals.
+  const isRscPrefetch =
+    req.headers.get("rsc") === "1" ||
+    req.headers.get("next-router-prefetch") === "1" ||
+    req.headers.get("purpose") === "prefetch" ||
+    req.headers.get("sec-purpose")?.includes("prefetch") ||
+    req.nextUrl.searchParams.has("_rsc");
+  if (isRscPrefetch) {
+    return new NextResponse(null, { status: 204 });
+  }
+
   if (!isSsoConfigured()) {
     const url = new URL("/sign-in", APP_ORIGIN);
     url.searchParams.set("error", "sso_not_configured");

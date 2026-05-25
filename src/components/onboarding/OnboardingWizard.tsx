@@ -1184,9 +1184,12 @@ function Step6Success({ state }: { state: State }) {
       </p>
 
       <div className="mt-6 pt-6 border-t border-gray-100">
-        <Link href="/auth/sso/login" className="text-sm text-primary hover:underline font-medium">
+        {/* Plain anchor so the browser does a top-level navigation; next/link
+            triggers an RSC fetch that follows the 302 to sso.ventera.ai as
+            CORS and is blocked. */}
+        <a href="/auth/sso/login" className="text-sm text-primary hover:underline font-medium">
           Login ke Dashboard →
-        </Link>
+        </a>
       </div>
     </div>
   );

@@ -79,7 +79,9 @@ const Header = () => {
               )
             )}
             <Button asChild variant="ghost" className="cursor-pointer">
-              <Link href="/auth/sso/login">Masuk</Link>
+              {/* Plain anchor — next/link would trigger an RSC fetch that
+                  follows the 302 to sso.ventera.ai as CORS and is blocked. */}
+              <a href="/auth/sso/login">Masuk</a>
             </Button>
             <Button asChild className="btn-hero">
               <Link href="/onboarding">Pesan Toko</Link>
@@ -127,9 +129,9 @@ const Header = () => {
               )}
               <div className="px-3 py-2 space-y-2">
                 <Button asChild variant="outline" className="w-full cursor-pointer">
-                  <Link href="/auth/sso/login" onClick={() => setIsMenuOpen(false)}>
+                  <a href="/auth/sso/login" onClick={() => setIsMenuOpen(false)}>
                     Masuk
-                  </Link>
+                  </a>
                 </Button>
                 <Button asChild className="btn-hero w-full">
                   <Link href="/onboarding" onClick={() => setIsMenuOpen(false)}>

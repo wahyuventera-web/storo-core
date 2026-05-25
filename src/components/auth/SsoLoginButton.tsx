@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LogIn } from "lucide-react";
 
 type Props = {
@@ -14,8 +13,11 @@ export function SsoLoginButton({ next, draft, label, className }: Props) {
   if (draft) href.searchParams.set("draft", draft);
   const hrefStr = `/auth/sso/login${href.search}`;
 
+  // Plain anchor (not next/link) so the browser does a top-level navigation.
+  // next/link triggers an RSC fetch which then follows the 302 to
+  // sso.ventera.ai as a CORS request and is blocked by the IdP.
   return (
-    <Link
+    <a
       href={hrefStr}
       className={
         className ??
@@ -24,6 +26,6 @@ export function SsoLoginButton({ next, draft, label, className }: Props) {
     >
       <LogIn className="w-4 h-4" />
       {label ?? "Lanjutkan dengan Ventera SSO"}
-    </Link>
+    </a>
   );
 }
