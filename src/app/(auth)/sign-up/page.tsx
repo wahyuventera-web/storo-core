@@ -69,13 +69,14 @@ export default function SignUpPage() {
           </div>
         )}
 
-        <Link
+        {/* Plain anchor (not next/link) — see sign-in/page.tsx for rationale. */}
+        <a
           href={ssoHref}
           className="w-full inline-flex items-center justify-center gap-3 rounded-lg h-11 bg-primary text-white font-medium hover:bg-primary/90 transition-colors cursor-pointer"
         >
           <LogIn className="w-4 h-4" />
           Daftar dengan Ventera SSO
-        </Link>
+        </a>
 
         <p className="text-xs text-gray-400 text-center mt-3">
           Akun Storo otomatis dibuat saat pertama kali login via Ventera SSO.
