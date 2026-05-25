@@ -4,7 +4,6 @@ import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
 import Solution from "@/components/Solution";
 import HowItWorks from "@/components/HowItWorks";
-import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import ClosingCTA from "@/components/ClosingCTA";
 import ContactForm from "@/components/ContactForm";
@@ -16,6 +15,7 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import TemplateShowcase from "@/components/TemplateShowcase";
 import Testimonials from "@/components/Testimonials";
 import FOMOSection from "@/components/FOMOSection";
+import TrustStrip from "@/components/TrustStrip";
 import ScrollAnimator from "@/components/ScrollAnimator";
 
 export const metadata: Metadata = {
@@ -131,11 +131,11 @@ export default function HomePage() {
         <Hero />
         <Problem />
         <Solution />
+        <TrustStrip />
         <TemplateShowcase />
         <HowItWorks />
         <Testimonials />
         <FOMOSection />
-        <Pricing />
         <FAQ />
         <ContactForm />
         <ClosingCTA />

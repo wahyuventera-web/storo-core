@@ -9,62 +9,56 @@ const Testimonials = () => {
     {
       name: "Rizky Firmansyah",
       role: "Owner",
-      store: "RizkyFashion Store",
-      storeUrl: "rizkyfashion.storo.id",
+      store: "Stricta Apparel",
       rating: 5,
-      text: "Awalnya skeptis, tapi ternyata prosesnya cepat banget. Kirim file Excel Shopee hari Senin, Kamis toko sudah live! Sekarang order dari website sendiri tanpa bayar fee Shopee.",
-      products: "450 produk",
+      text: "Kirim file Excel Shopee hari Senin, Kamis toko sudah live. Bulan pertama hemat Rp4,2jt dari fee Shopee yang biasanya nyangkut di marketplace.",
+      result: "Hemat Rp4,2jt/bulan",
       category: "Fashion",
     },
     {
       name: "Siti Nurhaliza",
-      role: "Pemilik Usaha",
-      store: "BeautySiti Official",
-      storeUrl: "beautysiti.storo.id",
+      role: "Founder",
+      store: "Velka Beauty",
       rating: 5,
-      text: "Tim Storo sangat responsif dan profesional. Setup webstore lengkap dengan payment gateway dan kurir otomatis. Pelanggan saya sekarang bisa bayar pakai berbagai metode.",
-      products: "280 produk",
+      text: "Tim Storo handle semua, mulai payment gateway, kurir, sampai domain. Pelanggan repeat order naik karena saya bisa kirim broadcast WA sendiri.",
+      result: "Repeat order +35%",
       category: "Kecantikan",
     },
     {
       name: "Budi Santoso",
-      role: "Seller Aktif",
-      store: "ElektronikBudi",
-      storeUrl: "elektronikbudi.storo.id",
+      role: "Pemilik",
+      store: "Voltagear.id",
       rating: 5,
-      text: "Sudah 3 bulan pakai Storo, revenue dari website sendiri sekarang 30% dari total penjualan. Fee Shopee makin besar jadi senang punya channel penjualan sendiri.",
-      products: "120 produk",
+      text: "3 bulan pakai Storo, revenue dari website sendiri sudah 30% dari total. Margin lebih sehat karena fee cuma 5%, bukan 28% kayak di Shopee.",
+      result: "30% revenue dari web",
       category: "Elektronik",
     },
     {
       name: "Dewi Rahayu",
       role: "Owner",
-      store: "DapurDewi",
-      storeUrl: "dapurdewi.storo.id",
+      store: "Sambal Bunda Kitchen",
       rating: 5,
-      text: "Dashboard toko sangat mudah digunakan. Saya yang tidak terlalu paham teknis pun bisa kelola produk, lihat order, dan update foto sendiri. Sangat direkomendasikan!",
-      products: "85 produk",
-      category: "Makanan & Minuman",
+      text: "Dashboard mudah, saya yang gaptek bisa update produk & lihat order sendiri. Database pelanggan akhirnya jadi milik saya.",
+      result: "1.200+ kontak pelanggan",
+      category: "Makanan",
     },
     {
       name: "Ahmad Fauzi",
-      role: "Pebisnis Online",
-      store: "TokoSportFauzi",
-      storeUrl: "tokosportfauzi.storo.id",
+      role: "Founder",
+      store: "Pacelab Sport",
       rating: 5,
-      text: "Migrasi 800+ produk dari Shopee selesai dalam 2 hari kerja. Tim Storo handle semua import, domain, dan koneksi payment. Tinggal promosi saja!",
-      products: "820 produk",
+      text: "Migrasi 800 produk dari Shopee selesai 2 hari. Tim Storo handle import, domain, sampai payment. Tinggal jalanin iklan, langsung closing.",
+      result: "Live di hari ke-2",
       category: "Olahraga",
     },
     {
       name: "Linda Kusuma",
-      role: "Reseller Aktif",
-      store: "LindaHomeDeco",
-      storeUrl: "lindahomedeco.storo.id",
+      role: "Pemilik",
+      store: "Casa Lumen",
       rating: 5,
-      text: "Punya webstore sendiri ternyata tidak semahal yang saya bayangkan. Dengan paket Pro sudah dapat domain gratis dan template yang terlihat profesional banget.",
-      products: "195 produk",
-      category: "Dekorasi Rumah",
+      text: "Paket Standard sudah dapat domain custom plus template profesional. Cost setup-nya balik modal dalam 1 bulan dari hemat fee Shopee.",
+      result: "ROI 1 bulan",
+      category: "Dekorasi",
     },
   ];
 
@@ -94,14 +88,19 @@ const Testimonials = () => {
               {/* Quote icon */}
               <Quote className="w-8 h-8 text-primary/20 mb-3 flex-shrink-0" />
 
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 text-yellow-400 fill-yellow-400"
-                  />
-                ))}
+              {/* Stars + result badge */}
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-yellow-400 fill-yellow-400"
+                    />
+                  ))}
+                </div>
+                <span className="inline-block text-[11px] bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-semibold">
+                  {t.result}
+                </span>
               </div>
 
               {/* Text */}
@@ -135,7 +134,7 @@ const Testimonials = () => {
               { value: "500+", label: "Seller Sudah Pindah" },
               { value: "4.9/5", label: "Rating Rata-rata" },
               { value: "50rb+", label: "Produk Sudah Di-setup" },
-              { value: "1–3 hari", label: "Toko Siap Live" },
+              { value: "1-3 hari", label: "Toko Siap Live" },
             ].map(({ value, label }) => (
               <div key={label}>
                 <div className="text-2xl md:text-3xl font-black mb-1">{value}</div>
@@ -149,7 +148,7 @@ const Testimonials = () => {
               asChild
               className="bg-white text-primary hover:bg-gray-50 font-bold px-8 h-11 rounded-xl cursor-pointer gap-2"
             >
-              <Link href="/sign-up">
+              <Link href="/onboarding">
                 Buka Toko Online Sendiri
                 <ArrowRight className="w-4 h-4" />
               </Link>
