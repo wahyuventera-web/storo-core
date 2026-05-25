@@ -16,14 +16,14 @@ const features = [
     color: "primary",
     title: "Setup Beres oleh Tim Kami",
     description:
-      "Anda tidak perlu sentuh coding, hosting, atau template builder. Tim Storo yang setup semuanya — produk, kategori, banner, foto, deskripsi, payment, ongkir, sampai domain. Dalam 1–3 hari kerja toko Anda live.",
+      "Anda tidak perlu sentuh coding, hosting, atau template builder. Tim Storo yang setup semuanya: produk, kategori, banner, foto, deskripsi, payment, ongkir, sampai domain. Dalam 1-3 hari kerja toko Anda live.",
   },
   {
     icon: CreditCard,
     color: "secondary",
     title: "Bayar Apapun, Dana Langsung Cair",
     description:
-      "Xendit + Midtrans sudah terhubung. Terima transfer bank, e-wallet (GoPay, OVO, Dana, ShopeePay), QRIS, kartu kredit, dan paylater. Cuma 5% per transaksi (vs 28% Shopee) — dana masuk rekening Anda.",
+      "Xendit dan Midtrans sudah terhubung. Terima transfer bank, e-wallet (GoPay, OVO, Dana, ShopeePay), QRIS, kartu kredit, dan paylater. Cuma 5% per transaksi (vs 28% Shopee), dana masuk rekening Anda.",
   },
   {
     icon: Truck,
@@ -44,14 +44,14 @@ const features = [
     color: "primary",
     title: "Blog SEO + Promo Codes",
     description:
-      "CMS blog untuk artikel produk & tutorial — dapat traffic Google gratis. Plus sistem kode promo, banner homepage, dan ulasan pelanggan terverifikasi. Konversi naik, biaya akuisisi turun.",
+      "CMS blog untuk artikel produk dan tutorial supaya dapat traffic Google gratis. Plus sistem kode promo, banner homepage, dan ulasan pelanggan terverifikasi. Konversi naik, biaya akuisisi turun.",
   },
   {
     icon: Globe,
     color: "secondary",
     title: "Domain Sendiri & Multi-Toko",
     description:
-      "Pakai subdomain gratis (namatoko.storo.id) atau domain .com/.co.id/.id custom. Punya beberapa brand? Kelola semua toko dari satu akun, satu dashboard — tinggal switch antar toko.",
+      "Pakai subdomain gratis (namatoko.storo.id) atau domain .com/.co.id/.id custom. Punya beberapa brand? Kelola semua toko dari satu akun, satu dashboard, tinggal switch antar toko.",
   },
 ];
 
@@ -69,8 +69,8 @@ const Solution = () => {
             <span className="text-primary">Bukan Cuma Template Kosong</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Semua fitur yang Anda butuhkan untuk pindah dari marketplace ke toko sendiri —
-            sudah terpasang, sudah terhubung, dan dikelola tim kami.
+            Semua fitur yang Anda butuhkan untuk pindah dari marketplace ke toko sendiri.
+            Sudah terpasang, sudah terhubung, dan dikelola tim kami.
           </p>
         </div>
 
@@ -115,7 +115,7 @@ const Solution = () => {
               Hemat 23% Per Transaksi, Repeat Order Naik Tanpa Iklan
             </h3>
             <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto mb-6">
-              Fee Storo cuma <strong>5%</strong> (vs 28% Shopee) — itu saja sudah hemat
+              Fee Storo cuma <strong>5%</strong> (vs 28% Shopee). Itu saja sudah hemat
               puluhan juta per tahun untuk seller dengan omset Rp500jt/tahun. Tambah
               loyalty point, membership, dan promo gratis ongkir, pelanggan lama balik
               beli sendiri. <strong>Margin terjaga, brand jadi milik Anda.</strong>

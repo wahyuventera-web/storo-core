@@ -12,12 +12,12 @@ const HowItWorks = () => {
     {
       step: "2",
       title: "Kirim data produk",
-      description: "Upload file Excel dari Seller Center, atau cukup kirim link toko Shopee Anda — tim kami yang import semua produk, foto, dan harga."
+      description: "Upload file Excel dari Seller Center, atau cukup kirim link toko Shopee Anda. Tim kami yang import semua produk, foto, dan harga."
     },
     {
       step: "3",
       title: "Webstore Anda live",
-      description: "Dalam 1–3 hari kerja toko siap menerima pesanan. Payment, ongkir, loyalty, blog — semua sudah terhubung dan langsung jalan."
+      description: "Dalam 1-3 hari kerja toko siap menerima pesanan. Payment, ongkir, loyalty, blog, semua sudah terhubung dan langsung jalan."
     }
   ];
 
@@ -27,7 +27,7 @@ const HowItWorks = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Pindah dari Marketplace ke{" "}
-            <span className="text-primary">Webstore Sendiri — 3 Langkah</span>
+            <span className="text-primary">Webstore Sendiri dalam 3 Langkah</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Anda fokus jualan, biar urusan teknis (server, payment, ongkir, integrasi) tim kami yang kerjakan.
@@ -62,7 +62,7 @@ const HowItWorks = () => {
           {/* CTA after steps */}
           <div className="text-center mt-12">
             <p className="text-lg text-gray-600 mb-6">
-              Belum yakin paket mana yang cocok? Konsultasi dulu — gratis, tanpa komitmen.
+              Belum yakin paket mana yang cocok? Konsultasi dulu, gratis tanpa komitmen.
             </p>
             <Button
               variant="secondary"

@@ -17,14 +17,14 @@ const sellerWins = [
     stat: "+40%",
     statColor: "text-green-600",
     title: "Repeat order naik tanpa bayar iklan",
-    desc: "Karena pelanggan sudah kenal brand mereka sendiri — bukan brand Shopee. Promo gratis ongkir cukup untuk bikin mereka balik beli lagi.",
+    desc: "Karena pelanggan sudah kenal brand mereka sendiri, bukan brand Shopee. Promo gratis ongkir cukup untuk bikin mereka balik beli lagi.",
   },
   {
     icon: ShieldCheck,
     stat: "5%",
     statColor: "text-primary",
     title: "Profit terjaga dengan customer retention",
-    desc: "Fee 5% vs 28% Shopee. Uang yang tadinya habis ke marketplace, sekarang dipakai untuk promo sendiri — hasilnya lebih besar, lebih efisien.",
+    desc: "Fee 5% vs 28% Shopee. Uang yang tadinya habis ke marketplace, sekarang dipakai untuk promo sendiri. Hasilnya lebih besar, lebih efisien.",
   },
 ];
 
@@ -49,7 +49,7 @@ const FOMOSection = () => {
             Seller Lain Sudah Jauh di Depan
           </h2>
           <p className="text-lg text-gray-400 max-w-xl mx-auto">
-            Setiap hari kamu menunggu, pelanggan makin nyaman belanja di toko kompetitor — dan makin susah balik ke kamu.
+            Setiap hari kamu menunggu, pelanggan makin nyaman belanja di toko kompetitor, dan makin susah balik ke kamu.
           </p>
         </div>
 
@@ -80,7 +80,7 @@ const FOMOSection = () => {
             </p>
             <p className="text-gray-300 text-base leading-relaxed">
               Jangan tunggu sampai pelanggan kamu terlanjur nyaman di toko kompetitor.
-              Pindah ke website sendiri sekarang — sebelum terlambat.
+              Pindah ke website sendiri sekarang, sebelum terlambat.
             </p>
           </div>
 
@@ -89,7 +89,7 @@ const FOMOSection = () => {
             asChild
             className="btn-hero text-base h-14 px-10 gap-2 cursor-pointer"
           >
-            <Link href="/sign-up">
+            <Link href="/onboarding">
               Buka Toko Sendiri Sekarang
               <ArrowRight className="w-5 h-5" />
             </Link>

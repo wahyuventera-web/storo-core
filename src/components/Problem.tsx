@@ -9,7 +9,7 @@ const problems = [
     statLabel: "fee Shopee & terus naik",
     title: "Fee 28% Bikin Margin Tipis",
     description:
-      "Komisi + admin fee + service fee Shopee kini menyentuh 28% per transaksi. Setiap Rp10 juta omset, Rp2,8 juta langsung hilang ke marketplace — sebelum Anda bayar produksi, ongkir, atau gaji tim.",
+      "Komisi plus admin fee plus service fee Shopee kini menyentuh 28% per transaksi. Setiap Rp10 juta omset, Rp2,8 juta langsung hilang ke marketplace, sebelum Anda bayar produksi, ongkir, atau gaji tim.",
   },
   {
     icon: ShieldOff,
@@ -17,7 +17,7 @@ const problems = [
     statLabel: null,
     title: "Pelanggan Bukan Milik Anda",
     description:
-      "Anda tidak tahu siapa yang beli. Tidak ada nomor WA, tidak ada email, tidak bisa retargeting. Saat algoritma Shopee berubah, traffic dan omset bisa anjlok dalam semalam — tanpa pemberitahuan.",
+      "Anda tidak tahu siapa yang beli. Tidak ada nomor WA, tidak ada email, tidak bisa retargeting. Saat algoritma Shopee berubah, traffic dan omset bisa anjlok dalam semalam tanpa pemberitahuan.",
   },
   {
     icon: RepeatIcon,
@@ -25,7 +25,7 @@ const problems = [
     statLabel: null,
     title: "Repeat Order Direbut Kompetitor",
     description:
-      "Pelanggan lama Anda buka Shopee — lalu klik kompetitor yang muncul di rekomendasi. Tidak ada loyalty point, tidak ada membership, tidak ada cara membuat mereka kembali ke toko Anda.",
+      "Pelanggan lama Anda buka Shopee, lalu klik kompetitor yang muncul di rekomendasi. Tidak ada loyalty point, tidak ada membership, tidak ada cara membuat mereka kembali ke toko Anda.",
   },
   {
     icon: AlertTriangle,
@@ -33,13 +33,13 @@ const problems = [
     statLabel: null,
     title: "Bisnis Anda Sandera Marketplace",
     description:
-      "Akun di-suspend, kebijakan berubah tiba-tiba, dipaksa ikut flash sale yang merusak harga. Anda tidak punya kendali — dan tidak punya plan B kalau marketplace tutup besok.",
+      "Akun di-suspend, kebijakan berubah tiba-tiba, dipaksa ikut flash sale yang merusak harga. Anda tidak punya kendali, dan tidak punya plan B kalau marketplace tutup besok.",
   },
 ];
 
 const Problem = () => {
   return (
-    <section className="section-padding bg-gray-50">
+    <section id="problem" className="section-padding bg-gray-50">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16 fade-in">
@@ -47,8 +47,8 @@ const Problem = () => {
             Kenapa Seller Shopee Rugi Diam-diam?
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Omset Naik, Tapi Profit Tetap{" "}
-            <span className="text-red-500">— Karena Marketplace yang Untung</span>
+            Omset Naik, Tapi Profit Tetap.{" "}
+            <span className="text-red-500">Karena Marketplace yang Untung.</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Semakin besar omset Anda di Shopee, semakin besar potongan yang masuk ke kantong marketplace.
@@ -93,7 +93,7 @@ const Problem = () => {
           <p className="text-gray-600 font-medium mb-5">
             Masih mau bayar 28% tiap transaksi ke marketplace?{" "}
             <span className="text-gray-900 font-semibold">
-              Ada cara yang lebih masuk akal — dan lebih murah.
+              Ada cara yang lebih masuk akal dan lebih murah.
             </span>
           </p>
           <Button asChild className="btn-hero gap-2 cursor-pointer">

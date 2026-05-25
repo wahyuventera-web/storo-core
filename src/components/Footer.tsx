@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Mail, MessageCircle, MapPin } from "lucide-react";
 import storoLogo from "@/assets/storo-logo.png";
 
 const productLinks = [
@@ -21,16 +22,34 @@ const legalLinks = [
   { label: "Kebijakan Cookie", href: "/cookies" },
 ];
 
+const venteraProducts = [
+  {
+    label: "Storo.id",
+    href: "https://storo.id",
+    desc: "Webstore terkelola",
+  },
+  {
+    label: "Salesmetrix",
+    href: "https://salesmetrix.id",
+    desc: "Analitik seller Shopee",
+  },
+  {
+    label: "Sharelink.id",
+    href: "https://sharelink.id",
+    desc: "Referral & affiliate",
+  },
+];
+
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-gray-50 border-t border-gray-100 font-inter">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Main grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
 
-          {/* Column 1 — Brand */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
+          {/* Column 1 — Brand + contact */}
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2">
             <Link href="/" className="inline-block mb-4">
               <Image
                 src={storoLogo}
@@ -39,9 +58,40 @@ export default function Footer() {
                 className="h-8 w-auto"
               />
             </Link>
-            <p className="text-gray-500 text-sm leading-relaxed mb-5 max-w-xs">
-              Bantu penjual Shopee buka webstore sendiri.
+            <p className="text-gray-600 text-sm leading-relaxed mb-5 max-w-sm">
+              Jasa pembuatan webstore terkelola untuk seller Indonesia.
+              Cukup kirim file produk Shopee, tim kami yang setup semuanya
+              sampai toko siap jualan.
             </p>
+
+            {/* Contact list */}
+            <ul className="space-y-2.5 text-sm mb-6">
+              <li>
+                <a
+                  href="https://wa.me/6285148416700"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                  +62 851-4841-6700 (WhatsApp)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:info@storo.id"
+                  className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+                >
+                  <Mail className="w-4 h-4 text-primary" />
+                  info@storo.id
+                </a>
+              </li>
+              <li className="inline-flex items-center gap-2 text-gray-600">
+                <MapPin className="w-4 h-4 text-secondary" />
+                Indonesia
+              </li>
+            </ul>
+
             {/* Social icons */}
             <div className="flex items-center gap-3">
               {/* Facebook */}
@@ -85,7 +135,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2 — Produk */}
+          {/* Column 2 — Produk Storo */}
           <div>
             <h3 className="text-gray-800 font-semibold text-sm mb-4">Produk</h3>
             <ul className="space-y-2.5">
@@ -148,21 +198,45 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
+        {/* Sister products strip */}
+        <div className="mt-12 pt-8 border-t border-gray-200">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+            Bagian dari ekosistem VenteraAI
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {venteraProducts.map(({ label, href, desc }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white border border-gray-200 hover:border-primary/30 hover:shadow-sm rounded-lg p-3 transition-all group"
+              >
+                <p className="font-semibold text-sm text-gray-800 group-hover:text-primary transition-colors">
+                  {label}
+                </p>
+                <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom divider */}
         <div className="border-t border-gray-200 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-gray-400 text-xs text-center sm:text-left">
-            © {year} Storo.id — PT Ventera Inovasi Digital. All rights reserved.
-          </p>
-          <p className="text-gray-400 text-xs">
-            Powered by{" "}
+            © {year} Storo.id. Dioperasikan oleh{" "}
             <a
               href="https://ventera.ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors font-medium"
             >
               VenteraAI
             </a>
+            . All rights reserved.
+          </p>
+          <p className="text-gray-400 text-xs">
+            Made with care in Indonesia
           </p>
         </div>
       </div>

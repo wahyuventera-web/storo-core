@@ -6,7 +6,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "Apakah data pelanggan benar-benar milik saya?",
-      answer: "100% milik Anda. Semua nama, nomor WA, email, dan riwayat transaksi pelanggan tersimpan di dashboard toko Anda — bisa di-export kapan saja, bisa di-broadcast promo, bisa dipakai untuk retargeting di Meta/Google. Beda dengan Shopee yang menyembunyikan kontak pelanggan."
+      answer: "100% milik Anda. Semua nama, nomor WA, email, dan riwayat transaksi pelanggan tersimpan di dashboard toko Anda. Bisa di-export kapan saja, bisa di-broadcast promo, bisa dipakai untuk retargeting di Meta/Google. Beda dengan Shopee yang menyembunyikan kontak pelanggan."
     },
     {
       question: "Berapa biaya sebenarnya per transaksi?",
@@ -30,11 +30,11 @@ const FAQ = () => {
     },
     {
       question: "Berapa lama proses pembuatan webstore?",
-      answer: "Paket Starter, Pro, Advance & Flexible: 1–3 hari kerja setelah pembayaran. Paket Custom: 5–7 hari kerja tergantung kompleksitas desain dan integrasi yang diminta."
+      answer: "Paket Basic, Standard, dan Business: 1-3 hari kerja setelah pembayaran. Paket Custom: 5-7 hari kerja tergantung kompleksitas desain dan integrasi yang diminta."
     },
     {
       question: "Apakah ada biaya bulanan setelah webstore jadi?",
-      answer: "Ya, ada biaya bulanan untuk maintenance, hosting, update sistem, dan support — mulai dari Rp250rb/bulan tergantung paket. Detail lengkap bisa dicek di halaman pricing."
+      answer: "Ya, ada biaya bulanan untuk maintenance, hosting, update sistem, dan support, mulai dari Rp150rb/bulan tergantung paket. Detail lengkap bisa dicek di halaman pricing."
     },
     {
       question: "Bisa integrasi dengan marketplace lain selain Shopee?",

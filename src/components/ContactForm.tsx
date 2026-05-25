@@ -143,17 +143,6 @@ const ContactForm = () => {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                Atau langsung chat WhatsApp: 
-                <button 
-                  onClick={() => window.open('https://wa.me/6285148416700', '_blank')}
-                  className="text-primary font-semibold ml-1 hover:underline"
-                >
-                  +62 851-4841-6700
-                </button>
-              </p>
-            </div>
           </div>
         </div>
       </div>

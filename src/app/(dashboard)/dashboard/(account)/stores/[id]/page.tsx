@@ -29,6 +29,7 @@ const SHOPEE_UPLOADS_BUCKET = "shopee-uploads";
 const SIGNED_URL_TTL = 60 * 60 * 24; // 24h
 import { PLANS } from "@/lib/plans";
 import { StoreEditDialog } from "@/components/dashboard/StoreEditDialog";
+import { ShopeeFilePreviewDialog } from "@/components/dashboard/ShopeeFilePreviewDialog";
 import { STATUS_CONFIG, getStepIndex, type StatusKey } from "@/lib/store-status";
 
 const TIMELINE_STEPS = [
@@ -503,14 +504,22 @@ export default async function StoreDetailPage({
                     </div>
                   </div>
                   {file.signedUrl && (
-                    <a
-                      href={file.signedUrl}
-                      download={file.name}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 cursor-pointer shrink-0"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      Download
-                    </a>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <ShopeeFilePreviewDialog
+                        fileName={file.name ?? `File ${idx + 1}`}
+                        fileSize={file.size}
+                        signedUrl={file.signedUrl}
+                        uploadedAt={file.uploaded_at}
+                      />
+                      <a
+                        href={file.signedUrl}
+                        download={file.name}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-700 cursor-pointer"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        Download
+                      </a>
+                    </div>
                   )}
                 </div>
               ))}
