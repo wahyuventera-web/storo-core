@@ -90,7 +90,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-inter antialiased`}>
         <Providers>{children}</Providers>
 
-        {/* Google Analytics */}
+        {/* Google Analytics + Google Ads */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-45J7TGRZJP"
           strategy="lazyOnload"
@@ -101,6 +101,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-45J7TGRZJP');
+            gtag('config', 'AW-17522921333');
           `}
         </Script>
       </body>
